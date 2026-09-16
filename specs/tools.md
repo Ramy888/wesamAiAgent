@@ -16,10 +16,21 @@ Research for this page used vendor docs and READMEs.
 ### Hesba calculator MCP (`hesba-calculator`)
 - The contract is in `specs/spec.md` §2. Tools: `price_product`, `cpa_table`,
   `price_bundles`, `check_campaign`.
-- **Code is blocked on G1** (whether code is allowed before Oct 1). It is the only source of
-  numbers; without it, Bya3 refuses to give numbers, by design.
+- **Built 2026-09-16** (`engine/`, `server/`). It runs locally and is **not deployed yet**.
+  It is the only source of numbers; without it, Bya3 refuses to give numbers, by design.
 - Hosting: Deno Deploy. URL: `https://<project>.deno.dev/mcp/<token>`. Read-only annotations.
 - Wesam setup: Name `Hesba Calculator`, include `*`, exclude nothing.
+
+## Wesam integrations in use
+- **Bright Data** (connected 2026-09-17). All 10 actions are enabled:
+  - SERP Search, Web Unlocker
+  - Trigger Site Crawl, Check Crawl Status, Download Scraped Data
+  - Browse Available Scrapers, Filter Dataset
+  - List Unlocker Zones, Get Available Countries / Cities
+
+  It needs an active **Web Unlocker** zone and an active **SERP API** zone in the Bright Data
+  account (not yet confirmed). It is used by the `hesba-competitor-check` skill. It is shared
+  with every agent in the workspace.
 
 ## Tier 2: optional data sources (read-only, the seller signs in)
 

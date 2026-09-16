@@ -6,7 +6,7 @@ Status: **draft v0.1**, 2026-09-16. Spec only. No engine code until G1 is answer
 
 | Gate | Answer (2026-09-16) | Effect on this spec |
 |---|---|---|
-| G1: code before Oct 1? | **Unknown.** Check the rules or ask the organizers. | Until answered, September output is limited to specs, the test plan and outlines. |
+| G1: code before Oct 1? | **Unknown.** Check the rules or ask the organizers. | **2026-09-16: at the user's request, the engine and MCP server are being built before G1 is confirmed.** If the rules forbid pre-built code, this is a disqualification risk. |
 | G2: reuse Bine code? | **Yes, port it.** | The engine is a port of `reference/dart/pricing_engine.dart`, checked against `reference/golden.json`. |
 | G3: how Wesam calls tools | **MCP servers only.** Agent Builder → Tools → *Add MCP server*: name + **Streamable HTTP (https) URL**, include/exclude tool globs. "Wesam proxies it." "Every workspace signs in on its own, so no keys or passwords are stored here." "Publish, send and spend actions are always excluded." | **Replaces the REST API in CLAUDE.md §4 with an MCP server** (§2). |
 | G4: can judges run it without an account? | **Partly answered.** Publishing needs a partner registration plus admin review, and an approved agent can then be hired by any Wesam workspace. There's no public chat link, so judges need a Wesam workspace. | The README must offer a Wesam-free path (§6). |
@@ -65,6 +65,9 @@ Runtime: Deno + TypeScript.
     fetch/WebStandard transport, or `@hono/mcp`.
   - (b) Hand-written JSON-RPC for the 5 methods above (~100 lines, no dependencies).
   - Pick (b) if (a) needs Node `req`/`res` shims.
+  - **Decided 2026-09-16: (b), hand-written** (`server/mcp.ts`). It passed a live check with the
+    official SDK client (`npm:@modelcontextprotocol/sdk@1.30.0`, script `tests/oracle/sdk_smoke.ts`):
+    initialize → tools/list → tools/call.
 - Hosting recommendation: **Deno Deploy**, which gives public HTTPS and a plain `fetch` handler.
   Avoid Supabase Edge Functions here: their default JWT check on `/functions/v1/*` would block
   the unauthenticated handshake. The user can override this.
@@ -99,6 +102,7 @@ Wesam always excludes publish/send/spend actions, and its default exclude globs 
 | `cpa_table` | Max CPA per lead at margins +20 … −20% at the seller's price | `/cpa-matrix` |
 | `price_bundles` | 2/3/4-piece bundle prices from margins, plus checks of explicit offers ("2 for 550") | `/bundles` |
 | `check_campaign` | Real campaign P&L from actual counts, with a deterministic verdict | `/campaign-pnl` |
+| `compare_prices` | Position the seller's price against confirmed competitor offers (added 2026-09-17; see `specs/competitor-pricing.md`) | — |
 
 ### 2.4 Shared input: `product` (used by all tools)
 
@@ -291,6 +295,28 @@ unlike Bine's simple `requiredCr`.
   - price vs `requiredPrice`
   - actual CR/DR vs the rates needed at the current CPL
 
+**`compare_prices`** (added 2026-09-17)
+- Input: `product` (pricing required fields), plus
+  `competitors: [{label, totalPrice, pieces=1, shippingCharged=0, source?, seenOn?}]`
+  (1–30 items).
+- For each competitor:
+  - `pricePerPiece = (totalPrice + shippingCharged) / pieces`
+  - `ifMatched`: profit, margin, max CPA at breakeven and verdict, using the bundle-order math
+    from `price_bundles`
+- `market`: count, min, p25, median, p75, max (linear percentiles).
+- `recommendation`:
+
+  | Code | Condition | Band |
+  |---|---|---|
+  | `NO_PROFITABLE_PRICE` | no suggested price | — |
+  | `CANNOT_COMPETE_ON_PRICE` | suggested > max | — |
+  | `PRICE_IN_BAND` | `max(suggested, p25) ≤ median` | `[max(suggested, p25), median]` |
+  | `PREMIUM_ONLY` | otherwise | `[suggested, max]` |
+
+- `seller` (only if `sellingPrice` is given): `shareCheaperPct` and `position`
+  (BELOW / IN / ABOVE the band, or `null` when there is no band).
+- Warning `FEW_COMPETITORS` when there are fewer than 3 offers.
+
 ## 3. Agent behaviour (Wesam: `wesam/instructions.md` + `SKILL.md`)
 
 - **Persona:** Bya3 (بيّاع), a pricing and ad-profit analyst for Egyptian COD sellers.
@@ -380,6 +406,6 @@ The same server also works in Claude Desktop and Claude Code as a fallback demo.
 | G1: is pre-Oct-1 code allowed? | user (rules) | Any engine code |
 | G4: judge access / marketplace | user (check *Publish to marketplace*) | README + demo |
 | Does Wesam accept an MCP server with **no** OAuth? (dialog says "every workspace signs in"; the Test button will tell) | spike | Auth design |
-| SDK transport on Deno vs hand-written JSON-RPC | spike | server/ |
+| ~~SDK transport on Deno vs hand-written JSON-RPC~~ | done: hand-written | — |
 | Bug #8 decision (ops/gateway per shipped order) | user | Canonical expected values |
 | Does Wesam's proxy forward `structuredContent`, or only `content` text? | spike | How much goes into the text |

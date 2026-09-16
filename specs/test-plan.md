@@ -124,6 +124,21 @@ bug #8 is not applied.
 If you approve bug #8, C2–C9, C11 and C12 are recomputed in a separate commit, and the Python
 oracle script is checked in under `tests/oracle/`.
 
+## CP — compare_prices (`tests/compare_test.ts`, oracle-computed)
+
+Market fixture: A 279, B 299 + 30 shipping, C 349, D 2 for 550, E 399. Seller price 300 on
+fixture U.
+
+| Check | Expected |
+|---|---|
+| Per-piece prices | 279, 329, 349, 275, 399 |
+| Market stats | min 275, p25 279, median 329, p75 349, max 399 |
+| Profit if matched | A −12.8298 (LOSS) · B 22.9202 (BELOW_TARGET) · C 37.2202 · D 70.9352 · E 72.9702 (ON_TARGET) |
+| Max CPA if matched | 11.536 · 21.1885 · 25.0495 · 34.1525 · 34.702 |
+| Recommendation | PREMIUM_ONLY, band [345.2273, 399]; seller BELOW_BAND; 40% of competitors cheaper |
+| Other markets | PRICE_IN_BAND [357.5, 370] for 350/360/380/400; CANNOT_COMPETE for 250/260/300 (position `null`, 66.67% cheaper); NO_PROFITABLE_PRICE at 100% fees + margin; FEW_COMPETITORS when there are fewer than 3 |
+| Over MCP | nested defaults (pieces 1, shipping 0), nested validation (label length, price > 0, date format), empty list rejected |
+
 ## E — edge cases (no golden data; expected behaviour stated)
 
 | ID | Input | Parity engine | Canonical tool |

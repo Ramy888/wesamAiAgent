@@ -1,0 +1,256 @@
+/** The four Hesba calculator tools: schema, validation, defaults, engine call, envelope. */
+import {
+  type Campaign,
+  checkCampaign,
+  comparePrices,
+  type Competitor,
+  cpaTable,
+  DEFAULT_MARGINS,
+  DEFAULT_TIERS,
+  type Offer,
+  priceBundles,
+  priceProduct,
+  type Product,
+  type Tier,
+  type Warning,
+} from "../engine/canonical.ts";
+import {
+  applyDefaults,
+  type Assumption,
+  CAMPAIGN_SCHEMA,
+  COMPETITORS_SCHEMA,
+  type FieldError,
+  type Lang,
+  MARGINS_SCHEMA,
+  type ObjectSchema,
+  OFFERS_SCHEMA,
+  productSchema,
+  TIERS_SCHEMA,
+  validate,
+} from "./schema.ts";
+import {
+  bundlesText,
+  campaignText,
+  compareText,
+  cpaTableText,
+  errorsText,
+  Fmt,
+  priceProductText,
+} from "./text.ts";
+
+export const ENGINE_VERSION = "0.1.0";
+
+export interface ToolResult {
+  content: { type: "text"; text: string }[];
+  structuredContent: Record<string, unknown>;
+  isError: boolean;
+}
+
+interface Computed {
+  result: unknown;
+  warnings: Warning[];
+  text: (f: Fmt) => string[];
+}
+
+export interface ToolDef {
+  name: string;
+  title: string;
+  description: string;
+  inputSchema: ObjectSchema;
+  /** Accepted but not used by this tool (never reported as assumptions). */
+  ignored: string[];
+  annotations: {
+    title: string;
+    readOnlyHint: true;
+    destructiveHint: false;
+    idempotentHint: true;
+    openWorldHint: false;
+  };
+  compute: (v: Record<string, unknown>) => Computed;
+}
+
+const PRICING_REQUIRED = [
+  "productCost",
+  "deliveryFee",
+  "leadCpa",
+  "confirmationRatePct",
+  "deliveryRatePct",
+];
+
+const COMMON_NOTE = "All amounts must be in one currency (no conversion). " +
+  "Optional fees default to 0 and every default used is listed in `assumptions`. " +
+  "Never compute prices yourself; quote the numbers this tool returns.";
+
+function toProduct(v: Record<string, unknown>): Product {
+  const n = (k: string) => (v[k] as number | undefined) ?? 0;
+  return {
+    productCost: n("productCost"),
+    customsDutyPerUnit: n("customsDutyPerUnit"),
+    leadCpa: n("leadCpa"),
+    confirmationRatePct: n("confirmationRatePct"),
+    deliveryRatePct: n("deliveryRatePct"),
+    deliveryFee: n("deliveryFee"),
+    returnShippingFee: n("returnShippingFee"),
+    packagingCost: n("packagingCost"),
+    fulfillmentFee: n("fulfillmentFee"),
+    callCenterCostPerLead: n("callCenterCostPerLead"),
+    smsCostPerLead: n("smsCostPerLead"),
+    platformFeePct: n("platformFeePct"),
+    paymentGatewayPct: n("paymentGatewayPct"),
+    paymentGatewayFixed: n("paymentGatewayFixed"),
+    vatPct: n("vatPct"),
+    marketerCommissionPct: n("marketerCommissionPct"),
+    targetMarginPct: n("targetMarginPct"),
+    sellingPrice: v.sellingPrice as number | undefined,
+  };
+}
+
+const annotations = (title: string): ToolDef["annotations"] => ({
+  title,
+  readOnlyHint: true,
+  destructiveHint: false,
+  idempotentHint: true,
+  openWorldHint: false,
+});
+
+export const TOOLS: ToolDef[] = [
+  {
+    name: "price_product",
+    title: "Price a product",
+    description:
+      "Price one cash-on-delivery product per delivered order: suggested and breakeven price, " +
+      "and — if sellingPrice is given — net profit and margin at that price, max CPA per lead " +
+      "(at breakeven and at the target margin), breakeven ROAS, the confirmation rate needed, " +
+      "and a verdict (LOSS / BELOW_TARGET / ON_TARGET). " + COMMON_NOTE,
+    inputSchema: productSchema(PRICING_REQUIRED),
+    ignored: [],
+    annotations: annotations("Price a product"),
+    compute: (v) => {
+      const r = priceProduct(toProduct(v));
+      return {
+        result: r,
+        warnings: r.warnings,
+        text: (f) => priceProductText(f, r, v.leadCpa as number),
+      };
+    },
+  },
+  {
+    name: "cpa_table",
+    title: "CPA table",
+    description:
+      "Max ad cost per lead (CPA) the seller can pay at their selling price for a range of net " +
+      "margins (default +20% … −20%), plus a headline at breakeven and at the target margin. " +
+      "Negative-margin rows are never marked viable. " + COMMON_NOTE,
+    inputSchema: productSchema(PRICING_REQUIRED, { margins: MARGINS_SCHEMA }, ["sellingPrice"]),
+    ignored: [],
+    annotations: annotations("CPA table"),
+    compute: (v) => {
+      const r = cpaTable(toProduct(v), (v.margins as number[] | undefined) ?? DEFAULT_MARGINS);
+      return { result: r, warnings: r.warnings, text: (f) => cpaTableText(f, r) };
+    },
+  },
+  {
+    name: "price_bundles",
+    title: "Price bundles and offers",
+    description:
+      "Price 2/3/4-piece bundles from target margins (with a 'was' price from the shown " +
+      "discount), and check explicit offers such as 2 for 550. Shipping, operations, lead and ad " +
+      "costs are paid once per order; only product cost scales with pieces. " +
+      'Convert "buy X get Y free" to pieces = X+Y and totalPrice = X × single price first. ' +
+      COMMON_NOTE,
+    inputSchema: productSchema(PRICING_REQUIRED, { tiers: TIERS_SCHEMA, offers: OFFERS_SCHEMA }),
+    ignored: [],
+    annotations: annotations("Price bundles and offers"),
+    compute: (v) => {
+      const r = priceBundles(
+        toProduct(v),
+        (v.tiers as Tier[] | undefined) ?? DEFAULT_TIERS,
+        (v.offers as Offer[] | undefined) ?? [],
+      );
+      return { result: r, warnings: r.warnings, text: (f) => bundlesText(f, r) };
+    },
+  },
+  {
+    name: "compare_prices",
+    title: "Compare with competitor prices",
+    description:
+      "Position the seller's price against competitor offers the seller has confirmed (from " +
+      "ads, landing pages or marketplaces). For each offer: price per piece including any " +
+      "shipping the customer pays, and the seller's profit, margin, max CPA and verdict if they " +
+      "matched it. Summary: market min/median/max, a recommended price band " +
+      "(PRICE_IN_BAND / PREMIUM_ONLY / CANNOT_COMPETE_ON_PRICE / NO_PROFITABLE_PRICE) and where " +
+      "the seller's current price sits. Only pass prices the seller confirmed. " + COMMON_NOTE,
+    inputSchema: productSchema(PRICING_REQUIRED, { competitors: COMPETITORS_SCHEMA }, [
+      "competitors",
+    ]),
+    ignored: [],
+    annotations: annotations("Compare with competitor prices"),
+    compute: (v) => {
+      const r = comparePrices(toProduct(v), v.competitors as Competitor[]);
+      return { result: r, warnings: r.warnings, text: (f) => compareText(f, r) };
+    },
+  },
+  {
+    name: "check_campaign",
+    title: "Check a campaign",
+    description:
+      "Real P&L of one ad campaign from its actual numbers (ad budget spent, leads, confirmed " +
+      "and delivered orders) and unit costs, with a verdict (PAUSE / FIX / SCALE), max CPL for " +
+      "the target margin, the price needed for the target, and the top lever. Confirmation " +
+      "rate, delivery rate and lead CPA are read from the counts; if sent, they are ignored. " +
+      COMMON_NOTE,
+    inputSchema: productSchema(["productCost", "deliveryFee", "sellingPrice"], {
+      campaign: CAMPAIGN_SCHEMA,
+    }, ["campaign"]),
+    ignored: ["leadCpa", "confirmationRatePct", "deliveryRatePct"],
+    annotations: annotations("Check a campaign"),
+    compute: (v) => {
+      const r = checkCampaign(toProduct(v), v.campaign as Campaign);
+      return { result: r, warnings: r.warnings, text: (f) => campaignText(f, r) };
+    },
+  },
+];
+
+export const TOOL_BY_NAME = new Map(TOOLS.map((t) => [t.name, t]));
+
+/** Rounds every number to 4 decimals for the structured payload. */
+export function round4(value: unknown): unknown {
+  if (typeof value === "number") return Math.round(value * 1e4) / 1e4 + 0; // + 0 turns -0 into 0
+  if (Array.isArray(value)) return value.map(round4);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, round4(v)]));
+  }
+  return value;
+}
+
+function pickLang(args: Record<string, unknown>): Lang {
+  return args.lang === "en" || args.lang === "fr" ? args.lang : "ar";
+}
+
+export function runTool(tool: ToolDef, rawArgs: unknown): ToolResult {
+  const args = (rawArgs ?? {}) as Record<string, unknown>;
+  const errors: FieldError[] = validate(tool.inputSchema, args);
+  if (errors.length) {
+    return {
+      content: [{ type: "text", text: errorsText(pickLang(args), errors) }],
+      structuredContent: { tool: tool.name, engineVersion: ENGINE_VERSION, errors },
+      isError: true,
+    };
+  }
+  const { values, assumptions } = applyDefaults(tool.inputSchema, args, tool.ignored);
+  const { result, warnings, text } = tool.compute(values);
+  const fmt = new Fmt(values.lang as Lang, values.currency as string);
+  const lines = [...text(fmt), ...fmt.tail(warnings, assumptions as Assumption[])];
+  return {
+    content: [{ type: "text", text: lines.join("\n") }],
+    structuredContent: round4({
+      tool: tool.name,
+      engineVersion: ENGINE_VERSION,
+      inputsUsed: values,
+      assumptions,
+      warnings,
+      result,
+    }) as Record<string, unknown>,
+    isError: false,
+  };
+}
