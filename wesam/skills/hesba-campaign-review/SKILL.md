@@ -1,6 +1,6 @@
 ---
 name: hesba-campaign-review
-description: Use when a seller asks whether an ad campaign or ad set is profitable, whether to scale, fix or pause it, or shares Ads Manager / TikTok / Snapchat screenshots, CSV exports, or courier and delivery reports. It covers how to extract the four campaign numbers, call check_campaign, and write the weekly review.
+description: Ad campaign check from real numbers: PAUSE/FIX/SCALE
 ---
 
 # Hesba campaign review

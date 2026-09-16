@@ -1,6 +1,6 @@
 ---
 name: hesba-offers-bundles
-description: Use when a seller wants bundle prices (2, 3 or 4 pieces), "was / now" discount prices, or asks whether an offer like "2 for 550" or "buy 2 get 1" is profitable. It covers how to frame offers, call price_bundles, and write short offer copy in the seller's dialect.
+description: Bundles and offers: 2/3/4-piece prices, "2 for X" checks
 ---
 
 # Hesba offers and bundles

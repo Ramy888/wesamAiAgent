@@ -1,6 +1,6 @@
 ---
 name: hesba-competitor-check
-description: Use when a seller asks what competitors charge, whether their price is competitive, or how to position their price in a market. Covers finding competitor offers with the Bright Data integration (SERP Search, Web Unlocker), building a confirmed evidence table, and calling the compare_prices tool.
+description: Competitor prices: find rivals (Bright Data), compare_prices
 ---
 
 # Hesba competitor check

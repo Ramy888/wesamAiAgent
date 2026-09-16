@@ -1,6 +1,6 @@
 ---
 name: hesba-pricing-playbook
-description: Use whenever a seller wants to price a product, work out a safe or breakeven price, the max CPA, or a CPA table, in any Egypt/MENA/Gulf market. It covers which inputs to collect for each Hesba calculator tool, how to handle currency and market, suggested defaults, and how to phrase the answer.
+description: Price a product: safe/breakeven price, max CPA, CPA table
 ---
 
 # Hesba pricing playbook

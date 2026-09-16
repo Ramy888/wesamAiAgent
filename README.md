@@ -53,6 +53,14 @@ or run `deno run -A tests/oracle/sdk_smoke.ts` while it is running.
 | `landing/` | Landing page (https://hesba-ten.vercel.app) |
 | `specs/` | Spec, test plan, MCP tools research |
 
+## Production
+
+- Server: https://hesba-calculator.hesba.deno.net (Deno Deploy, org `hesba`). `/health` is public.
+- The MCP endpoint is `/mcp/<token>`. The token is the `HESBA_TOKENS` secret on Deno Deploy; it
+  is never in this repo.
+- Redeploy with `deno task deploy`, which runs the tests and uploads only `deno.json`,
+  `deno.lock`, `engine/` and `server/`.
+
 ## Configuration
 
 Put these in a local `.env` (copy `.env.example`). `.env` is git-ignored; never commit it.
@@ -61,3 +69,4 @@ Put these in a local `.env` (copy `.env.example`). `.env` is git-ignored; never 
 |---|---|---|
 | `HESBA_TOKENS` | `dev` | Comma-separated secrets accepted in the `/mcp/<token>` path |
 | `PORT` | `8000` | Listen port |
+| `DENO_DEPLOY_TOKEN`, `DENO_DEPLOY_ORG` | — | Used only by `deno task deploy` |

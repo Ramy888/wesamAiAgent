@@ -16,9 +16,11 @@ Research for this page used vendor docs and READMEs.
 ### Hesba calculator MCP (`hesba-calculator`)
 - The contract is in `specs/spec.md` §2. Tools: `price_product`, `cpa_table`,
   `price_bundles`, `check_campaign`.
-- **Built 2026-09-16** (`engine/`, `server/`). It runs locally and is **not deployed yet**.
+- **Built 2026-09-16** (`engine/`, `server/`). **Deployed 2026-09-17** to
+  https://hesba-calculator.hesba.deno.net (Deno Deploy org `hesba`, region global). The path
+  token is a Deno Deploy secret.
   It is the only source of numbers; without it, Bya3 refuses to give numbers, by design.
-- Hosting: Deno Deploy. URL: `https://<project>.deno.dev/mcp/<token>`. Read-only annotations.
+- Hosting: Deno Deploy. URL: `https://hesba-calculator.hesba.deno.net/mcp/<token>`. Read-only annotations.
 - Wesam setup: Name `Hesba Calculator`, include `*`, exclude nothing.
 
 ## Wesam integrations in use

@@ -5,7 +5,8 @@
   "tasks": {
     "test": "deno test",
     "serve": "deno run --env-file=.env --allow-net=0.0.0.0 --allow-env=HESBA_TOKENS,PORT server/main.ts",
-    "check": "deno check server/main.ts && deno lint && deno fmt --check"
+    "check": "deno check server/main.ts && deno lint && deno fmt --check",
+    "deploy": "bash scripts/deploy.sh"
   },
   "fmt": {
     "lineWidth": 100,
@@ -30,5 +31,9 @@
     "include": [
       "tests/"
     ]
+  },
+  "deploy": {
+    "org": "hesba",
+    "app": "hesba-calculator"
   }
 }
