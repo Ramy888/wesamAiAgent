@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حِسبة Hesba · اعرف مكسبك الحقيقي</title>
+<meta name="description" content="Hesba (حِسبة): an AI pricing and ad-profit analyst for Egyptian cash-on-delivery sellers. Safe price, max CPA, bundles and a SCALE / FIX / PAUSE verdict for your ads, in Egyptian Arabic.">
+<meta name="theme-color" content="#0B1F17">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="حِسبة Hesba · Know your real profit before the next ad">
+<meta property="og:description" content="AI pricing & ad-profit analyst for Egyptian COD sellers. Built on Wesam.ai.">
+<meta property="og:image" content="https://hesba-ten.vercel.app/og.png">
+<meta property="og:url" content="https://hesba-ten.vercel.app/">
+<link rel="canonical" href="https://hesba-ten.vercel.app/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1F17; --ink-2:#2B3F36; --muted:#5B6B63;
+  --cream:#FBF8F1; --paper:#FFFFFF; --line:#E6E0D2;
+  --emerald:#0E9F6E; --emerald-d:#067A55; --emerald-l:#E3F5EC;
+  --gold:#F5B301; --gold-l:#FFF4D1;
+  --red:#C8412F; --red-l:#FCE9E5;
+  --amber:#B7791F; --amber-l:#FDF0DA;
+  --radius:18px; --shadow:0 1px 2px rgba(11,31,23,.06),0 12px 32px -12px rgba(11,31,23,.18);
+  --font-body:"IBM Plex Sans Arabic",system-ui,sans-serif;
+  --font-head:"Readex Pro","IBM Plex Sans Arabic",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html[lang=ar] .en, html[lang=en] .ar{display:none!important}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--font-head);line-height:1.25;margin:0}
+h2{font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em}
+.eyebrow{display:inline-block;font-family:var(--font-head);font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--emerald-d);background:var(--emerald-l);padding:4px 12px;border-radius:99px;margin-bottom:14px}
+.lead{color:var(--ink-2);font-size:clamp(17px,1.8vw,20px);max-width:60ch}
+.num{font-family:var(--font-head);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate;display:inline-block}
+section{padding:88px 0}
+
+/* nav */
+header{position:sticky;top:0;z-index:10;background:rgba(251,248,241,.86);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+header.scrolled{border-bottom-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-head);font-weight:700;font-size:21px}
+.brand img{width:36px;height:36px}
+.brand small{font-weight:500;color:var(--muted);font-size:15px}
+.nav-links{display:flex;gap:26px;font-size:15px}
+.nav-links a{text-decoration:none;color:var(--ink-2)}
+.nav-links a:hover{color:var(--emerald-d)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.lang{border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:7px 14px;font:600 14px var(--font-head);cursor:pointer;color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:99px;padding:13px 22px;font:600 16px var(--font-head);text-decoration:none;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s}
+.btn-primary{background:var(--ink);color:var(--cream)}
+.btn-primary:hover{background:var(--emerald-d);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--cream)}
+.btn-sm{padding:9px 16px;font-size:14px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+/* hero */
+.hero{padding:56px 0 80px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(34px,5.4vw,60px);font-weight:700;letter-spacing:-.02em}
+.hero h1 mark{background:linear-gradient(transparent 62%,var(--gold) 62%);color:inherit;padding:0 4px}
+.hero .lead{margin:20px 0 30px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.hero-note{margin-top:18px;color:var(--muted);font-size:14px}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.pill{font-size:13px;background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:5px 12px;color:var(--ink-2)}
+
+/* chat mockup */
+.chat{background:var(--paper);border-radius:26px;box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden;max-width:470px;justify-self:center;width:100%}
+.chat-top{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);background:#F6F3EA}
+.avatar{width:36px;height:36px;border-radius:12px;background:var(--emerald);color:#fff;display:grid;place-items:center;font:700 15px var(--font-head)}
+.chat-top b{font-family:var(--font-head);display:block;line-height:1.2}
+.chat-top span{font-size:12px;color:var(--emerald-d)}
+.chat-body{padding:18px;display:flex;flex-direction:column;gap:12px;font-size:15px}
+.msg{max-width:88%;padding:10px 14px;border-radius:16px;line-height:1.6}
+.msg.me{align-self:flex-start;background:var(--ink);color:var(--cream);border-start-start-radius:4px}
+.msg.bot{align-self:flex-end;background:#F2F7F4;border:1px solid #D7EBE0;border-start-end-radius:4px}
+.verdict{display:inline-block;font:700 12px var(--font-head);letter-spacing:.05em;padding:3px 9px;border-radius:6px;margin-bottom:6px}
+.v-fix{background:var(--amber-l);color:var(--amber)}
+.v-pause{background:var(--red-l);color:var(--red)}
+.v-scale{background:var(--emerald-l);color:var(--emerald-d)}
+.kv{display:grid;grid-template-columns:1fr auto;gap:2px 14px;margin:8px 0;font-size:14px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:600}
+.action{border-top:1px dashed #C9DED2;padding-top:8px;margin-top:6px;font-weight:600}
+.typing{display:flex;gap:4px;align-self:flex-end;padding:10px 14px}
+.typing i{width:7px;height:7px;border-radius:50%;background:#9DB8AA;animation:b 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+.reveal{opacity:0;transform:translateY(8px);animation:in .5s forwards}
+@keyframes in{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* funnel */
+.dark{background:var(--ink);color:var(--cream)}
+.dark .lead{color:#C7D3CC}
+.dark .eyebrow{background:rgba(245,179,1,.14);color:var(--gold)}
+.funnel-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.funnel{display:flex;flex-direction:column;gap:12px}
+.bar{position:relative;height:58px;border-radius:12px;background:rgba(255,255,255,.06);overflow:hidden}
+.bar .fill{position:absolute;inset-block:0;inset-inline-start:0;border-radius:12px;width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.bar .label{position:relative;display:flex;align-items:center;height:100%;padding-inline:16px;font-weight:600;white-space:nowrap}
+.bar .b1{background:#2E4A3E}.bar .b2{background:#1F7A57}.bar .b3{background:var(--emerald)}
+.bar:last-child .label .num{color:var(--gold)}
+.funnel-note{margin-top:18px;font-size:15px;color:#C7D3CC}
+
+/* jobs */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.card h3{font-size:19px;margin:14px 0 8px}
+.card p{margin:0;color:var(--ink-2);font-size:15px}
+.icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--emerald-l)}
+.icon svg{width:24px;height:24px;stroke:var(--emerald-d);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* how */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;counter-reset:s}
+.step{position:relative;padding:26px;border-radius:var(--radius);background:var(--paper);border:1px solid var(--line)}
+.step::before{counter-increment:s;content:counter(s);font:700 15px var(--font-head);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:var(--ink);margin-bottom:14px}
+.step h3{font-size:19px;margin-bottom:6px}
+.step p{margin:0;color:var(--ink-2);font-size:15px}
+.flow{margin-top:34px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.flow svg{width:100%;height:auto;display:block}
+
+/* verdicts */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.vcard{border-radius:var(--radius);padding:24px;border:1px solid var(--line);background:var(--paper)}
+.vcard .verdict{font-size:14px;padding:5px 12px}
+.vcard h3{font-size:18px;margin:12px 0 6px}
+.vcard p{margin:0;color:var(--ink-2);font-size:15px}
+.example{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ex{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.ex h3{font-size:17px;margin-bottom:12px}
+.ex table{width:100%;border-collapse:collapse;font-size:15px}
+.ex td{padding:7px 0;border-bottom:1px solid #EFEAE0}
+.ex td:last-child{text-align:end;font-weight:600}
+.ex tr:last-child td{border-bottom:0}
+.ex .foot{margin-top:12px;font-size:13px;color:var(--muted)}
+.neg{color:var(--red)} .pos{color:var(--emerald-d)}
+
+/* trust */
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px}
+.trust div{border-top:3px solid var(--emerald);padding-top:16px}
+.trust h3{font-size:18px;margin-bottom:6px}
+.trust p{margin:0;color:var(--ink-2);font-size:15px}
+
+/* faq */
+.faq{max-width:780px;margin:36px auto 0}
+details{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:4px 20px;margin-bottom:10px}
+summary{cursor:pointer;list-style:none;font:600 17px var(--font-head);padding:14px 0;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--emerald-d);font-size:22px;line-height:1}
+details[open] summary::after{content:"−"}
+details p{margin:0 0 16px;color:var(--ink-2)}
+
+/* cta */
+.cta{background:linear-gradient(135deg,var(--emerald-d),var(--emerald));color:#fff;border-radius:28px;padding:56px 40px;text-align:center;position:relative;overflow:hidden}
+.cta h2{max-width:22ch;margin:0 auto}
+.cta p{color:#DDF3E8;max-width:52ch;margin:14px auto 28px}
+.cta .btn-primary{background:var(--gold);color:var(--ink)}
+.cta .btn-primary:hover{background:#fff}
+.cta .coins{position:absolute;inset:0;pointer-events:none;opacity:.14}
+footer{padding:40px 0 48px;color:var(--muted);font-size:14px}
+.foot{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:24px}
+
+@media (max-width:960px){
+  .hero-grid,.funnel-grid,.example{grid-template-columns:1fr}
+  .grid4{grid-template-columns:1fr 1fr}
+  .steps,.grid3,.trust{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  section{padding:64px 0}
+  .grid4{grid-template-columns:1fr}
+  .brand small{display:none}
+  .nav-actions .btn-sm{display:none}
+  .cta{padding:40px 20px}
+}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Hesba">
+      <img src="/logo.svg" alt="" width="36" height="36">
+      <span>حِسبة <small>Hesba</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#problem"><span class="ar">المشكلة</span><span class="en">Problem</span></a>
+      <a href="#jobs"><span class="ar">بيّاع بيعمل إيه</span><span class="en">What Bya3 does</span></a>
+      <a href="#how"><span class="ar">إزاي بيشتغل</span><span class="en">How it works</span></a>
+      <a href="#faq"><span class="ar">أسئلة</span><span class="en">FAQ</span></a>
+    </nav>
+    <div class="nav-actions">
+      <button class="lang" id="langBtn" type="button" aria-label="Switch language">EN</button>
+      <a class="btn btn-primary btn-sm js-waitlist" href="#waitlist"><span class="ar">قائمة الانتظار</span><span class="en">Join waitlist</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="ar">لبياعين الدفع عند الاستلام في مصر</span><span class="en">For Egyptian cash-on-delivery sellers</span></span>
+      <h1>
+        <span class="ar">اعرف <mark>مكسبك الحقيقي</mark> قبل ما تدفع في الإعلان الجاي</span>
+        <span class="en">Know your <mark>real profit</mark> before you pay for the next ad</span>
+      </h1>
+      <p class="lead">
+        <span class="ar">«بيّاع» هو محلل التسعير بتاع حِسبة. بيحسبلك السعر الآمن، وأقصى CPA تقدر تدفعه، وأسعار الباكدجات، وبيقولك تكبّر الإعلان ولا تصلّحه ولا توقفه. كل ده بالمصري، وفي دقيقة.</span>
+        <span class="en">Bya3 is Hesba's pricing analyst. It works out your safe price, the most you can pay per lead (CPA) and your bundle prices, then tells you whether to scale, fix or pause your ads. In plain Egyptian Arabic or English, in about a minute.</span>
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary js-waitlist" href="#waitlist">
+          <span class="ar">انضم لقائمة الانتظار</span><span class="en">Join the waitlist</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" style="transform:scaleX(var(--flip,-1))"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#how"><span class="ar">شوف بيشتغل إزاي</span><span class="en">See how it works</span></a>
+      </div>
+      <p class="hero-note"><span class="ar">موظف ذكاء اصطناعي على منصة Wesam.ai · مجاني في الفترة التجريبية</span><span class="en">An AI employee on Wesam.ai · Free during beta</span></p>
+      <div class="pill-row" aria-label="Capabilities">
+        <span class="pill"><span class="ar">السعر الآمن ونقطة التعادل</span><span class="en">Safe &amp; breakeven price</span></span>
+        <span class="pill"><span class="ar">أقصى CPA</span><span class="en">Max CPA</span></span>
+        <span class="pill"><span class="ar">الباكدجات والعروض</span><span class="en">Bundles &amp; offers</span></span>
+        <span class="pill"><span class="ar">كمّل / صلّح / وقّف</span><span class="en">Scale / Fix / Pause</span></span>
+      </div>
+    </div>
+
+    <div class="chat" aria-label="Example conversation">
+      <div class="chat-top">
+        <div class="avatar">ب</div>
+        <div><b><span class="ar">بيّاع · حِسبة</span><span class="en">Bya3 · Hesba</span></b><span><span class="ar">● متصل</span><span class="en">● Online</span></span></div>
+      </div>
+      <div class="chat-body" id="chat">
+        <div class="msg me reveal" style="animation-delay:.2s">
+          <span class="ar">المنتج تكلفته 100 + جمارك 10، ببيعه بـ 300. الـ CPA عندي 15، التأكيد 60% والتسليم 45%.</span>
+          <span class="en">Cost 100 + 10 customs, I sell at 300. My CPA is 15, confirmation 60%, delivery 45%.</span>
+        </div>
+        <div class="typing reveal" style="animation-delay:.8s" id="typing"><i></i><i></i><i></i></div>
+        <div class="msg bot reveal" style="animation-delay:1.9s">
+          <span class="verdict v-fix"><span class="ar">تحت الهدف</span><span class="en">BELOW TARGET</span></span>
+          <div><span class="ar">سعرك 300 تقريبًا على التعادل.</span><span class="en">300 is roughly breakeven.</span></div>
+          <dl class="kv">
+            <dt><span class="ar">صافي الربح / أوردر</span><span class="en">Net profit / order</span></dt><dd><span class="num">2.19</span> <span class="ar">ج.م</span><span class="en">EGP</span> (<span class="num">0.7%</span>)</dd>
+            <dt><span class="ar">أقصى CPA على التعادل</span><span class="en">Max CPA at breakeven</span></dt><dd><span class="num">15.59</span> <span class="ar">مقابل 15</span><span class="en">vs 15 now</span></dd>
+            <dt><span class="ar">سعر التعادل</span><span class="en">Breakeven price</span></dt><dd><span class="num">296.94</span></dd>
+          </dl>
+          <div class="action"><span class="ar">الخطوة: ارفع السعر لـ <span class="num">345.23</span> عشان توصل لهامش 10%.</span><span class="en">Next step: raise the price to <span class="num">345.23</span> to reach a 10% margin.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="dark" id="problem">
+  <div class="wrap funnel-grid">
+    <div>
+      <span class="eyebrow"><span class="ar">المشكلة</span><span class="en">The problem</span></span>
+      <h2><span class="ar">في الدفع عند الاستلام، مش كل ليد بيدفع</span><span class="en">With cash on delivery, most leads never pay</span></h2>
+      <p class="lead" style="margin-top:16px">
+        <span class="ar">بتدفع إعلان على كل ليد، لكن جزء بس بيأكّد، وجزء أقل بيستلم ويدفع. الباقي بيرجع ومعاه مصاريف شحن. لو سعّرت على أساس «كل ليد = أوردر»، هتلاقي نفسك بتخسر وإنت فاكر إنك كسبان.</span>
+        <span class="en">You pay for every lead, but only some confirm, and fewer still accept the parcel and pay. The rest come back with return shipping costs. Price as if every lead were a sale and you can lose money while thinking you're in profit.</span>
+      </p>
+    </div>
+    <div>
+      <div class="funnel" id="funnel" aria-label="Lead funnel example">
+        <div class="bar"><span class="fill b1" data-w="100"></span><span class="label"><span class="num">100</span>&nbsp;<span class="ar">ليد دفعت عليهم إعلان</span><span class="en">leads you paid for</span></span></div>
+        <div class="bar"><span class="fill b2" data-w="60"></span><span class="label"><span class="num">60</span>&nbsp;<span class="ar">أكّدوا</span><span class="en">confirmed</span></span></div>
+        <div class="bar"><span class="fill b3" data-w="27"></span><span class="label"><span class="num">27</span>&nbsp;<span class="ar">استلموا ودفعوا</span><span class="en">received &amp; paid</span></span></div>
+      </div>
+      <p class="funnel-note">
+        <span class="ar">مثال: تأكيد 60% × تسليم 45% = 27% بس. يعني بتدفع إعلان <b class="num">3.7</b> ليد عشان أوردر واحد مدفوع.</span>
+        <span class="en">Example: 60% confirmation × 45% delivery = only 27%. You pay for <b class="num">3.7</b> leads to get one paid order.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- JOBS -->
+<section id="jobs">
+  <div class="wrap">
+    <span class="eyebrow"><span class="ar">4 مهام</span><span class="en">4 jobs</span></span>
+    <h2><span class="ar">بيّاع بيعمل الحسبة كلها بدل الشيت</span><span class="en">Bya3 does the whole calculation, no spreadsheet needed</span></h2>
+    <div class="grid4">
+      <article class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></div>
+        <h3><span class="ar">تسعير منتج</span><span class="en">Price a product</span></h3>
+        <p><span class="ar">السعر الآمن وسعر التعادل، والربح والهامش على سعرك إنت، وأقصى CPA، ونقطة تعادل الـ ROAS.</span><span class="en">Safe and breakeven prices, profit and margin at <em>your</em> price, max CPA and breakeven ROAS.</span></p>
+      </article>
+      <article class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+        <h3><span class="ar">جدول الـ CPA</span><span class="en">CPA table</span></h3>
+        <p><span class="ar">أقصى تكلفة لكل ليد عند كل هامش من +20% لـ −20%، عشان تعرف الميديا باير يقف فين.</span><span class="en">The most you can pay per lead at every margin from +20% to −20%, so your media buyer knows where to stop.</span></p>
+      </article>
+      <article class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M8 8c-2-3 1-5 4 0 3-5 6-3 4 0"/></svg></div>
+        <h3><span class="ar">باكدجات وعروض</span><span class="en">Bundles &amp; offers</span></h3>
+        <p><span class="ar">أسعار باكدج 2 و3 و4 قطع بسعر «قبل وبعد»، وبيراجع عرض زي «2 بـ 550» قبل ما تنزّله.</span><span class="en">Prices for 2-, 3- and 4-piece bundles with "was / now" prices, and a check on offers like "2 for 550" before you launch them.</span></p>
+      </article>
+      <article class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><path d="M12 10v2l1.5 1.5"/></svg></div>
+        <h3><span class="ar">مراجعة حملة</span><span class="en">Campaign check</span></h3>
+        <p><span class="ar">من أرقامك الحقيقية (الصرف والليدز والمؤكد والمُسلَّم) بيطلع الأرباح والخسائر الفعلية وقرار واضح.</span><span class="en">From your real numbers (ad budget, leads, confirmed and delivered orders) you get the actual P&amp;L and a clear decision.</span></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow"><span class="ar">إزاي بيشتغل</span><span class="en">How it works</span></span>
+    <h2><span class="ar">إنت بتتكلم، والحاسبة بتحسب، وبيّاع بيشرح</span><span class="en">You chat, the calculator calculates, Bya3 explains</span></h2>
+    <div class="steps">
+      <div class="step">
+        <h3><span class="ar">اكتب أرقامك</span><span class="en">Share your numbers</span></h3>
+        <p><span class="ar">بيّاع بيسألك 3 أسئلة بالكتير في كل رسالة. ولو مش عارف نسبة التأكيد أو التسليم، بيقترح أرقام شائعة في السوق المصري وبيستأذنك الأول.</span><span class="en">Bya3 asks at most three questions per message. If you don't know your confirmation or delivery rate, it suggests typical Egyptian values and asks before using them.</span></p>
+      </div>
+      <div class="step">
+        <h3><span class="ar">الحاسبة بتحسب</span><span class="en">The engine calculates</span></h3>
+        <p><span class="ar">الأرقام كلها بتطلع من محرك تسعير ثابت، مش من تخمين الذكاء الاصطناعي. نفس المدخلات بتدي نفس النتيجة كل مرة.</span><span class="en">Every number comes from a deterministic pricing engine, never from AI guesswork. The same inputs always give the same result.</span></p>
+      </div>
+      <div class="step">
+        <h3><span class="ar">قرار + خطوة واحدة</span><span class="en">A decision + one step</span></h3>
+        <p><span class="ar">القرار الأول، وبعده من 3 لـ 5 أرقام مهمة، وبعدين خطوة واحدة تعملها، مع الافتراضات اللي اتحسب بيها.</span><span class="en">The decision comes first, then the 3–5 numbers that matter, then one thing to do, along with the assumptions used.</span></p>
+      </div>
+    </div>
+    <div class="flow" aria-hidden="true">
+      <svg class="ar" viewBox="0 0 900 150"><defs><marker id="ah-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#5B6B63"/></marker></defs><g font-family="Readex Pro, IBM Plex Sans Arabic, sans-serif" font-size="17" text-anchor="middle"><rect x="20" y="35" width="200" height="80" rx="16" fill="#0B1F17"/><text x="120" y="70" fill="#F5B301" font-weight="600">محرك حِسبة</text><text x="120" y="95" fill="#C7D3CC" font-size="13">كل الحسابات هنا</text><rect x="350" y="35" width="200" height="80" rx="16" fill="#E3F5EC" stroke="#0E9F6E"/><text x="450" y="70" fill="#067A55" font-weight="600">بيّاع على Wesam.ai</text><text x="450" y="95" fill="#5B6B63" font-size="13">بيجمع ويشرح</text><rect x="680" y="35" width="200" height="80" rx="16" fill="#FBF8F1" stroke="#E6E0D2"/><text x="780" y="70" fill="#0B1F17" font-weight="600">البائع</text><text x="780" y="95" fill="#5B6B63" font-size="13">شات بالمصري أو إنجليزي</text><path d="M226 65H342" stroke="#5B6B63" stroke-width="2" marker-end="url(#ah-ar)"/><path d="M342 88H226" stroke="#5B6B63" stroke-width="2" marker-end="url(#ah-ar)"/><path d="M556 65H672" stroke="#5B6B63" stroke-width="2" marker-end="url(#ah-ar)"/><path d="M672 88H556" stroke="#5B6B63" stroke-width="2" marker-end="url(#ah-ar)"/></g></svg>
+      <svg class="en" viewBox="0 0 900 150"><defs><marker id="ah-en" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#5B6B63"/></marker></defs><g font-family="Readex Pro, IBM Plex Sans Arabic, sans-serif" font-size="17" text-anchor="middle"><rect x="20" y="35" width="200" height="80" rx="16" fill="#FBF8F1" stroke="#E6E0D2"/><text x="120" y="70" fill="#0B1F17" font-weight="600">Seller</text><text x="120" y="95" fill="#5B6B63" font-size="13">chat in AR / EN</text><rect x="350" y="35" width="200" height="80" rx="16" fill="#E3F5EC" stroke="#0E9F6E"/><text x="450" y="70" fill="#067A55" font-weight="600">Bya3 on Wesam.ai</text><text x="450" y="95" fill="#5B6B63" font-size="13">collects &amp; explains</text><rect x="680" y="35" width="200" height="80" rx="16" fill="#0B1F17"/><text x="780" y="70" fill="#F5B301" font-weight="600">Hesba engine</text><text x="780" y="95" fill="#C7D3CC" font-size="13">all math lives here</text><path d="M226 65H342" stroke="#5B6B63" stroke-width="2" marker-end="url(#ah-en)"/><path d="M342 88H226" stroke="#5B6B63" stroke-width="2" marker-end="url(#ah-en)"/><path d="M556 65H672" stroke="#5B6B63" stroke-width="2" marker-end="url(#ah-en)"/><path d="M672 88H556" stroke="#5B6B63" stroke-width="2" marker-end="url(#ah-en)"/></g></svg>
+    </div>
+  </div>
+</section>
+
+<!-- VERDICTS -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow"><span class="ar">قرار واضح</span><span class="en">A clear decision</span></span>
+    <h2><span class="ar">كمّل، صلّح، ولا وقّف؟</span><span class="en">Scale, fix, or pause?</span></h2>
+    <div class="grid3">
+      <div class="vcard"><span class="verdict v-scale">SCALE</span><h3><span class="ar">كبّر الحملة</span><span class="en">Scale it</span></h3><p><span class="ar">الهامش الصافي وصل للهدف أو عدّاه. زوّد الميزانية وإنت مطمّن.</span><span class="en">Net margin is at or above your target. Add budget with confidence.</span></p></div>
+      <div class="vcard"><span class="verdict v-fix">FIX</span><h3><span class="ar">صلّح حاجة</span><span class="en">Fix something</span></h3><p><span class="ar">كسبان بس تحت الهدف. بيّاع بيقولك أنهي حاجة تغيّرها الأول: السعر أو تكلفة الليد أو نسب التأكيد والتسليم.</span><span class="en">Profitable but below target. Bya3 tells you which lever to change first: price, cost per lead, or confirmation and delivery rates.</span></p></div>
+      <div class="vcard"><span class="verdict v-pause">PAUSE</span><h3><span class="ar">وقّف الإعلان</span><span class="en">Pause the ad</span></h3><p><span class="ar">الحملة بتخسر. وقّف النزيف الأول وبعدين نصلّح الحسبة.</span><span class="en">The campaign is losing money. Stop the bleeding first, then fix the numbers.</span></p></div>
+    </div>
+
+    <div class="example">
+      <div class="ex">
+        <h3><span class="ar">مثال: مراجعة حملة أسبوع</span><span class="en">Example: a one-week campaign check</span></h3>
+        <table>
+          <tr><td><span class="ar">صرف إعلان · ليدز · مؤكد · مُسلَّم</span><span class="en">Ad budget · leads · confirmed · delivered</span></td><td><span class="num">1,000 · 100 · 50 · 40</span></td></tr>
+          <tr><td><span class="ar">الإيراد</span><span class="en">Revenue</span></td><td><span class="num">12,000</span></td></tr>
+          <tr><td><span class="ar">التكاليف (منتج، شحن، مرتجعات، رسوم)</span><span class="en">Costs (product, shipping, returns, fees)</span></td><td><span class="num">10,440</span></td></tr>
+          <tr><td><span class="ar">صافي الربح بعد الإعلان</span><span class="en">Net profit after ads</span></td><td class="pos"><span class="num">560 (4.7%)</span></td></tr>
+          <tr><td><span class="ar">القرار (الهدف 20%)</span><span class="en">Verdict (20% target)</span></td><td><span class="verdict v-fix" style="margin:0">FIX</span></td></tr>
+          <tr><td><span class="ar">السعر المطلوب للهدف</span><span class="en">Price needed for target</span></td><td><span class="num">401.10</span></td></tr>
+        </table>
+        <p class="foot"><span class="ar">سعر البيع 300 · التكلفة 100 · شحن 25 · مرتجع 15 · ضريبة 14% · منصة 8% · مسوّق 10% · بوابة دفع 2.5% + 3</span><span class="en">Price 300 · cost 100 · delivery 25 · return 15 · VAT 14% · platform 8% · marketer 10% · gateway 2.5% + 3</span></p>
+      </div>
+      <div class="ex">
+        <h3><span class="ar">مثال: هل عرض «2 بـ 550» يستاهل؟</span><span class="en">Example: is "2 for 550" worth it?</span></h3>
+        <table>
+          <tr><td><span class="ar">عرض 2 قطعة بـ 550</span><span class="en">2 pieces for 550</span></td><td class="pos"><span class="num">+70.94 (12.9%)</span></td></tr>
+          <tr><td><span class="ar">عرض 3 قطع بـ 780</span><span class="en">3 pieces for 780</span></td><td class="pos"><span class="num">+125.39 (16.1%)</span></td></tr>
+          <tr><td><span class="ar">قطعة واحدة بـ 300</span><span class="en">Single piece at 300</span></td><td><span class="num">+2.19 (0.7%)</span></td></tr>
+        </table>
+        <p class="foot"><span class="ar">نفس منتج المثال اللي فوق. الشحن والتشغيل والإعلان بيتوزّعوا على الأوردر كله، فالباكدج بيكسب أكتر من القطعة الواحدة.</span><span class="en">Same product as the chat above. Shipping, operations and ad cost are paid once per order, so the bundle earns far more than a single piece.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="dark">
+  <div class="wrap">
+    <span class="eyebrow"><span class="ar">ليه تثق في الأرقام</span><span class="en">Why trust the numbers</span></span>
+    <h2><span class="ar">الذكاء الاصطناعي بيتكلم، والحسابات بتتعمل في الكود</span><span class="en">The AI does the talking. The code does the math.</span></h2>
+    <div class="trust">
+      <div><h3><span class="ar">مفيش تخمين</span><span class="en">No guesswork</span></h3><p style="color:#C7D3CC"><span class="ar">بيّاع ممنوع يحسب أي رقم بنفسه. لو الحاسبة مش متاحة بيقولك كده، ومش بيألّف رقم.</span><span class="en">Bya3 is not allowed to calculate numbers itself. If the calculator is down, it tells you instead of inventing a figure.</span></p></div>
+      <div><h3><span class="ar">افتراضات مكتوبة</span><span class="en">Assumptions stated</span></h3><p style="color:#C7D3CC"><span class="ar">أي قيمة افتراضية، زي الرسوم = صفر أو الهامش المستهدف 20%، بتظهرلك في الرد.</span><span class="en">Every default, such as fees = 0 or a 20% target margin, is shown in the reply.</span></p></div>
+      <div><h3><span class="ar">مصمّم للـ COD</span><span class="en">Built for COD</span></h3><p style="color:#C7D3CC"><span class="ar">بيحسب نسب التأكيد والتسليم، والمرتجعات، ومصاريف الكول سنتر والـ SMS، والضريبة، وعمولات المنصة والمسوّق.</span><span class="en">It accounts for confirmation and delivery rates, returns, call-center and SMS costs, VAT, and platform and marketer fees.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div style="text-align:center">
+      <span class="eyebrow"><span class="ar">أسئلة شائعة</span><span class="en">FAQ</span></span>
+      <h2><span class="ar">عندك سؤال؟</span><span class="en">Questions?</span></h2>
+    </div>
+    <div class="faq">
+      <details><summary><span class="ar">يعني إيه CR وDR وRTO؟</span><span class="en">What do CR, DR and RTO mean?</span></summary>
+        <p><span class="ar">CR هي نسبة التأكيد: الليدز اللي أكّدت الأوردر في التليفون. DR هي نسبة التسليم: الأوردرات المؤكدة اللي اتسلّمت واتدفعت فعلًا. RTO هو الأوردر اللي رجع، وبتدفع عليه شحن المرتجع.</span><span class="en">CR is the confirmation rate: the share of leads that confirm by phone. DR is the delivery rate: the share of confirmed orders that are delivered and paid. RTO is a returned order, which costs you return shipping.</span></p></details>
+      <details><summary><span class="ar">محتاج حساب على Wesam.ai؟</span><span class="en">Do I need a Wesam.ai account?</span></summary>
+        <p><span class="ar">أيوه. بيّاع «موظف ذكاء اصطناعي» بتعيّنه في مساحة العمل بتاعتك على Wesam.ai. سجّل في قائمة الانتظار وهنبعتلك أول ما يبقى متاح.</span><span class="en">Yes. Bya3 is an AI employee you hire into your Wesam.ai workspace. Join the waitlist and we'll email you as soon as it's available.</span></p></details>
+      <details><summary><span class="ar">بكام؟</span><span class="en">How much does it cost?</span></summary>
+        <p><span class="ar">مجاني في الفترة التجريبية.</span><span class="en">Free during the beta.</span></p></details>
+      <details><summary><span class="ar">ينفع بعملة غير الجنيه؟</span><span class="en">Can I use a currency other than EGP?</span></summary>
+        <p><span class="ar">الحسابات بتشتغل بأي عملة طالما كل الأرقام بنفس العملة. الافتراضي جنيه مصري.</span><span class="en">The math works in any currency as long as all numbers use the same one. The default is EGP.</span></p></details>
+      <details><summary><span class="ar">بياناتي بتتخزن؟</span><span class="en">Is my data stored?</span></summary>
+        <p><span class="ar">محرك الحسابات مش بيحفظ أرقامك. المحادثة نفسها بتفضل جوه مساحة العمل بتاعتك على Wesam.ai.</span><span class="en">The calculation engine doesn't store your numbers. The conversation itself stays in your own Wesam.ai workspace.</span></p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="waitlist" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <svg class="coins" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width="3"><circle cx="80" cy="60" r="34"/><circle cx="720" cy="230" r="46"/><circle cx="650" cy="50" r="20"/><circle cx="140" cy="250" r="24"/><path d="M60 60h40M60 70h40M700 230h40M700 242h40"/></g></svg>
+      <h2><span class="ar">بطّل تسعّر بالإحساس</span><span class="en">Stop pricing by gut feel</span></h2>
+      <p><span class="ar">سجّل في قائمة الانتظار، وأول ما بيّاع يبقى متاح على Wesam.ai هنبعتلك.</span><span class="en">Join the waitlist and we'll email you the moment Bya3 is available on Wesam.ai.</span></p>
+      <a class="btn btn-primary js-waitlist" id="waitlistBtn" href="#">
+        <span class="ar">انضم لقائمة الانتظار بالإيميل</span><span class="en">Join the waitlist by email</span>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="brand" style="font-size:17px"><img src="/logo.svg" alt="" width="28" height="28" style="width:28px;height:28px"> <span>حِسبة Hesba</span></div>
+    <div><span class="ar">مبني على Wesam.ai · مشروع مشارك في هاكاثون Agents at Work · 2026</span><span class="en">Built on Wesam.ai · An entry in the Agents at Work hackathon · 2026</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var EMAIL = "ramy.comm@gmail.com";
+  var MAIL = {
+    ar: {s:"قائمة انتظار حِسبة", b:"عايز أنضم لقائمة انتظار حِسبة (بيّاع).\n\nاسم البيزنس:\nبنبيع إيه:\nعدد الأوردرات في الشهر تقريبًا:\n"},
+    en: {s:"Hesba waitlist", b:"I'd like to join the Hesba (Bya3) waitlist.\n\nBusiness name:\nWhat we sell:\nApprox. orders per month:\n"}
+  };
+  var root = document.documentElement, btn = document.getElementById("langBtn");
+
+  function mailto(lang){
+    var m = MAIL[lang];
+    return "mailto:" + EMAIL + "?subject=" + encodeURIComponent(m.s) + "&body=" + encodeURIComponent(m.b);
+  }
+  function setLang(lang){
+    root.lang = lang; root.dir = lang === "ar" ? "rtl" : "ltr";
+    root.style.setProperty("--flip", lang === "ar" ? "-1" : "1");
+    btn.textContent = lang === "ar" ? "EN" : "عربي";
+    document.title = lang === "ar" ? "حِسبة Hesba · اعرف مكسبك الحقيقي" : "Hesba · Know your real profit before the next ad";
+    document.getElementById("waitlistBtn").href = mailto(lang);
+    try { localStorage.setItem("hesba-lang", lang); } catch (e) {}
+  }
+  var q = new URLSearchParams(location.search).get("lang"), saved = null;
+  try { saved = localStorage.getItem("hesba-lang"); } catch (e) {}
+  setLang(q === "en" || q === "ar" ? q : (saved || "ar"));
+  btn.addEventListener("click", function(){ setLang(root.lang === "ar" ? "en" : "ar"); });
+
+  // header border on scroll
+  var header = document.querySelector("header");
+  addEventListener("scroll", function(){ header.classList.toggle("scrolled", scrollY > 8); }, {passive:true});
+
+  // hide typing dots once the reply appears
+  setTimeout(function(){ var t = document.getElementById("typing"); if (t) t.style.display = "none"; }, 1900);
+
+  // funnel bars animate when visible
+  var bars = document.querySelectorAll("#funnel [data-w]");
+  function fill(){ bars.forEach(function(b){ b.style.width = b.dataset.w + "%"; }); }
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(es){ if (es.some(function(e){ return e.isIntersecting; })) { fill(); io.disconnect(); } }, {threshold:.3});
+    io.observe(document.getElementById("funnel"));
+  } else { fill(); }
+})();
+</script>
+</body>
+</html>

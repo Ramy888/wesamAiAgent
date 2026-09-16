@@ -1,0 +1,704 @@
+{
+  "cpaMatrix": {
+    "input": {
+      "productCost": 100.0,
+      "customsDutyPerUnit": 0.0,
+      "leadCpa": 0.0,
+      "confirmationRatePct": 50.0,
+      "deliveryRatePct": 80.0,
+      "deliveryFee": 25.0,
+      "returnShippingFee": 0.0,
+      "packagingCost": 0.0,
+      "fulfillmentFee": 0.0,
+      "callCenterCostPerLead": 0.0,
+      "smsCostPerLead": 0.0,
+      "platformFeePct": 0.0,
+      "paymentGatewayPct": 0.0,
+      "paymentGatewayFixed": 0.0,
+      "vatPct": 0.0,
+      "marketerCommissionPct": 0.0,
+      "targetMarginPct": 20.0,
+      "sellingPrice": 300.0,
+      "expectedPriceEgp": 0.0,
+      "bundleMarginPct2pc": 15.0,
+      "bundleMarginPct3pc": 20.0,
+      "bundleMarginPct4pc": 25.0,
+      "bundleDiscountPct2pc": 5.0,
+      "bundleDiscountPct3pc": 10.0,
+      "bundleDiscountPct4pc": 15.0,
+      "adSpend": 0.0,
+      "totalLeads": 0.0,
+      "confirmedOrders": 0.0,
+      "deliveredOrders": 0.0,
+      "campaignPeriodName": "",
+      "calculatorSource": "ultimatePricing",
+      "productName": "",
+      "notes": ""
+    },
+    "output": {
+      "totalCostPerUnit": 120.0,
+      "suggestedPrice": 150.0,
+      "breakevenPrice": 120.0,
+      "netProfit": 30.0,
+      "netMarginPct": 20.0,
+      "grossProfit": 30.0,
+      "maxCpa": 12.0,
+      "breakEvenRoas": 5.0,
+      "successRatePct": 40.0,
+      "leadsPerDelivered": 2.5,
+      "adCostPerDelivered": 0.0,
+      "blendedShipping": 20.0,
+      "operationsCost": 0.0,
+      "leadProcessingCost": 0.0,
+      "fixedCostsPerDelivered": 120.0,
+      "pctStack": 0.0,
+      "requiredPrice": 0.0,
+      "requiredCr": 0.0,
+      "breakevenMaxCpa": 0.0,
+      "survivalCr": 0.0,
+      "expectedPnl": 0.0,
+      "targetPnl": 0.0,
+      "breakevenPnl": 0.0,
+      "revenue": 0.0,
+      "totalCogs": 0.0,
+      "actualCpa": 0.0,
+      "cpl": 0.0,
+      "crPct": 0.0,
+      "drPct": 0.0,
+      "roas": 0.0,
+      "rtoCount": 0.0,
+      "cpaMatrixRows": [
+        {
+          "marginPct": 20.0,
+          "cpaLocal": 46.0,
+          "cpaEgp": 46.0,
+          "cpaUsd": 0.92,
+          "isViable": true
+        },
+        {
+          "marginPct": 15.0,
+          "cpaLocal": 52.0,
+          "cpaEgp": 52.0,
+          "cpaUsd": 1.04,
+          "isViable": true
+        },
+        {
+          "marginPct": 10.0,
+          "cpaLocal": 58.0,
+          "cpaEgp": 58.0,
+          "cpaUsd": 1.16,
+          "isViable": true
+        },
+        {
+          "marginPct": 5.0,
+          "cpaLocal": 64.0,
+          "cpaEgp": 64.0,
+          "cpaUsd": 1.28,
+          "isViable": true
+        },
+        {
+          "marginPct": 0.0,
+          "cpaLocal": 70.0,
+          "cpaEgp": 70.0,
+          "cpaUsd": 1.4,
+          "isViable": true
+        },
+        {
+          "marginPct": -5.0,
+          "cpaLocal": 76.0,
+          "cpaEgp": 76.0,
+          "cpaUsd": 1.52,
+          "isViable": true
+        },
+        {
+          "marginPct": -10.0,
+          "cpaLocal": 82.0,
+          "cpaEgp": 82.0,
+          "cpaUsd": 1.64,
+          "isViable": true
+        },
+        {
+          "marginPct": -20.0,
+          "cpaLocal": 94.0,
+          "cpaEgp": 94.0,
+          "cpaUsd": 1.88,
+          "isViable": true
+        }
+      ]
+    }
+  },
+  "reverseCalc": {
+    "input": {
+      "productCost": 100.0,
+      "customsDutyPerUnit": 0.0,
+      "leadCpa": 15.0,
+      "confirmationRatePct": 50.0,
+      "deliveryRatePct": 80.0,
+      "deliveryFee": 25.0,
+      "returnShippingFee": 0.0,
+      "packagingCost": 0.0,
+      "fulfillmentFee": 0.0,
+      "callCenterCostPerLead": 0.0,
+      "smsCostPerLead": 0.0,
+      "platformFeePct": 0.0,
+      "paymentGatewayPct": 0.0,
+      "paymentGatewayFixed": 0.0,
+      "vatPct": 0.0,
+      "marketerCommissionPct": 0.0,
+      "targetMarginPct": 20.0,
+      "sellingPrice": 300.0,
+      "expectedPriceEgp": 0.0,
+      "bundleMarginPct2pc": 15.0,
+      "bundleMarginPct3pc": 20.0,
+      "bundleMarginPct4pc": 25.0,
+      "bundleDiscountPct2pc": 5.0,
+      "bundleDiscountPct3pc": 10.0,
+      "bundleDiscountPct4pc": 15.0,
+      "adSpend": 0.0,
+      "totalLeads": 0.0,
+      "confirmedOrders": 0.0,
+      "deliveredOrders": 0.0,
+      "campaignPeriodName": "",
+      "calculatorSource": "ultimatePricing",
+      "productName": "",
+      "notes": ""
+    },
+    "output": {
+      "totalCostPerUnit": 157.5,
+      "suggestedPrice": 196.875,
+      "breakevenPrice": 157.5,
+      "netProfit": 137.5,
+      "netMarginPct": 45.8333,
+      "grossProfit": 175.0,
+      "maxCpa": 70.0,
+      "breakEvenRoas": 1.7143,
+      "successRatePct": 40.0,
+      "leadsPerDelivered": 2.5,
+      "adCostPerDelivered": 37.5,
+      "blendedShipping": 20.0,
+      "operationsCost": 0.0,
+      "leadProcessingCost": 0.0,
+      "fixedCostsPerDelivered": 120.0,
+      "pctStack": 0.0,
+      "requiredPrice": 203.125,
+      "requiredCr": 16.3043,
+      "breakevenMaxCpa": 70.0,
+      "survivalCr": 43.8596,
+      "expectedPnl": 0.0,
+      "targetPnl": 0.0,
+      "breakevenPnl": 0.0,
+      "revenue": 0.0,
+      "totalCogs": 0.0,
+      "actualCpa": 0.0,
+      "cpl": 0.0,
+      "crPct": 0.0,
+      "drPct": 0.0,
+      "roas": 0.0,
+      "rtoCount": 0.0,
+      "bundles": [
+        {
+          "pieces": 2,
+          "discountPct": 0.0,
+          "totalPrice": 600.0,
+          "originalTotalPrice": 600.0,
+          "pricePerPiece": 300.0,
+          "marginPct": 56.25,
+          "profitPerBundle": 337.5
+        },
+        {
+          "pieces": 2,
+          "discountPct": 10.0,
+          "totalPrice": 540.0,
+          "originalTotalPrice": 600.0,
+          "pricePerPiece": 270.0,
+          "marginPct": 51.3889,
+          "profitPerBundle": 277.5
+        },
+        {
+          "pieces": 2,
+          "discountPct": 20.0,
+          "totalPrice": 480.0,
+          "originalTotalPrice": 600.0,
+          "pricePerPiece": 240.0,
+          "marginPct": 45.3125,
+          "profitPerBundle": 217.5
+        },
+        {
+          "pieces": 2,
+          "discountPct": 30.0,
+          "totalPrice": 420.0,
+          "originalTotalPrice": 600.0,
+          "pricePerPiece": 210.0,
+          "marginPct": 37.5,
+          "profitPerBundle": 157.5
+        },
+        {
+          "pieces": 2,
+          "discountPct": 40.0,
+          "totalPrice": 360.0,
+          "originalTotalPrice": 600.0,
+          "pricePerPiece": 180.0,
+          "marginPct": 27.0833,
+          "profitPerBundle": 97.5
+        },
+        {
+          "pieces": 2,
+          "discountPct": 50.0,
+          "totalPrice": 300.0,
+          "originalTotalPrice": 600.0,
+          "pricePerPiece": 150.0,
+          "marginPct": 12.5,
+          "profitPerBundle": 37.5
+        },
+        {
+          "pieces": 3,
+          "discountPct": 0.0,
+          "totalPrice": 900.0,
+          "originalTotalPrice": 900.0,
+          "pricePerPiece": 300.0,
+          "marginPct": 59.7222,
+          "profitPerBundle": 537.5
+        },
+        {
+          "pieces": 3,
+          "discountPct": 10.0,
+          "totalPrice": 810.0,
+          "originalTotalPrice": 900.0,
+          "pricePerPiece": 270.0,
+          "marginPct": 55.2469,
+          "profitPerBundle": 447.5
+        },
+        {
+          "pieces": 3,
+          "discountPct": 20.0,
+          "totalPrice": 720.0,
+          "originalTotalPrice": 900.0,
+          "pricePerPiece": 240.0,
+          "marginPct": 49.6528,
+          "profitPerBundle": 357.5
+        },
+        {
+          "pieces": 3,
+          "discountPct": 30.0,
+          "totalPrice": 630.0,
+          "originalTotalPrice": 900.0,
+          "pricePerPiece": 210.0,
+          "marginPct": 42.4603,
+          "profitPerBundle": 267.5
+        },
+        {
+          "pieces": 3,
+          "discountPct": 40.0,
+          "totalPrice": 540.0,
+          "originalTotalPrice": 900.0,
+          "pricePerPiece": 180.0,
+          "marginPct": 32.8704,
+          "profitPerBundle": 177.5
+        },
+        {
+          "pieces": 3,
+          "discountPct": 50.0,
+          "totalPrice": 450.0,
+          "originalTotalPrice": 900.0,
+          "pricePerPiece": 150.0,
+          "marginPct": 19.4444,
+          "profitPerBundle": 87.5
+        },
+        {
+          "pieces": 4,
+          "discountPct": 0.0,
+          "totalPrice": 1200.0,
+          "originalTotalPrice": 1200.0,
+          "pricePerPiece": 300.0,
+          "marginPct": 61.4583,
+          "profitPerBundle": 737.5
+        },
+        {
+          "pieces": 4,
+          "discountPct": 10.0,
+          "totalPrice": 1080.0,
+          "originalTotalPrice": 1200.0,
+          "pricePerPiece": 270.0,
+          "marginPct": 57.1759,
+          "profitPerBundle": 617.5
+        },
+        {
+          "pieces": 4,
+          "discountPct": 20.0,
+          "totalPrice": 960.0,
+          "originalTotalPrice": 1200.0,
+          "pricePerPiece": 240.0,
+          "marginPct": 51.8229,
+          "profitPerBundle": 497.5
+        },
+        {
+          "pieces": 4,
+          "discountPct": 30.0,
+          "totalPrice": 840.0,
+          "originalTotalPrice": 1200.0,
+          "pricePerPiece": 210.0,
+          "marginPct": 44.9405,
+          "profitPerBundle": 377.5
+        },
+        {
+          "pieces": 4,
+          "discountPct": 40.0,
+          "totalPrice": 720.0,
+          "originalTotalPrice": 1200.0,
+          "pricePerPiece": 180.0,
+          "marginPct": 35.7639,
+          "profitPerBundle": 257.5
+        },
+        {
+          "pieces": 4,
+          "discountPct": 50.0,
+          "totalPrice": 600.0,
+          "originalTotalPrice": 1200.0,
+          "pricePerPiece": 150.0,
+          "marginPct": 22.9167,
+          "profitPerBundle": 137.5
+        }
+      ]
+    }
+  },
+  "advancedPnl": {
+    "input": {
+      "productCost": 100.0,
+      "customsDutyPerUnit": 0.0,
+      "leadCpa": 15.0,
+      "confirmationRatePct": 60.0,
+      "deliveryRatePct": 45.0,
+      "deliveryFee": 25.0,
+      "returnShippingFee": 15.0,
+      "packagingCost": 0.0,
+      "fulfillmentFee": 10.0,
+      "callCenterCostPerLead": 0.0,
+      "smsCostPerLead": 0.0,
+      "platformFeePct": 0.0,
+      "paymentGatewayPct": 0.0,
+      "paymentGatewayFixed": 0.0,
+      "vatPct": 15.0,
+      "marketerCommissionPct": 3.0,
+      "targetMarginPct": 10.0,
+      "sellingPrice": 300.0,
+      "expectedPriceEgp": 0.0,
+      "bundleMarginPct2pc": 15.0,
+      "bundleMarginPct3pc": 20.0,
+      "bundleMarginPct4pc": 25.0,
+      "bundleDiscountPct2pc": 5.0,
+      "bundleDiscountPct3pc": 10.0,
+      "bundleDiscountPct4pc": 15.0,
+      "adSpend": 0.0,
+      "totalLeads": 0.0,
+      "confirmedOrders": 0.0,
+      "deliveredOrders": 0.0,
+      "campaignPeriodName": "",
+      "calculatorSource": "ultimatePricing",
+      "productName": "",
+      "notes": ""
+    },
+    "output": {
+      "totalCostPerUnit": 221.1111,
+      "suggestedPrice": 307.0988,
+      "breakevenPrice": 269.6477,
+      "netProfit": 24.8889,
+      "netMarginPct": 8.2963,
+      "grossProfit": 80.4444,
+      "maxCpa": 21.72,
+      "breakEvenRoas": 3.7293,
+      "successRatePct": 27.0,
+      "leadsPerDelivered": 3.7037,
+      "adCostPerDelivered": 55.5556,
+      "blendedShipping": 19.5,
+      "operationsCost": 10.0,
+      "leadProcessingCost": 0.0,
+      "fixedCostsPerDelivered": 165.5556,
+      "pctStack": 0.18,
+      "requiredPrice": 0.0,
+      "requiredCr": 0.0,
+      "breakevenMaxCpa": 0.0,
+      "survivalCr": 0.0,
+      "expectedPnl": 24.8889,
+      "targetPnl": 30.7099,
+      "breakevenPnl": 0.0,
+      "revenue": 0.0,
+      "totalCogs": 0.0,
+      "actualCpa": 0.0,
+      "cpl": 0.0,
+      "crPct": 0.0,
+      "drPct": 0.0,
+      "roas": 0.0,
+      "rtoCount": 0.0,
+      "bundles": [
+        {
+          "pieces": 2,
+          "discountPct": 5.0,
+          "totalPrice": 479.2703,
+          "originalTotalPrice": 504.4951,
+          "pricePerPiece": 239.6352,
+          "marginPct": 15.0,
+          "profitPerBundle": 71.8905
+        },
+        {
+          "pieces": 3,
+          "discountPct": 10.0,
+          "totalPrice": 679.2115,
+          "originalTotalPrice": 754.6794,
+          "pricePerPiece": 226.4038,
+          "marginPct": 20.0,
+          "profitPerBundle": 135.8423
+        },
+        {
+          "pieces": 4,
+          "discountPct": 15.0,
+          "totalPrice": 914.23,
+          "originalTotalPrice": 1075.5647,
+          "pricePerPiece": 228.5575,
+          "marginPct": 25.0,
+          "profitPerBundle": 228.5575
+        }
+      ]
+    }
+  },
+  "ultimatePricing": {
+    "input": {
+      "productCost": 100.0,
+      "customsDutyPerUnit": 10.0,
+      "leadCpa": 15.0,
+      "confirmationRatePct": 60.0,
+      "deliveryRatePct": 45.0,
+      "deliveryFee": 25.0,
+      "returnShippingFee": 15.0,
+      "packagingCost": 5.0,
+      "fulfillmentFee": 10.0,
+      "callCenterCostPerLead": 2.0,
+      "smsCostPerLead": 0.5,
+      "platformFeePct": 8.0,
+      "paymentGatewayPct": 2.5,
+      "paymentGatewayFixed": 3.0,
+      "vatPct": 15.0,
+      "marketerCommissionPct": 3.0,
+      "targetMarginPct": 10.0,
+      "sellingPrice": 300.0,
+      "expectedPriceEgp": 0.0,
+      "bundleMarginPct2pc": 15.0,
+      "bundleMarginPct3pc": 20.0,
+      "bundleMarginPct4pc": 25.0,
+      "bundleDiscountPct2pc": 5.0,
+      "bundleDiscountPct3pc": 10.0,
+      "bundleDiscountPct4pc": 15.0,
+      "adSpend": 0.0,
+      "totalLeads": 0.0,
+      "confirmedOrders": 0.0,
+      "deliveredOrders": 0.0,
+      "campaignPeriodName": "",
+      "calculatorSource": "ultimatePricing",
+      "productName": "",
+      "notes": ""
+    },
+    "output": {
+      "totalCostPerUnit": 212.3148,
+      "suggestedPrice": 345.2273,
+      "breakevenPrice": 296.9438,
+      "netProfit": 34.5227,
+      "netMarginPct": 10.0,
+      "grossProfit": 90.0783,
+      "maxCpa": 24.3211,
+      "breakEvenRoas": 3.8325,
+      "successRatePct": 27.0,
+      "leadsPerDelivered": 3.7037,
+      "adCostPerDelivered": 55.5556,
+      "blendedShipping": 19.5,
+      "operationsCost": 15.0,
+      "leadProcessingCost": 9.2593,
+      "fixedCostsPerDelivered": 156.7593,
+      "pctStack": 0.285,
+      "requiredPrice": 0.0,
+      "requiredCr": 0.0,
+      "breakevenMaxCpa": 0.0,
+      "survivalCr": 0.0,
+      "expectedPnl": 0.0,
+      "targetPnl": 0.0,
+      "breakevenPnl": 0.0,
+      "revenue": 0.0,
+      "totalCogs": 0.0,
+      "actualCpa": 0.0,
+      "cpl": 0.0,
+      "crPct": 0.0,
+      "drPct": 0.0,
+      "roas": 0.0,
+      "rtoCount": 0.0,
+      "bundles": [
+        {
+          "pieces": 2,
+          "discountPct": 5.0,
+          "totalPrice": 570.4687,
+          "originalTotalPrice": 600.4934,
+          "pricePerPiece": 285.2343,
+          "marginPct": 15.0,
+          "profitPerBundle": 85.5703
+        },
+        {
+          "pieces": 3,
+          "discountPct": 10.0,
+          "totalPrice": 839.4462,
+          "originalTotalPrice": 932.718,
+          "pricePerPiece": 279.8154,
+          "marginPct": 20.0,
+          "profitPerBundle": 167.8892
+        },
+        {
+          "pieces": 4,
+          "discountPct": 15.0,
+          "totalPrice": 1166.2684,
+          "originalTotalPrice": 1372.0805,
+          "pricePerPiece": 291.5671,
+          "marginPct": 25.0,
+          "profitPerBundle": 291.5671
+        }
+      ],
+      "cogsBreakdown": [
+        {
+          "label": "Product Cost",
+          "amount": 110.0
+        },
+        {
+          "label": "Blended Shipping",
+          "amount": 19.5
+        },
+        {
+          "label": "Operations",
+          "amount": 15.0
+        },
+        {
+          "label": "Lead Processing",
+          "amount": 9.2593
+        },
+        {
+          "label": "Gateway Fixed",
+          "amount": 3.0
+        },
+        {
+          "label": "Revenue % Stack",
+          "amount": 98.3898
+        },
+        {
+          "label": "Ad Cost/Delivered",
+          "amount": 55.5556
+        }
+      ]
+    }
+  },
+  "plTracker": {
+    "input": {
+      "productCost": 100.0,
+      "customsDutyPerUnit": 0.0,
+      "leadCpa": 0.0,
+      "confirmationRatePct": 50.0,
+      "deliveryRatePct": 80.0,
+      "deliveryFee": 25.0,
+      "returnShippingFee": 15.0,
+      "packagingCost": 5.0,
+      "fulfillmentFee": 10.0,
+      "callCenterCostPerLead": 2.0,
+      "smsCostPerLead": 0.5,
+      "platformFeePct": 8.0,
+      "paymentGatewayPct": 2.5,
+      "paymentGatewayFixed": 3.0,
+      "vatPct": 14.0,
+      "marketerCommissionPct": 10.0,
+      "targetMarginPct": 20.0,
+      "sellingPrice": 300.0,
+      "expectedPriceEgp": 0.0,
+      "bundleMarginPct2pc": 15.0,
+      "bundleMarginPct3pc": 20.0,
+      "bundleMarginPct4pc": 25.0,
+      "bundleDiscountPct2pc": 5.0,
+      "bundleDiscountPct3pc": 10.0,
+      "bundleDiscountPct4pc": 15.0,
+      "adSpend": 1000.0,
+      "totalLeads": 100.0,
+      "confirmedOrders": 50.0,
+      "deliveredOrders": 40.0,
+      "campaignPeriodName": "",
+      "calculatorSource": "ultimatePricing",
+      "productName": "",
+      "notes": ""
+    },
+    "output": {
+      "totalCostPerUnit": 261.0,
+      "suggestedPrice": 300.0,
+      "breakevenPrice": 0.0,
+      "netProfit": 560.0,
+      "netMarginPct": 4.6667,
+      "grossProfit": 8000.0,
+      "maxCpa": 0.0,
+      "breakEvenRoas": 7.6923,
+      "successRatePct": 40.0,
+      "leadsPerDelivered": 2.5,
+      "adCostPerDelivered": 25.0,
+      "blendedShipping": 23.0,
+      "operationsCost": 15.0,
+      "leadProcessingCost": 6.25,
+      "fixedCostsPerDelivered": 261.0,
+      "pctStack": 0.345,
+      "requiredPrice": 0.0,
+      "requiredCr": 0.0,
+      "breakevenMaxCpa": 0.0,
+      "survivalCr": 0.0,
+      "expectedPnl": 0.0,
+      "targetPnl": 0.0,
+      "breakevenPnl": 0.0,
+      "revenue": 12000.0,
+      "totalCogs": 10440.0,
+      "actualCpa": 25.0,
+      "cpl": 10.0,
+      "crPct": 50.0,
+      "drPct": 80.0,
+      "roas": 12.0,
+      "rtoCount": 10.0,
+      "cogsBreakdown": [
+        {
+          "label": "Product Costs",
+          "amount": 4000.0
+        },
+        {
+          "label": "Shipping Costs",
+          "amount": 1150.0
+        },
+        {
+          "label": "Packaging",
+          "amount": 250.0
+        },
+        {
+          "label": "Fulfillment",
+          "amount": 500.0
+        },
+        {
+          "label": "Call Center",
+          "amount": 200.0
+        },
+        {
+          "label": "SMS",
+          "amount": 50.0
+        },
+        {
+          "label": "Gateway Fees",
+          "amount": 450.0
+        },
+        {
+          "label": "Platform Fees",
+          "amount": 960.0
+        },
+        {
+          "label": "Marketer Fees",
+          "amount": 1200.0
+        },
+        {
+          "label": "VAT",
+          "amount": 1680.0
+        }
+      ]
+    }
+  }
+}
