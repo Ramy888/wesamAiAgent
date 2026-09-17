@@ -4,6 +4,29 @@ Bya3 is an AI pricing and ad-profit analyst for cash-on-delivery sellers in Egyp
 MENA. It runs on Wesam.ai. All of its math comes from the **Hesba calculator**, a small,
 dependency-free MCP server in this repo.
 
+## For judges
+
+1. **Check the math in 5 minutes.** Follow the section below to run the calculator locally. You
+   don't need an account.
+2. **Talk to Bya3 on Wesam.** _How judges get access is still to be confirmed with the
+   organizers (marketplace listing or a shared workspace). The link will go here._ Paste any of
+   these prompts:
+   - Pricing (expected: below target; net profit 2.19 EGP; breakeven 296.94; safe price 345.23):
+     > عايز أسعّر منتج في مصر. التكلفة 100 جنيه + جمارك 10، الشحن 25 والمرتجع 15، تغليف 5 وتجهيز 10، كول سنتر 2 و SMS نص جنيه لكل ليد. عمولة المنصة 8% وبوابة الدفع 2.5% + 3 جنيه، ضريبة 15% وعمولة مسوّق 3%. الـ CPA عندي 15، التأكيد 60% والتسليم 45%، وببيع بـ 300 وعايز هامش 10%.
+   - Campaign (expected: FIX; top lever: raise the price to 373.79):
+     > نفس المنتج، الأسبوع ده صرفت 1000 جنيه، جالي 100 ليد، 50 أكدوا و40 استلموا. الهدف 20%.
+   - Offer (expected: +70.94 per order, 12.9%):
+     > نفس المنتج: لو عملت عرض قطعتين بـ 550 هكسب ولا هخسر؟
+   - Competitors (uses live web search):
+     > نفس المنتج اسمه "مكواة بخار محمولة" في مصر. قارن سعري بالمنافسين.
+3. **What to expect.** Bya3 replies with a verdict first, then 3–5 numbers, one action, and a
+   chart. If numbers are missing, it asks for them. Any default it uses is listed as an
+   assumption. Competitor prices come with source links, and Bya3 asks you to confirm them
+   before comparing.
+
+Demo script: [docs/demo-script.md](docs/demo-script.md). Impact slides outline:
+[docs/impact-slides.md](docs/impact-slides.md).
+
 ## Run it in under 5 minutes (no Wesam account needed)
 
 Requires [Deno](https://deno.com) 2.x.
