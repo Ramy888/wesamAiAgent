@@ -36,6 +36,10 @@ Research for this page used vendor docs and READMEs.
     Google block page that the agent read as a "CAPTCHA"; Full JSON fixed it.
   - **`hesba_unlocker`** (Web Unlocker API, $1.50/CPM).
   - The spend limit is still "No limit"; consider setting a monthly cap.
+
+  It is used by the `hesba-competitor-check` skill. It is shared with every agent in the
+  workspace.
+
 ## Tier 2: optional data sources (read-only, the seller signs in)
 
 | Priority | Server | Endpoint | Auth | Tools to allow | Status and risks |
