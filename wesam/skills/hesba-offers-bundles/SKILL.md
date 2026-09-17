@@ -1,6 +1,6 @@
 ---
 name: hesba-offers-bundles
-description: Bundles and offers: 2/3/4-piece prices, "2 for X" checks
+description: 'Bundles and offers: 2/3/4-piece prices, "2 for X" checks'
 ---
 
 # Hesba offers and bundles

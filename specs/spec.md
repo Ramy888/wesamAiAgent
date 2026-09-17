@@ -405,7 +405,7 @@ The same server also works in Claude Desktop and Claude Code as a fallback demo.
 |---|---|---|
 | G1: is pre-Oct-1 code allowed? | user (rules) | Any engine code |
 | G4: judge access / marketplace | user (check *Publish to marketplace*) | README + demo |
-| Does Wesam accept an MCP server with **no** OAuth? (dialog says "every workspace signs in"; the Test button will tell) | spike | Auth design |
+| ~~Does Wesam accept an MCP server with **no** OAuth?~~ | **Yes (2026-09-17):** Test said "Reachable — no sign-in needed, 5 tools"; server connected | — |
 | ~~SDK transport on Deno vs hand-written JSON-RPC~~ | done: hand-written | — |
 | Bug #8 decision (ops/gateway per shipped order) | user | Canonical expected values |
 | Does Wesam's proxy forward `structuredContent`, or only `content` text? | spike | How much goes into the text |

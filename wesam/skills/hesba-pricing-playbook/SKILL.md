@@ -1,6 +1,6 @@
 ---
 name: hesba-pricing-playbook
-description: Price a product: safe/breakeven price, max CPA, CPA table
+description: 'Price a product: safe/breakeven price, max CPA, CPA table'
 ---
 
 # Hesba pricing playbook

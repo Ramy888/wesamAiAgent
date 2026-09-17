@@ -1,6 +1,6 @@
 ---
 name: hesba-competitor-check
-description: Competitor prices: find rivals (Bright Data), compare_prices
+description: 'Competitor prices: find rivals (Bright Data), compare_prices'
 ---
 
 # Hesba competitor check

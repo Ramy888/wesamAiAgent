@@ -21,7 +21,8 @@ Research for this page used vendor docs and READMEs.
   token is a Deno Deploy secret.
   It is the only source of numbers; without it, Bya3 refuses to give numbers, by design.
 - Hosting: Deno Deploy. URL: `https://hesba-calculator.hesba.deno.net/mcp/<token>`. Read-only annotations.
-- Wesam setup: Name `Hesba Calculator`, include `*`, exclude nothing.
+- Wesam setup: Name `Hesba Calculator`, include `*`, exclude nothing. **Connected to Bya3 on
+  2026-09-17** (Test found 5 tools).
 
 ## Wesam integrations in use
 - **Bright Data** (connected 2026-09-17). All 10 actions are enabled:
@@ -72,7 +73,7 @@ tool list and adjust.
    are enough for the demo.
 
 ## Open questions to test inside Wesam
-- Can a tool server run with no OAuth (hesba-calculator uses a secret in the URL path)?
+- ~~Can a tool server run with no OAuth?~~ **Yes.** hesba-calculator connected on 2026-09-17 with "no sign-in needed".
 - Do Meta and TikTok accept Wesam's OAuth client?
 - Does Wesam support SSE-only servers?
 - How does Wesam handle servers that need your own OAuth client ID and secret (Google)?

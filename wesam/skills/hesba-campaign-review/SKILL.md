@@ -1,6 +1,6 @@
 ---
 name: hesba-campaign-review
-description: Ad campaign check from real numbers: PAUSE/FIX/SCALE
+description: 'Ad campaign check from real numbers: PAUSE/FIX/SCALE'
 ---
 
 # Hesba campaign review
