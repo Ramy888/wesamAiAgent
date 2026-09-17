@@ -253,3 +253,19 @@ Deno.test("render: rejects malformed data instead of drawing garbage", () => {
   }
   assert(threw);
 });
+
+Deno.test("chart rate limit is per client address", async () => {
+  const limited = createHandler({ tokens: ["t"], chartSecret: SECRET, rateLimitPerMinute: 1 });
+  const token = signChart("cost", { cur: "EGP", items: [] }, SECRET);
+  const hit = async (ip: string) => {
+    const r = await limited(new Request(`http://x/chart/cost/${token}.svg`), {
+      remoteAddr: { hostname: ip },
+    });
+    await r.body?.cancel();
+    return r.status;
+  };
+  assertEquals(await hit("1.1.1.1"), 200);
+  assertEquals(await hit("1.1.1.1"), 200); // chart budget is 2× the MCP limit
+  assertEquals(await hit("1.1.1.1"), 429);
+  assertEquals(await hit("2.2.2.2"), 200, "another client is unaffected");
+});

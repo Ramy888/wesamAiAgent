@@ -68,7 +68,14 @@ function rateLimiter(now: () => number, limit: number) {
   };
 }
 
-export function createHandler(opts: HandlerOptions): (req: Request) => Promise<Response> {
+/** Connection info as passed by Deno.serve (optional so tests can call the handler directly). */
+export interface ConnInfo {
+  remoteAddr?: { hostname?: string };
+}
+
+export function createHandler(
+  opts: HandlerOptions,
+): (req: Request, info?: ConnInfo) => Promise<Response> {
   const tokens = new Set(opts.tokens.filter(Boolean));
   const log = opts.log ?? (() => {});
   const now = opts.now ?? Date.now;
@@ -164,11 +171,12 @@ export function createHandler(opts: HandlerOptions): (req: Request) => Promise<R
     return dispatch(m);
   }
 
-  return async (req: Request): Promise<Response> => {
+  return async (req: Request, info?: ConnInfo): Promise<Response> => {
     const url = new URL(req.url);
 
     if (url.pathname.startsWith("/chart/")) {
-      const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "anon";
+      const ip = info?.remoteAddr?.hostname ||
+        req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "anon";
       if (!allowChart(`chart:${ip}`)) return new Response("slow down", { status: 429 });
       const res = handleChartRequest(req, url, chartSecret)!;
       log({ at: new Date(now()).toISOString(), method: "chart", status: res.status, ms: 0 });
