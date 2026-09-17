@@ -409,3 +409,5 @@ The same server also works in Claude Desktop and Claude Code as a fallback demo.
 | ~~SDK transport on Deno vs hand-written JSON-RPC~~ | done: hand-written | — |
 | Bug #8 decision (ops/gateway per shipped order) | user | Canonical expected values |
 | Does Wesam's proxy forward `structuredContent`, or only `content` text? | spike | How much goes into the text |
+| **Domain validation of answers** (a COD practitioner reviews real Bya3 outputs, or we build a review rubric/skill) | user, **outstanding** | Trust in the advice, impact slides |
+| **Rich media in answers** (charts, analysed images, source links); see chat 2026-09-17 | design | Demo quality |
