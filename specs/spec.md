@@ -6,7 +6,7 @@ Status: **draft v0.1**, 2026-09-16. Spec only. No engine code until G1 is answer
 
 | Gate | Answer (2026-09-16) | Effect on this spec |
 |---|---|---|
-| G1: code before Oct 1? | **Unknown.** Check the rules or ask the organizers. | **2026-09-16: at the user's request, the engine and MCP server are being built before G1 is confirmed.** If the rules forbid pre-built code, this is a disqualification risk. |
+| G1: code before Oct 1? | **Asked the organizers on 2026-09-17; waiting for a reply.** | **2026-09-16: at the user's request, the engine and MCP server are being built before G1 is confirmed.** If the rules forbid pre-built code, this is a disqualification risk. |
 | G2: reuse Bine code? | **Yes, port it.** | The engine is a port of `reference/dart/pricing_engine.dart`, checked against `reference/golden.json`. |
 | G3: how Wesam calls tools | **MCP servers only.** Agent Builder → Tools → *Add MCP server*: name + **Streamable HTTP (https) URL**, include/exclude tool globs. "Wesam proxies it." "Every workspace signs in on its own, so no keys or passwords are stored here." "Publish, send and spend actions are always excluded." | **Replaces the REST API in CLAUDE.md §4 with an MCP server** (§2). |
 | G4: can judges run it without an account? | **Partly answered.** Publishing needs a partner registration plus admin review, and an approved agent can then be hired by any Wesam workspace. There's no public chat link, so judges need a Wesam workspace. | The README must offer a Wesam-free path (§6). |
