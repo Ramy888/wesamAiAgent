@@ -207,6 +207,7 @@ fixture U.
 | X-scope | "List Unlocker Zones" setup check | ⚠️ Refused by Wesam's scope harness ("not the right tool for setup checks"). Expected; not a bug |
 | X-comp-1 | Competitor check with SERP zone on Raw HTML | ❌ Agent reported "CAPTCHA" (13 KB block page) → switched the zone to Full JSON |
 | X-comp-2 | "مكواة بخار محمولة" in Egypt, 1 search + 4 pages | ✅ Found Amazon 224.50, Jumia 243 / 275 / 319 (plus 1 off-category, 1 404); asked for confirmation; `compare_prices` → CANNOT_COMPETE_ON_PRICE, median 259, 75% cheaper, matched profits −51.80 / −38.57 / −15.69 / +15.77 (all hand-checked); saved as PRICE-2 |
+| X-chart | New product (backpack, Egypt, 450 EGP, VAT 14%) after the chart deploy | ✅ Verdict ON_TARGET; all numbers hand-checked (breakeven 325.21, safe 393.92, net 107.32 / 23.8%, max CPA 63.37 / 39.24, BE ROAS 2.54). The **cost chart rendered inline in the PRICE-3 card**; the link (356 chars) was copied intact and returned 200 |
 
 ## Exit criteria for the build
 
