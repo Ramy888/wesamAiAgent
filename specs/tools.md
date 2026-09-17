@@ -31,13 +31,11 @@ Research for this page used vendor docs and READMEs.
   - Browse Available Scrapers, Filter Dataset
   - List Unlocker Zones, Get Available Countries / Cities
 
-  Bright Data zones:
-  - **`hesba_serp`** (SERP API, pay-as-you-go $1.50/CPM, 5,000 free credits): created 2026-09-17.
-  - **`hesba_unlocker`** (Web Unlocker API): configured, but Bright Data requires a payment
-    method before it can be created. **The user must add the payment method** (the agent
-    doesn't enter payment details). It is used by the `hesba-competitor-check` skill. It is shared
-  with every agent in the workspace.
-
+  Bright Data zones (both active, created 2026-09-17; the user added a payment method):
+  - **`hesba_serp`** (SERP API, **Full JSON** format, $1.50/CPM). Raw HTML returned a ~13 KB
+    Google block page that the agent read as a "CAPTCHA"; Full JSON fixed it.
+  - **`hesba_unlocker`** (Web Unlocker API, $1.50/CPM).
+  - The spend limit is still "No limit"; consider setting a monthly cap.
 ## Tier 2: optional data sources (read-only, the seller signs in)
 
 | Priority | Server | Endpoint | Auth | Tools to allow | Status and risks |

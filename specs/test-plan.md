@@ -199,6 +199,15 @@ fixture U.
 5. Kill the server → the agent says the calculator is down and gives no numbers.
 6. Judge path (spec §6) timed on a clean machine: under 5 minutes.
 
+## X results (2026-09-17, Bya3 Preview chat in Wesam)
+
+| # | Test | Result |
+|---|---|---|
+| X-price | Fixture U in Egyptian Arabic | ✅ All numbers match C1–C8 (2.19 / 0.7% / 296.94 / 345.23 / 15.59 / 7.49 / 105.1%); saved as the deliverable PRICE-1 |
+| X-scope | "List Unlocker Zones" setup check | ⚠️ Refused by Wesam's scope harness ("not the right tool for setup checks"). Expected; not a bug |
+| X-comp-1 | Competitor check with SERP zone on Raw HTML | ❌ Agent reported "CAPTCHA" (13 KB block page) → switched the zone to Full JSON |
+| X-comp-2 | "مكواة بخار محمولة" in Egypt, 1 search + 4 pages | ✅ Found Amazon 224.50, Jumia 243 / 275 / 319 (plus 1 off-category, 1 404); asked for confirmation; `compare_prices` → CANNOT_COMPETE_ON_PRICE, median 259, 75% cheaper, matched profits −51.80 / −38.57 / −15.69 / +15.77 (all hand-checked); saved as PRICE-2 |
+
 ## Exit criteria for the build
 
 - P, C, E, V and M are all green in `deno task test`.
