@@ -9,7 +9,7 @@ dependency-free MCP server in this repo.
 Requires [Deno](https://deno.com) 2.x.
 
 ```sh
-deno task test      # test suite: Bine golden parity, the pricing model, validation, MCP protocol
+deno task test      # test suite (charts included): Bine golden parity, the pricing model, validation, MCP protocol
 deno task serve     # http://localhost:8000/mcp/dev  (token "dev" unless .env sets HESBA_TOKENS)
 ```
 
@@ -55,7 +55,8 @@ or run `deno run -A tests/oracle/sdk_smoke.ts` while it is running.
 
 ## Production
 
-- Server: https://hesba-calculator.hesba.deno.net (Deno Deploy, org `hesba`). `/health` is public.
+- Server: https://hesba-calculator.hesba.deno.net (Deno Deploy, org `hesba`). `/health` and the
+  signed chart images at `/chart/...` are public.
 - The MCP endpoint is `/mcp/<token>`. The token is the `HESBA_TOKENS` secret on Deno Deploy; it
   is never in this repo.
 - Redeploy with `deno task deploy`, which runs the tests and uploads only `deno.json`,
@@ -69,4 +70,6 @@ Put these in a local `.env` (copy `.env.example`). `.env` is git-ignored; never 
 |---|---|---|
 | `HESBA_TOKENS` | `dev` | Comma-separated secrets accepted in the `/mcp/<token>` path |
 | `PORT` | `8000` | Listen port |
+| `HESBA_CHART_SECRET` | derived from the first token | Signs chart links (`/chart/<kind>/<payload>.<sig>.svg`). Keep it stable |
+| `PUBLIC_BASE_URL` | request origin | Origin used in chart links |
 | `DENO_DEPLOY_TOKEN`, `DENO_DEPLOY_ORG` | — | Used only by `deno task deploy` |

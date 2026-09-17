@@ -4,7 +4,7 @@
   },
   "tasks": {
     "test": "deno test",
-    "serve": "deno run --env-file=.env --allow-net=0.0.0.0 --allow-env=HESBA_TOKENS,PORT server/main.ts",
+    "serve": "deno run --env-file=.env --allow-net=0.0.0.0 --allow-env=HESBA_TOKENS,PORT,HESBA_CHART_SECRET,PUBLIC_BASE_URL server/main.ts",
     "check": "deno check server/main.ts && deno lint && deno fmt --check",
     "deploy": "bash scripts/deploy.sh"
   },
@@ -37,3 +37,5 @@
     "app": "hesba-calculator"
   }
 }
+
+

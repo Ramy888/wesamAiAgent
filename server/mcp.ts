@@ -2,10 +2,13 @@
  * Stateless MCP Streamable HTTP endpoint (JSON responses only), written by hand so it has no
  * dependencies (specs/spec.md §2.1, option b).
  *
- * Routes:  POST /mcp/<token>   JSON-RPC (single message or batch)
- *          GET  /health        liveness
+ * Routes:  POST /mcp/<token>             JSON-RPC (single message or batch)
+ *          GET  /chart/<kind>/<sig>.svg  signed chart images (public, rate-limited per IP)
+ *          GET  /health                  liveness
  */
-import { ENGINE_VERSION, runTool, TOOL_BY_NAME, TOOLS } from "./tools.ts";
+import { createHmac } from "node:crypto";
+import { handleChartRequest } from "./charts.ts";
+import { type ChartContext, ENGINE_VERSION, runTool, TOOL_BY_NAME, TOOLS } from "./tools.ts";
 
 export const SUPPORTED_PROTOCOL_VERSIONS = ["2025-11-25", "2025-06-18", "2025-03-26"];
 const MAX_BODY_BYTES = 32_000;
@@ -28,6 +31,10 @@ export interface HandlerOptions {
   log?: (event: LogEvent) => void;
   now?: () => number;
   rateLimitPerMinute?: number;
+  /** Chart signing key; defaults to a key derived from the first MCP token. */
+  chartSecret?: string;
+  /** Public origin for chart links (Wesam proxies MCP calls, so the request host is unreliable). */
+  publicBaseUrl?: string;
 }
 
 type Json = Record<string, unknown>;
@@ -66,6 +73,13 @@ export function createHandler(opts: HandlerOptions): (req: Request) => Promise<R
   const log = opts.log ?? (() => {});
   const now = opts.now ?? Date.now;
   const allow = rateLimiter(now, opts.rateLimitPerMinute ?? DEFAULT_RATE_LIMIT_PER_MINUTE);
+  const allowChart = rateLimiter(
+    now,
+    (opts.rateLimitPerMinute ?? DEFAULT_RATE_LIMIT_PER_MINUTE) * 2,
+  );
+  const chartSecret = opts.chartSecret ||
+    createHmac("sha256", opts.tokens[0] ?? "dev").update("hesba-chart-key").digest("hex");
+  let chartCtx: ChartContext | undefined;
 
   function dispatch(msg: Json): unknown {
     const id = (msg.id ?? null) as RpcId;
@@ -119,7 +133,7 @@ export function createHandler(opts: HandlerOptions): (req: Request) => Promise<R
           return rpcError(id, -32602, `Unknown tool: ${name.slice(0, 64)}`);
         }
         try {
-          const result = runTool(tool, params.arguments);
+          const result = runTool(tool, params.arguments, chartCtx);
           done(name, result.isError ? "error" : "ok");
           return rpcResult(id, result);
         } catch {
@@ -153,6 +167,14 @@ export function createHandler(opts: HandlerOptions): (req: Request) => Promise<R
   return async (req: Request): Promise<Response> => {
     const url = new URL(req.url);
 
+    if (url.pathname.startsWith("/chart/")) {
+      const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "anon";
+      if (!allowChart(`chart:${ip}`)) return new Response("slow down", { status: 429 });
+      const res = handleChartRequest(req, url, chartSecret)!;
+      log({ at: new Date(now()).toISOString(), method: "chart", status: res.status, ms: 0 });
+      return res;
+    }
+
     if (url.pathname === "/health" && req.method === "GET") {
       return json({ ok: true, name: "hesba-calculator", version: ENGINE_VERSION });
     }
@@ -162,6 +184,10 @@ export function createHandler(opts: HandlerOptions): (req: Request) => Promise<R
       return json({ error: "not found" }, 404);
     }
     const token = decodeURIComponent(match[1]);
+    chartCtx = {
+      baseUrl: (opts.publicBaseUrl || url.origin).replace(/\/$/, ""),
+      secret: chartSecret,
+    };
 
     if (req.method !== "POST") {
       return json({ error: "method not allowed" }, 405, { allow: "POST" });

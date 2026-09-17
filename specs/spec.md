@@ -169,6 +169,18 @@ delivered at CR/DR = 0".
 }
 ```
 
+- **Charts** (added 2026-09-17): on success, `structuredContent.charts = [{key, title, url}]`,
+  and the same links are appended to the text as Markdown images (caption in `lang`).
+  - `url` = `<PUBLIC_BASE_URL>/chart/<kind>/<payload>.<sig>.svg`. The payload holds the
+    rounded result numbers; the signature is an HMAC over `kind.payload`
+    (`HESBA_CHART_SECRET`, or a key derived from the first MCP token).
+  - Kinds: `cost` (price_product), `cpa` (cpa_table), `bundles` (price_bundles), `market`
+    (compare_prices), `funnel` (check_campaign).
+  - `GET /chart/...` is public and IP-rate-limited. It returns SVG with
+    `cache-control: immutable` and a strict CSP. Status codes: tampered → 400, unknown kind
+    → 404, path > 4096 → 414, non-GET → 405.
+  - Wesam renders Markdown images and SVGs inline (checked 2026-09-17). Charts are light
+    theme only, with bilingual labels.
 - **Validation failure:**
   - `isError: true`, and the text lists every bad field with its reason (in `lang`).
   - `structuredContent.errors[] = {field, code, message}`.

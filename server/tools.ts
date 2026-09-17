@@ -28,6 +28,7 @@ import {
   TIERS_SCHEMA,
   validate,
 } from "./schema.ts";
+import { type ChartKind, signChart } from "./charts.ts";
 import {
   bundlesText,
   campaignText,
@@ -39,6 +40,21 @@ import {
 } from "./text.ts";
 
 export const ENGINE_VERSION = "0.1.0";
+
+export interface ChartSpec {
+  kind: ChartKind;
+  title: string;
+  data: Record<string, unknown>;
+}
+
+/** Where chart links point and how they are signed; charts are omitted without it. */
+export interface ChartContext {
+  baseUrl: string;
+  secret: string;
+}
+
+// deno-lint-ignore no-explicit-any
+type Rounded = any;
 
 export interface ToolResult {
   content: { type: "text"; text: string }[];
@@ -67,6 +83,8 @@ export interface ToolDef {
     openWorldHint: false;
   };
   compute: (v: Record<string, unknown>) => Computed;
+  /** Charts built from the rounded result, so they always match the numbers in the answer. */
+  charts: (r: Rounded, v: Record<string, unknown>) => ChartSpec[];
 }
 
 const PRICING_REQUIRED = [
@@ -133,6 +151,19 @@ export const TOOLS: ToolDef[] = [
         text: (f) => priceProductText(f, r, v.leadCpa as number),
       };
     },
+    charts: (r, v) => [{
+      kind: "cost",
+      title: "فين بتروح فلوس كل أوردر؟ · Where each order's money goes",
+      data: {
+        cur: v.currency,
+        price: v.sellingPrice ?? r.suggestedPrice,
+        net: r.atSellingPrice?.netProfit ?? r.atSuggested?.netProfit ?? null,
+        items: r.costBreakdown.map((c: { key: string; amount: number | null }) => [
+          c.key,
+          c.amount,
+        ]),
+      },
+    }],
   },
   {
     name: "cpa_table",
@@ -148,6 +179,21 @@ export const TOOLS: ToolDef[] = [
       const r = cpaTable(toProduct(v), (v.margins as number[] | undefined) ?? DEFAULT_MARGINS);
       return { result: r, warnings: r.warnings, text: (f) => cpaTableText(f, r) };
     },
+    charts: (r, v) => [{
+      kind: "cpa",
+      title: "أقصى تكلفة ليد تقدر تدفعها · Max cost per lead by margin",
+      data: {
+        cur: v.currency,
+        price: r.price,
+        current: r.headline.currentLeadCpa,
+        target: v.targetMarginPct,
+        rows: r.rows.map((x: { marginPct: number; maxCpaPerLead: number; viable: boolean }) => [
+          x.marginPct,
+          x.maxCpaPerLead,
+          x.viable,
+        ]),
+      },
+    }],
   },
   {
     name: "price_bundles",
@@ -169,6 +215,27 @@ export const TOOLS: ToolDef[] = [
       );
       return { result: r, warnings: r.warnings, text: (f) => bundlesText(f, r) };
     },
+    charts: (r, v) => [{
+      kind: "bundles",
+      title: "ربح الأوردر في كل عرض · Profit per order by offer",
+      data: {
+        cur: v.currency,
+        rows: [
+          ...r.tiers.map((t: { pieces: number; price: number | null; profit: number | null }) => [
+            "tier",
+            t.pieces,
+            t.price,
+            t.profit,
+          ]),
+          ...r.offers.map((o: { pieces: number; totalPrice: number; profit: number }) => [
+            "offer",
+            o.pieces,
+            o.totalPrice,
+            o.profit,
+          ]),
+        ],
+      },
+    }],
   },
   {
     name: "compare_prices",
@@ -189,6 +256,21 @@ export const TOOLS: ToolDef[] = [
       const r = comparePrices(toProduct(v), v.competitors as Competitor[]);
       return { result: r, warnings: r.warnings, text: (f) => compareText(f, r) };
     },
+    charts: (r, v) => [{
+      kind: "market",
+      title: "سعرك وسط المنافسين · Your price vs competitors",
+      data: {
+        cur: v.currency,
+        // Capped and trimmed so the signed link stays short.
+        comps: r.competitors.slice(0, 20).map((c: { label: string; pricePerPiece: number }) => [
+          c.label.slice(0, 30),
+          c.pricePerPiece,
+        ]),
+        you: r.seller?.price ?? null,
+        breakeven: r.breakevenPrice,
+        safe: r.suggestedPrice,
+      },
+    }],
   },
   {
     name: "check_campaign",
@@ -207,6 +289,21 @@ export const TOOLS: ToolDef[] = [
     compute: (v) => {
       const r = checkCampaign(toProduct(v), v.campaign as Campaign);
       return { result: r, warnings: r.warnings, text: (f) => campaignText(f, r) };
+    },
+    charts: (r, v) => {
+      const c = v.campaign as Campaign;
+      return [{
+        kind: "funnel",
+        title: "من الليد للأوردر المدفوع · From lead to paid order",
+        data: {
+          cur: v.currency,
+          leads: c.leads,
+          confirmed: c.confirmed,
+          delivered: c.delivered,
+          rto: r.rtoCount,
+          net: r.netProfit,
+        },
+      }];
     },
   },
 ];
@@ -227,7 +324,7 @@ function pickLang(args: Record<string, unknown>): Lang {
   return args.lang === "en" || args.lang === "fr" ? args.lang : "ar";
 }
 
-export function runTool(tool: ToolDef, rawArgs: unknown): ToolResult {
+export function runTool(tool: ToolDef, rawArgs: unknown, charts?: ChartContext): ToolResult {
   const args = (rawArgs ?? {}) as Record<string, unknown>;
   const errors: FieldError[] = validate(tool.inputSchema, args);
   if (errors.length) {
@@ -240,17 +337,29 @@ export function runTool(tool: ToolDef, rawArgs: unknown): ToolResult {
   const { values, assumptions } = applyDefaults(tool.inputSchema, args, tool.ignored);
   const { result, warnings, text } = tool.compute(values);
   const fmt = new Fmt(values.lang as Lang, values.currency as string);
+  const structured = round4({
+    tool: tool.name,
+    engineVersion: ENGINE_VERSION,
+    inputsUsed: values,
+    assumptions,
+    warnings,
+    result,
+  }) as Record<string, unknown>;
   const lines = [...text(fmt), ...fmt.tail(warnings, assumptions as Assumption[])];
+  if (charts) {
+    const refs = tool.charts(structured.result, values).map((c) => ({
+      key: c.kind,
+      title: c.title,
+      url: `${charts.baseUrl}/chart/${c.kind}/${signChart(c.kind, c.data, charts.secret)}.svg`,
+    }));
+    structured.charts = refs;
+    // Titles are "Arabic · English"; the image caption follows the answer language.
+    const caption = (t: string) => t.split(" · ")[values.lang === "ar" ? 0 : 1] ?? t;
+    lines.push("", ...refs.map((c) => `![${caption(c.title)}](${c.url})`));
+  }
   return {
     content: [{ type: "text", text: lines.join("\n") }],
-    structuredContent: round4({
-      tool: tool.name,
-      engineVersion: ENGINE_VERSION,
-      inputsUsed: values,
-      assumptions,
-      warnings,
-      result,
-    }) as Record<string, unknown>,
+    structuredContent: structured,
     isError: false,
   };
 }

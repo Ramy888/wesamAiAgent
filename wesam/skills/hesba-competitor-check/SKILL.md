@@ -59,7 +59,8 @@ Then add:
 - 2–3 competitor rows from `ifMatched`, for example "If you match A at 279, you lose 12.83
   per order".
 - The `FEW_COMPETITORS` warning, if present.
-- The sources: "prices seen today on …".
+- The sources as clickable links: "prices seen today on [Store](link) …".
+- The market chart returned by `compare_prices` (show the `![…](…)` line as is).
 
 ## 6. If Bright Data fails
 If you get a zone error, an auth error or no results, say so plainly: "I couldn't search

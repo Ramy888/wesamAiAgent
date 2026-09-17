@@ -151,6 +151,11 @@ header.scrolled{border-bottom-color:var(--line)}
 .trust h3{font-size:18px;margin-bottom:6px}
 .trust p{margin:0;color:var(--ink-2);font-size:15px}
 
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
+.shots figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+.shots img{width:100%;height:auto;display:block}
+.shots figcaption{margin-top:10px;font:600 15px var(--font-head);color:var(--ink-2);text-align:center}
+@media (max-width:960px){.shots{grid-template-columns:1fr}}
 /* faq */
 .faq{max-width:780px;margin:36px auto 0}
 details{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:4px 20px;margin-bottom:10px}
@@ -385,12 +390,24 @@ footer{padding:40px 0 48px;color:var(--muted);font-size:14px}
 <!-- TRUST -->
 <section class="dark">
   <div class="wrap">
-    <span class="eyebrow"><span class="ar">ليه تثق في الأرقام</span><span class="en">Why trust the numbers</span></span>
-    <h2><span class="ar">الذكاء الاصطناعي بيتكلم، والحسابات بتتعمل في الكود</span><span class="en">The AI does the talking. The code does the math.</span></h2>
+    <span class="eyebrow"><span class="ar">ليه تثق في الأرقام</span><span class="en">Why the numbers hold up</span></span>
+    <h2><span class="ar">مش تخمين. حسبة كاملة، في كل مرة.</span><span class="en">Not a guess. The full picture, every time.</span></h2>
     <div class="trust">
-      <div><h3><span class="ar">مفيش تخمين</span><span class="en">No guesswork</span></h3><p style="color:#C7D3CC"><span class="ar">بيّاع ممنوع يحسب أي رقم بنفسه. لو الحاسبة مش متاحة بيقولك كده، ومش بيألّف رقم.</span><span class="en">Bya3 is not allowed to calculate numbers itself. If the calculator is down, it tells you instead of inventing a figure.</span></p></div>
-      <div><h3><span class="ar">افتراضات مكتوبة</span><span class="en">Assumptions stated</span></h3><p style="color:#C7D3CC"><span class="ar">أي قيمة افتراضية، زي الرسوم = صفر أو الهامش المستهدف 20%، بتظهرلك في الرد.</span><span class="en">Every default, such as fees = 0 or a 20% target margin, is shown in the reply.</span></p></div>
-      <div><h3><span class="ar">مصمّم للـ COD</span><span class="en">Built for COD</span></h3><p style="color:#C7D3CC"><span class="ar">بيحسب نسب التأكيد والتسليم، والمرتجعات، ومصاريف الكول سنتر والـ SMS، والضريبة، وعمولات المنصة والمسوّق.</span><span class="en">It accounts for confirmation and delivery rates, returns, call-center and SMS costs, VAT, and platform and marketer fees.</span></p></div>
+      <div><h3><span class="ar">كل التكاليف المخفية محسوبة</span><span class="en">Every hidden cost counted</span></h3><p style="color:#C7D3CC"><span class="ar">اللي بيرفض الأوردر، واللي بيرجّعه، والشحن، والعمولات، والإعلان. كل ده داخل في الحسبة قبل ما تقرر.</span><span class="en">Orders that get refused or returned, shipping, commissions and ads are all counted before you decide.</span></p></div>
+      <div><h3><span class="ar">نفس الأرقام، كل مرة</span><span class="en">Same numbers, every time</span></h3><p style="color:#C7D3CC"><span class="ar">محرك حسابات مختبر، مش ذكاء اصطناعي بيخمّن. اسأل مرتين، تاخد نفس الإجابة.</span><span class="en">A tested calculation engine, not an AI guessing. Ask twice and you get the same answer.</span></p></div>
+      <div><h3><span class="ar">تشوفها بعينك</span><span class="en">See it at a glance</span></h3><p style="color:#C7D3CC"><span class="ar">كل إجابة معاها رسم بياني واضح بالعربي والإنجليزي، ومصادر أسعار المنافسين بروابط تقدر تفتحها.</span><span class="en">Every answer comes with a clear chart in Arabic and English, plus clickable sources for competitor prices.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEE IT -->
+<section id="see">
+  <div class="wrap">
+    <span class="eyebrow"><span class="ar">شكل الإجابة</span><span class="en">What you get</span></span>
+    <h2><span class="ar">قرار واضح، ورسم يوضّحه</span><span class="en">A clear decision, and a chart that shows why</span></h2>
+    <div class="shots">
+      <figure><img src="/media/chart-cost.svg" alt="Where each order's money goes chart" loading="lazy" width="800" height="700"><figcaption><span class="ar">فين بتروح فلوس كل أوردر</span><span class="en">Where each order's money goes</span></figcaption></figure>
+      <figure><img src="/media/chart-market.svg" alt="Your price vs competitors chart" loading="lazy" width="800" height="560"><figcaption><span class="ar">سعرك وسط المنافسين</span><span class="en">Your price vs competitors</span></figcaption></figure>
     </div>
   </div>
 </section>
