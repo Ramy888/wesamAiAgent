@@ -35,7 +35,9 @@ Research for this page used vendor docs and READMEs.
   - **`hesba_serp`** (SERP API, **Full JSON** format, $1.50/CPM). Raw HTML returned a ~13 KB
     Google block page that the agent read as a "CAPTCHA"; Full JSON fixed it.
   - **`hesba_unlocker`** (Web Unlocker API, $1.50/CPM).
-  - The spend limit is still "No limit"; consider setting a monthly cap.
+  - **Monthly cap (2026-09-17):** 3,333 requests per zone (= $5 at $1.50/CPM; Bright Data
+    requires a dollar cap above $10, so the cap is set in requests). On breach: suspend the zone
+    and send an alert.
 
   It is used by the `hesba-competitor-check` skill. It is shared with every agent in the
   workspace.
