@@ -31,8 +31,11 @@ Research for this page used vendor docs and READMEs.
   - Browse Available Scrapers, Filter Dataset
   - List Unlocker Zones, Get Available Countries / Cities
 
-  It needs an active **Web Unlocker** zone and an active **SERP API** zone in the Bright Data
-  account (not yet confirmed). It is used by the `hesba-competitor-check` skill. It is shared
+  Bright Data zones:
+  - **`hesba_serp`** (SERP API, pay-as-you-go $1.50/CPM, 5,000 free credits): created 2026-09-17.
+  - **`hesba_unlocker`** (Web Unlocker API): configured, but Bright Data requires a payment
+    method before it can be created. **The user must add the payment method** (the agent
+    doesn't enter payment details). It is used by the `hesba-competitor-check` skill. It is shared
   with every agent in the workspace.
 
 ## Tier 2: optional data sources (read-only, the seller signs in)
