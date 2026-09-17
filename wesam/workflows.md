@@ -32,6 +32,18 @@ All numbers come from the Hesba calculator tools. Steps say which tool to call.
 >   waste tokens.
 > - Create #2 only after the Hesba calculator MCP is connected. Otherwise every scheduled
 >   run would just report "calculator unavailable".
+>
+> **Created 2026-09-17** ("Weekly campaign check · مراجعة الحملات الأسبوعية", enabled).
+> - Cron `0 10 * * 0`, Africa/Cairo, endless; the goal starts as active.
+> - 4 input fields:
+>   - products (text)
+>   - country/currency (select, 14 options)
+>   - unit costs (text)
+>   - target margin % (number, default 20, min 0)
+> - 5 steps; deliverable types Document / – / Ad Report / Advice Brief / –.
+> - The rules forbid paid lookups (Bright Data) in this workflow.
+> - Built by hand: Wesam's "Build it with AI" failed with "Couldn't build: Expecting value:
+>   line 1 column 1".
 
 ---
 
