@@ -428,6 +428,6 @@ The same server also works in Claude Desktop and Claude Code as a fallback demo.
 | **Domain validation of answers** (a COD practitioner reviews real Bya3 outputs, or we build a review rubric/skill) | user, **outstanding** | Trust in the advice, impact slides |
 | **Rich media in answers** (charts, analysed images, source links); see chat 2026-09-17 | design | Demo quality |
 | `market_demand`: Google Ads account? Meta Ad Library in or out? (see `specs/market-demand.md` §10) | user | Whether volumes are absolute or relative |
-| **Tenant identity**: does Wesam's proxy send anything identifying the workspace? (log header *names* only, once, then revert) | spike | Any per-seller state, e.g. the product watchlist (`specs/product-review.md` §4) |
-| Is Deno KV available on the current Deploy setup? | spike | Same |
+| ~~Tenant identity~~ | **Answered 2026-09-23: no.** A real Wesam `tools/call` carries no workspace, session or auth header → per-seller state is not safely buildable; product watch dropped (`specs/product-review.md` §4) | — |
+| ~~Deno KV on the current Deploy?~~ | **Yes** (2026-09-23, docs) | — |
 | Market defaults (delivery/return bands from courier price pages; CR/DR have **no public source**) | research + seller session | `price_scenarios` for beginners (`specs/beginner-pricing.md` §3) |

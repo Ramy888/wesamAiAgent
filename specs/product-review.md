@@ -1,7 +1,8 @@
 # Spec: review a product from a link, and watch it over time
 
-Status: **spec, 2026-09-23.** Part A (review from a link) needs no new code and can ship
-immediately. Part B (watching a product) needs server code and is blocked on two checks.
+Status: **spec, 2026-09-23.** Part A (review from a link) needs no new code and is already in
+the live instructions. Part B (watching a product) is **dropped**: Wesam sends nothing that
+identifies the calling workspace, so per-seller state can't be kept safely (§4).
 
 ## 1. What was asked
 
@@ -18,7 +19,7 @@ immediately. Part B (watching a product) needs server code and is blocked on two
 | Find the same product elsewhere | The Bright Data SERP zone | ✅ have it |
 | Price and position maths | `price_product`, `compare_prices` | ✅ **no new tool** |
 | Competitor ads, traffic, sales | `market_demand` | ❌ **spec only** (`specs/market-demand.md`), and blocked on two decisions |
-| Recurring per-seller watch | A watchlist store, two small tools, one scheduled workflow | ❌ **new server code** |
+| Recurring per-seller watch | A watchlist store, two small tools, one scheduled workflow | ❌ **dropped** — no tenant identity (§4) |
 | Real search volumes, ad hooks | A new integration (Google Ads, or an ad-library vendor) | ❌ see `market-demand.md` §4 |
 
 **Answer: reviewing a product from a link needs no new tool and no new integration.** It's
@@ -64,7 +65,7 @@ The higher-value flow, and the one a seller asks before spending anything.
 - Everything from `market-demand.md` applies to demand signals: confidence labels, source
   links, and never into the profit maths.
 
-## 4. Part B — watching a product (blocked)
+## 4. Part B — watching a product (dropped)
 
 **What Wesam allows:** a workflow is defined in the builder and always runs on a schedule. An
 end-user cannot create their own schedule from chat. So "watch this product" can't be a real
@@ -73,7 +74,24 @@ per-seller schedule; it has to be **one scheduled workflow that reads a watchlis
 That needs somewhere to keep the list, which the server doesn't have: it's stateless by
 design. Deno KV is the likely home.
 
-**Two checks before any of this is built:**
+**Both checks are now done (2026-09-23), and one of them failed:**
+
+- ✅ **Deno KV is available** on the current Deploy platform (the docs list it as supported).
+- ❌ **Wesam sends nothing that identifies the workspace.** Measured, not assumed: a temporary
+  probe logged header *names only* on production, and a real `tools/call` from Bya3 arrived
+  with just `accept, accept-encoding, connection, content-length, content-type, host,
+  mcp-protocol-version, traceparent, tracestate, user-agent, via`. No authorization, no
+  workspace or session id; `traceparent` changes per request. The probe was reverted and the
+  clean build redeployed.
+
+**Consequence: per-seller watching is not safely buildable today.** Every workspace that hires
+Bya3 would share one anonymous stream of calls, so a watchlist would have no owner. Options if
+this is ever revisited: ask the seller for an identifier and accept that they can see each
+other's keys (bad), issue one token per workspace (defeats a single marketplace listing), or
+wait for Wesam to forward a workspace id. **Decision: drop Part B; keep the stateless
+fallback** — Bya3 offers to re-review any product whenever the seller asks.
+
+<details><summary>Original plan, kept for reference</summary>
 
 1. **Tenant identity — the blocker.** Once Bya3 is on the marketplace, every workspace that
    hires it shares one MCP server and one token. A watchlist with no owner would leak one
@@ -92,9 +110,11 @@ design. Deno KV is the likely home.
 - Quiet by design: at most one message per seller per week, and it says what changed, not
   everything it knows.
 
-**If either check fails**, the fallback costs nothing and keeps most of the value: the seller
-asks Bya3 to re-review whenever they want, and Bya3 says so at the end of a review. Stateless,
-no leak risk, no new code.
+</details>
+
+The fallback costs nothing and keeps most of the value: the seller asks Bya3 to re-review
+whenever they want, and Bya3 says so at the end of a review. Stateless, no leak risk, no new
+code — and it is already in the instructions.
 
 ## 5. The first-message menu
 
