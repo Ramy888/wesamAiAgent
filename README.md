@@ -1,8 +1,9 @@
 # Hesba — Bya3 pricing agent (Wesam.ai)
 
-Bya3 is an AI pricing and ad-profit analyst for cash-on-delivery sellers in Egypt, the Gulf and
-MENA. It runs on Wesam.ai. All of its math comes from the **Hesba calculator**, a small,
-dependency-free MCP server in this repo.
+Bya3 is an AI pricing and profit advisor for online sellers in Egypt, the Gulf and MENA. It
+tells a seller what to charge, and whether their ads are actually making money. It runs on
+Wesam.ai, and all of its math comes from the **Hesba calculator**, a small, dependency-free
+MCP server in this repo.
 
 ## For judges
 

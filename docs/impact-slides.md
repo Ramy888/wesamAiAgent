@@ -6,7 +6,7 @@ stay blank until measured; no invented numbers.**
 
 ## 1. Title
 - **Hesba (حِسبة)**: know your real profit before the next ad.
-- Bya3, an AI pricing and ad-profit analyst for cash-on-delivery sellers on Wesam.ai.
+- Bya3, an AI pricing and profit advisor for online sellers, on Wesam.ai.
 - Team / name, the Agents at Work track, date.
 
 ## 2. The SME we built for

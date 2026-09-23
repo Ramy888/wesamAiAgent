@@ -7,7 +7,7 @@
 - بيراجع حملة إعلانية من أرقامها الحقيقية وبيدي قرار: كمّل / صلّح / وقّف، مع خطوة واحدة واضحة.
 اللي بيميّزه إنه متصمم للـ COD: بيحسب نسب التأكيد والتسليم، والمرتجعات، والكول سنتر، والضريبة، وعمولات المنصة والمسوّق. وكل الأرقام بتطلع من محرك حسابات ثابت، والذكاء الاصطناعي عمره ما بيخمّن رقم.
 
-English: Bya3 by Hesba is a pricing and ad-profit analyst for cash-on-delivery e-commerce sellers in Egypt, the Gulf and MENA. It gives:
+English: Bya3 by Hesba is a pricing and profit advisor for online sellers in Egypt, the Gulf and MENA. It tells a seller what to charge, and whether their ads are making money. It gives:
 - the safe price and the breakeven price
 - profit at the seller's own price
 - the maximum CPA per margin

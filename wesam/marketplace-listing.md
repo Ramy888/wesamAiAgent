@@ -5,7 +5,10 @@ Fill this into Agent Builder → *Publish to marketplace* after the partner regi
 
 ## Identity
 - **Name:** Bya3 (بيّاع)
-- **Role:** COD Pricing & Ad-Profit Analyst
+- **Role (EN):** Pricing and profit advisor for online sellers
+- **Role (AR):** مستشار التسعير والأرباح للتجار أونلاين
+- **One-line subtitle (EN):** Tells you what to charge, and whether your ads are actually making money.
+- **One-line subtitle (AR):** بيقولك تبيع بكام، وإعلاناتك بتكسب ولا بتخسر.
 - **Markets:** Egypt, Saudi Arabia, UAE, Kuwait, Qatar, Bahrain, Oman, Jordan, Iraq,
   Lebanon, Palestine, Syria, Yemen, Morocco, Algeria, Tunisia, Libya, Sudan, Mauritania
 - **Card description (≤ 300 characters, already set):** "Prices COD products, sets your max

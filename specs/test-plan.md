@@ -209,6 +209,13 @@ fixture U.
 | X-comp-2 | "مكواة بخار محمولة" in Egypt, 1 search + 4 pages | ✅ Found Amazon 224.50, Jumia 243 / 275 / 319 (plus 1 off-category, 1 404); asked for confirmation; `compare_prices` → CANNOT_COMPETE_ON_PRICE, median 259, 75% cheaper, matched profits −51.80 / −38.57 / −15.69 / +15.77 (all hand-checked); saved as PRICE-2 |
 | X-chart | New product (backpack, Egypt, 450 EGP, VAT 14%) after the chart deploy | ✅ Verdict ON_TARGET; all numbers hand-checked (breakeven 325.21, safe 393.92, net 107.32 / 23.8%, max CPA 63.37 / 39.24, BE ROAS 2.54). The **cost chart rendered inline in the PRICE-3 card**; the link (356 chars) was copied intact and returned 200 |
 
+## Planned layers (not built)
+
+| Layer | Covers | Spec |
+|---|---|---|
+| S | `price_scenarios`: deterministic ladder, band thresholds, a price below breakeven is always `critical`, every row's margin agrees with `price_product`, revenue matches the stated volume, competitor labels and links survive, chart carries the table's numbers, no equation reaches the seller | `specs/beginner-pricing.md` §7 |
+| D | `market_demand`: share-of-voice percentages sum to 100, each estimation branch incl. the `null` branch, cross-border warning, no multiplier in user-facing text | `specs/market-demand.md` §9 |
+
 ## Exit criteria for the build
 
 - P, C, E, V and M are all green in `deno task test`.
