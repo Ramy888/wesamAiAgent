@@ -41,7 +41,8 @@ export type WarningCode =
   | "NO_DELIVERIES"
   | "NO_AD_BUDGET"
   | "OFFER_BELOW_BREAKEVEN"
-  | "FEW_COMPETITORS";
+  | "FEW_COMPETITORS"
+  | "VOLUME_UNDEFINED";
 
 export interface Warning {
   code: WarningCode;
@@ -648,6 +649,132 @@ export function checkCampaign(p: Product, c: Campaign): CampaignResult {
       : null,
     verdict,
     levers,
+    warnings,
+  };
+}
+
+// ─── price_scenarios ────────────────────────────────────────────────────────
+// One table for a seller who is new to this: every price worth considering, what each earns,
+// and how healthy it is — with competitors in the same rows (specs/beginner-pricing.md).
+
+export interface ScenarioCompetitor {
+  label: string;
+  price: number;
+  source?: string;
+}
+
+export type ScenarioBand = "LOSS" | "CRITICAL" | "THIN" | "HEALTHY";
+export type ScenarioKind = "breakeven" | "suggested" | "you" | "competitor" | "ladder";
+
+export interface ScenarioRow {
+  price: number;
+  who: string;
+  kind: ScenarioKind;
+  profitPerOrder: number;
+  marginPct: number;
+  /** Volume columns at the assumed ad spend; null when ads cost nothing, so volume is undefined. */
+  deliveredOrders: number | null;
+  revenue: number | null;
+  profit: number | null;
+  band: ScenarioBand;
+  source?: string;
+}
+
+export interface ScenariosResult {
+  adSpendAssumed: number;
+  deliveredPerSpend: number | null;
+  breakevenPrice: number | null;
+  suggestedPrice: number | null;
+  rows: ScenarioRow[];
+  warnings: Warning[];
+}
+
+/** A margin below this is "critical" however low the seller's own target is. */
+export const CRITICAL_MARGIN_PCT = 5;
+export const DEFAULT_SCENARIO_AD_SPEND = 1000;
+const MAX_SCENARIO_ROWS = 12;
+/** Steps around the safe price, so the seller sees what a small change is worth. */
+const LADDER_STEPS = [-0.2, -0.1, 0.1, 0.2];
+
+function scenarioBand(p: Product, profit: number, marginPct: number): ScenarioBand {
+  // Exactly breakeven lands a hair below zero in floating point; that is not a loss.
+  if (profit < -1e-9) return "LOSS";
+  if (marginPct < CRITICAL_MARGIN_PCT) return "CRITICAL";
+  if (marginPct < p.targetMarginPct - 1e-9) return "THIN";
+  return "HEALTHY";
+}
+
+export function priceScenarios(
+  p: Product,
+  competitors: ScenarioCompetitor[] = [],
+  adSpend: number = DEFAULT_SCENARIO_AD_SPEND,
+): ScenariosResult {
+  const e = economics(p);
+  const warnings = stackWarnings(p, e);
+
+  // Candidates are derived here, never chosen by the caller's model.
+  const candidates: { price: number; who: string; kind: ScenarioKind; source?: string }[] = [];
+  const add = (price: number, who: string, kind: ScenarioKind, source?: string) => {
+    if (!Number.isFinite(price) || price <= 0) return;
+    candidates.push({ price, who, kind, source });
+  };
+  if (e.breakevenPrice !== null) add(e.breakevenPrice, "breakeven", "breakeven");
+  if (e.suggestedPrice !== null) {
+    add(e.suggestedPrice, "suggested", "suggested");
+    for (const step of LADDER_STEPS) add(e.suggestedPrice * (1 + step), "option", "ladder");
+  }
+  if (p.sellingPrice !== undefined) add(p.sellingPrice, "you", "you");
+  for (const c of competitors) add(c.price, c.label, "competitor", c.source);
+
+  // Sort, then keep the first row for each price so a named anchor wins over a ladder step.
+  const rank: Record<ScenarioKind, number> = {
+    you: 0,
+    competitor: 1,
+    suggested: 2,
+    breakeven: 3,
+    ladder: 4,
+  };
+  candidates.sort((a, b) => a.price - b.price || rank[a.kind] - rank[b.kind]);
+  const picked: typeof candidates = [];
+  for (const c of candidates) {
+    const prev = picked[picked.length - 1];
+    if (prev && Math.abs(prev.price - c.price) < 1e-9) continue;
+    picked.push(c);
+  }
+  // If there are more prices than a table should hold, drop ladder steps first.
+  while (picked.length > MAX_SCENARIO_ROWS) {
+    const i = picked.map((c) => c.kind).lastIndexOf("ladder");
+    if (i < 0) break;
+    picked.splice(i, 1);
+  }
+
+  const deliveredPerSpend = e.adCostPerDelivered > EPS ? adSpend / e.adCostPerDelivered : null;
+  if (deliveredPerSpend === null) warnings.push({ code: "VOLUME_UNDEFINED" });
+
+  const rows: ScenarioRow[] = picked.map((c) => {
+    const profitPerOrder = c.price * (1 - e.pctStack) - e.fixedCostsPerDelivered -
+      e.adCostPerDelivered;
+    const marginPct = (profitPerOrder / c.price) * 100;
+    return {
+      price: c.price,
+      who: c.who,
+      kind: c.kind,
+      profitPerOrder,
+      marginPct,
+      deliveredOrders: deliveredPerSpend,
+      revenue: deliveredPerSpend === null ? null : c.price * deliveredPerSpend,
+      profit: deliveredPerSpend === null ? null : profitPerOrder * deliveredPerSpend,
+      band: scenarioBand(p, profitPerOrder, marginPct),
+      ...(c.source ? { source: c.source } : {}),
+    };
+  });
+
+  return {
+    adSpendAssumed: adSpend,
+    deliveredPerSpend,
+    breakevenPrice: e.breakevenPrice,
+    suggestedPrice: e.suggestedPrice,
+    rows,
     warnings,
   };
 }

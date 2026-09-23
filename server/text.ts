@@ -8,6 +8,7 @@ import type {
   CompareResult,
   CpaTableResult,
   PriceProductResult,
+  ScenariosResult,
   Warning,
 } from "../engine/canonical.ts";
 import { type Assumption, CURRENCY_DECIMALS, type FieldError, type Lang } from "./schema.ts";
@@ -57,6 +58,14 @@ interface Words {
   cheaper: string;
   ifMatched: string;
   position: Record<"BELOW_BAND" | "IN_BAND" | "ABOVE_BAND", string>;
+  scenarioBands: Record<"LOSS" | "CRITICAL" | "THIN" | "HEALTHY", string>;
+  perSpend: string;
+  ofAdSpend: string;
+  orders: string;
+  marketCosts: string;
+  noPublicCosts: string;
+  returnsEqualDelivery: string;
+  returnFee: string;
   rec: {
     PRICE_IN_BAND: string;
     PREMIUM_ONLY: string;
@@ -120,6 +129,7 @@ const AR: Words = {
     NO_AD_BUDGET: "صرف الإعلان صفر",
     OFFER_BELOW_BREAKEVEN: "عرض بيخسر",
     FEW_COMPETITORS: "عدد المنافسين قليل (أقل من 3)، النتيجة تقريبية",
+    VOLUME_UNDEFINED: "من غير تكلفة إعلان مفيش عدد أوردرات نحسب عليه",
   },
   market: "السوق",
   offers: "عروض",
@@ -133,6 +143,19 @@ const AR: Words = {
     IN_BAND: "جوه النطاق المقترح",
     ABOVE_BAND: "أعلى من النطاق المقترح",
   },
+  scenarioBands: {
+    LOSS: "خسارة",
+    CRITICAL: "ضعيف جدًا",
+    THIN: "تحت الهدف",
+    HEALTHY: "كويس",
+  },
+  perSpend: "لكل",
+  ofAdSpend: "إعلان",
+  orders: "أوردر",
+  marketCosts: "تكاليف الشحن المنشورة",
+  noPublicCosts: "مفيش أسعار منشورة للسوق ده — اسأل البيّاع",
+  returnsEqualDelivery: "المرتجع بيتحاسب بنفس سعر التوصيل",
+  returnFee: "تكلفة المرتجع",
   rec: {
     PRICE_IN_BAND: "السعر المقترح في السوق: {low} – {high}",
     PREMIUM_ONLY: "مينفعش تنافس على الرخص؛ اتموضع أغلى: {low} – {high} (الوسيط {median})",
@@ -197,6 +220,7 @@ const EN: Words = {
     NO_AD_BUDGET: "ad budget is zero",
     OFFER_BELOW_BREAKEVEN: "an offer loses money",
     FEW_COMPETITORS: "fewer than 3 competitors; treat the comparison as rough",
+    VOLUME_UNDEFINED: "with no ad cost there is no order volume to work from",
   },
   market: "Market",
   offers: "offers",
@@ -210,6 +234,19 @@ const EN: Words = {
     IN_BAND: "inside the recommended band",
     ABOVE_BAND: "above the recommended band",
   },
+  scenarioBands: {
+    LOSS: "loss",
+    CRITICAL: "very thin",
+    THIN: "below target",
+    HEALTHY: "good",
+  },
+  perSpend: "per",
+  ofAdSpend: "of ad spend",
+  orders: "orders",
+  marketCosts: "published shipping costs",
+  noPublicCosts: "nothing is published for this market — ask the seller",
+  returnsEqualDelivery: "a return costs the same as a delivery",
+  returnFee: "return fee",
   rec: {
     PRICE_IN_BAND: "Recommended market price: {low} – {high}",
     PREMIUM_ONLY: "Don't compete on cheapness; position premium: {low} – {high} (median {median})",
@@ -441,6 +478,42 @@ export function compareText(f: Fmt, r: CompareResult): string[] {
     );
   }
   return lines;
+}
+
+export function scenariosText(f: Fmt, r: ScenariosResult): string[] {
+  const w = f.w;
+  const lines = [
+    `${w.suggested}: ${f.m(r.suggestedPrice)} · ${w.breakeven}: ${f.m(r.breakevenPrice)}.`,
+    `${w.revenue}/${w.profit} ${w.perSpend} ${f.m(r.adSpendAssumed)} ${w.ofAdSpend}` +
+    (r.deliveredPerSpend === null ? ` — ${w.na}.` : ` ≈ ${f.n(r.deliveredPerSpend)} ${w.orders}.`),
+  ];
+  for (const row of r.rows) {
+    const who = row.kind === "you" ? w.yourPrice : row.who;
+    lines.push(
+      `${f.m(row.price)} (${who}): ${w.profit} ${f.m(row.profitPerOrder)} ` +
+        `(${f.pct(row.marginPct)}) — ${w.scenarioBands[row.band]}` +
+        (row.revenue === null ? "." : `; ${w.revenue} ${f.m(row.revenue)}, ${f.m(row.profit)}.`),
+    );
+  }
+  return lines;
+}
+
+export function marketCostsText(f: Fmt, r: Record<string, unknown>): string[] {
+  const w = f.w;
+  if (!r.found) return [`${w.marketCosts}: ${w.noPublicCosts}.`];
+  const lines = [
+    `${w.marketCosts} (${r.market}): ${f.m(r.deliveryFeeLow as number)} – ${
+      f.m(r.deliveryFeeHigh as number)
+    }` + (r.deliveryFeeTypical === null ? "." : `, ~${f.m(r.deliveryFeeTypical as number)}.`),
+  ];
+  lines.push(
+    r.returnEqualsDeliveryFee
+      ? `${w.returnFee}: ${w.returnsEqualDelivery}.`
+      : `${w.returnFee}: ${f.m(r.returnShippingFee as number | null)}.`,
+  );
+  lines.push(String(r.note ?? ""));
+  lines.push(String(r.source ?? ""));
+  return lines.filter(Boolean);
 }
 
 export function errorsText(lang: Lang, errors: FieldError[]): string {

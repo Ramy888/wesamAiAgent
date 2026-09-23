@@ -244,6 +244,47 @@ export const MARGINS_SCHEMA: ArraySchema = {
   items: { type: "number", exclusiveMinimum: -100, exclusiveMaximum: 100 },
 };
 
+export const SCENARIO_COMPETITORS_SCHEMA: ArraySchema = {
+  type: "array",
+  description:
+    "Competitor single-piece prices the seller confirmed, so they appear as rows in the same " +
+    "table. Use what the customer actually pays.",
+  minItems: 1,
+  maxItems: 10,
+  items: {
+    type: "object",
+    properties: {
+      label: { type: "string", description: "Competitor or store name.", maxLength: 80 },
+      price: {
+        type: "number",
+        description: "What the customer pays for one piece.",
+        exclusiveMinimum: 0,
+        maximum: LIMIT,
+      },
+      source: { type: "string", description: "Link the price was read from.", maxLength: 400 },
+    },
+    required: ["label", "price"],
+    additionalProperties: false,
+  },
+};
+
+export const AD_SPEND_SCHEMA: NumberSchema = {
+  type: "number",
+  description:
+    "Ad spend the revenue and profit columns are quoted for, in the same currency. Default 1000.",
+  exclusiveMinimum: 0,
+  maximum: LIMIT,
+  default: 1000,
+};
+
+export const MARKET_SCHEMA: Schema = {
+  type: "string",
+  description:
+    "Two-letter country code (EG, MA, AE, SA). Returns the courier costs published for that " +
+    "market, with their source. Other markets have nothing published: ask the seller instead.",
+  maxLength: 2,
+};
+
 export function productSchema(
   required: string[],
   extra: Record<string, Schema> = {},

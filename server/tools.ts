@@ -10,11 +10,14 @@ import {
   type Offer,
   priceBundles,
   priceProduct,
+  priceScenarios,
   type Product,
+  type ScenarioCompetitor,
   type Tier,
   type Warning,
 } from "../engine/canonical.ts";
 import {
+  AD_SPEND_SCHEMA,
   applyDefaults,
   type Assumption,
   CAMPAIGN_SCHEMA,
@@ -22,13 +25,17 @@ import {
   type FieldError,
   type Lang,
   MARGINS_SCHEMA,
+  MARKET_SCHEMA,
   type ObjectSchema,
   OFFERS_SCHEMA,
+  PRODUCT_FIELDS,
   productSchema,
+  SCENARIO_COMPETITORS_SCHEMA,
   TIERS_SCHEMA,
   validate,
 } from "./schema.ts";
 import { type ChartKind, signChart } from "./charts.ts";
+import { MARKET_COSTS, MARKETS_WITH_COSTS } from "./market-defaults.ts";
 import {
   bundlesText,
   campaignText,
@@ -36,7 +43,9 @@ import {
   cpaTableText,
   errorsText,
   Fmt,
+  marketCostsText,
   priceProductText,
+  scenariosText,
 } from "./text.ts";
 
 export const ENGINE_VERSION = "0.1.0";
@@ -305,6 +314,85 @@ export const TOOLS: ToolDef[] = [
         },
       }];
     },
+  },
+  {
+    name: "price_scenarios",
+    title: "Price options side by side",
+    description:
+      "One table for a seller deciding what to charge: the breakeven price, the safe price, " +
+      "steps around it, the seller's own price and each confirmed competitor price — with " +
+      "profit per order, margin, and revenue and profit for a stated ad spend, plus a health " +
+      "band per row (LOSS / CRITICAL / THIN / HEALTHY). The prices are chosen by this tool, " +
+      "not by you. Best for beginners and whenever competitor prices are known. " + COMMON_NOTE,
+    inputSchema: productSchema(PRICING_REQUIRED, {
+      competitors: SCENARIO_COMPETITORS_SCHEMA,
+      adSpend: AD_SPEND_SCHEMA,
+    }),
+    ignored: [],
+    annotations: annotations("Price options side by side"),
+    compute: (v) => {
+      const r = priceScenarios(
+        toProduct(v),
+        (v.competitors as ScenarioCompetitor[] | undefined) ?? [],
+        v.adSpend as number,
+      );
+      return { result: r, warnings: r.warnings, text: (f) => scenariosText(f, r) };
+    },
+    charts: (r, v) => [{
+      kind: "scenarios",
+      title: "الربح عند كل سعر · Profit at each price",
+      data: {
+        cur: v.currency,
+        rows: r.rows.map((
+          row: { price: number; who: string; kind: string; band: string; profitPerOrder: number },
+        ) => [
+          row.price,
+          row.kind === "you" ? "you" : row.who.slice(0, 30),
+          row.band,
+          row.profitPerOrder,
+        ]),
+      },
+    }],
+  },
+  {
+    name: "market_costs",
+    title: "Published shipping costs for a market",
+    description:
+      "What couriers publicly charge for delivery and returns in one market, with the source " +
+      "link, for a seller who doesn't know their own numbers yet. Markets with published " +
+      "figures: " + MARKETS_WITH_COSTS.join(", ") +
+      ". Any other market returns found=false, which means ask the seller — never guess. " +
+      "These are list prices: a seller with volume pays less. Show the figures, get the " +
+      "seller's confirmation, then pass them to the pricing tools.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        market: MARKET_SCHEMA,
+        lang: PRODUCT_FIELDS.lang,
+        currency: PRODUCT_FIELDS.currency,
+      },
+      required: ["market"],
+      additionalProperties: false,
+    },
+    ignored: [],
+    annotations: annotations("Published shipping costs for a market"),
+    compute: (v) => {
+      const code = String(v.market ?? "").toUpperCase();
+      const m = MARKET_COSTS[code];
+      const result = m ? { market: code, found: true, ...m } : {
+        market: code,
+        found: false,
+        note:
+          "No courier publishes a delivery or return price for this market. Ask the seller what " +
+          "their courier charges.",
+      };
+      return {
+        result,
+        warnings: [],
+        text: (f) => marketCostsText(f, result as unknown as Record<string, unknown>),
+      };
+    },
+    charts: () => [],
   },
 ];
 

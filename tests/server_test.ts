@@ -78,6 +78,14 @@ const REQUIRED_BY_TOOL: Record<string, string[]> = {
     "deliveryRatePct",
   ],
   check_campaign: ["productCost", "deliveryFee", "sellingPrice", "campaign"],
+  price_scenarios: [
+    "productCost",
+    "deliveryFee",
+    "leadCpa",
+    "confirmationRatePct",
+    "deliveryRatePct",
+  ],
+  market_costs: ["market"],
   compare_prices: [
     "productCost",
     "deliveryFee",
@@ -126,15 +134,17 @@ Deno.test("M2: notifications get 202 with no body", async () => {
   assertEquals(json, null);
 });
 
-Deno.test("M3: tools/list returns the 5 tools with schemas and read-only annotations", async () => {
+Deno.test("M3: tools/list returns every tool with schemas and read-only annotations", async () => {
   const { json } = await rpc({ jsonrpc: "2.0", id: 1, method: "tools/list" });
   const tools = json.result.tools;
   assertEquals(tools.map((t: { name: string }) => t.name).sort(), [
     "check_campaign",
     "compare_prices",
     "cpa_table",
+    "market_costs",
     "price_bundles",
     "price_product",
+    "price_scenarios",
   ]);
   for (const t of tools) {
     assertEquals(t.inputSchema.type, "object");

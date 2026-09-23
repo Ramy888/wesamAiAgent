@@ -11,7 +11,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { CURRENCY_DECIMALS } from "./schema.ts";
 
-export const CHART_KINDS = ["cost", "cpa", "market", "funnel", "bundles"] as const;
+export const CHART_KINDS = ["cost", "cpa", "market", "funnel", "bundles", "scenarios"] as const;
 export type ChartKind = typeof CHART_KINDS[number];
 
 const SIG_HEX = 24;
@@ -463,12 +463,65 @@ function bundlesChart(d: Record<string, unknown>): string {
   );
 }
 
+// ─── 6. price scenarios ─────────────────────────────────────────────────────
+
+/** Profit per order at each candidate price, with the loss zone shaded. */
+function scenariosChart(d: Record<string, unknown>): string {
+  const dec = decimalsFor(d.cur);
+  const rows = requireArray(d.rows, "rows") as [number, string, string, Num][];
+  const profits = rows.map((r) => r[3]).filter(isNum);
+  const lo = Math.min(0, ...profits);
+  const hi = Math.max(0, ...profits) || 1;
+  const labelX = 250;
+  const plotL = 270;
+  const plotR = 640;
+  const x = scale(lo, hi, plotL, plotR);
+  const top = 120;
+  const rowH = 52;
+  const bottom = top + rows.length * rowH;
+  // Shade the loss side once, so "below this line you pay to sell" reads at a glance.
+  let body = x(0) > plotL
+    ? `<rect x="${plotL}" y="${top - 10}" width="${x(0) - plotL}" height="${
+      bottom - top + 10
+    }" fill="${C.critical}" opacity="0.07"/>`
+    : "";
+  body += `<line x1="${x(0)}" y1="${top - 10}" x2="${x(0)}" y2="${bottom}" stroke="${C.grid}"/>`;
+  rows.forEach(([price, who, band, profit], i) => {
+    const mid = top + i * rowH + rowH / 2;
+    const isYou = who === "you";
+    body += rowLabel(
+      labelX,
+      mid,
+      `${num(price, dec)}  ${isYou ? "إنت" : who}`,
+      `${num(price, dec)}  ${who}`,
+    );
+    const loss = band === "LOSS";
+    const fill = loss ? C.critical : isYou ? C.you : band === "HEALTHY" ? C.good : C.series;
+    if (isNum(profit)) body += hbar(x(0), x(profit), mid - 10, 20, fill);
+    const end = isNum(profit) ? Math.max(x(profit), x(0)) : x(0);
+    const word: Record<string, string> = {
+      LOSS: "Loss · خسارة",
+      CRITICAL: "Thin · ضعيف جدًا",
+      THIN: "Below target · تحت الهدف",
+      HEALTHY: "Good · كويس",
+    };
+    body += text(end + 10, mid + 7, `${num(profit, dec)}  ${word[band] ?? ""}`, { size: 20 });
+  });
+  return frame(
+    bottom + 60,
+    "الربح في الأوردر عند كل سعر",
+    `Profit per order at each price · ${String(d.cur ?? "")}`,
+    body,
+  );
+}
+
 const RENDERERS: Record<ChartKind, (d: Record<string, unknown>) => string> = {
   cost: costChart,
   cpa: cpaChart,
   market: marketChart,
   funnel: funnelChart,
   bundles: bundlesChart,
+  scenarios: scenariosChart,
 };
 
 export function renderChart(kind: ChartKind, data: Record<string, unknown>): string {

@@ -1,7 +1,7 @@
 # Spec: pricing for a seller who is new to selling online
 
-Status: **spec, 2026-09-23.** Needs engine code, so nothing is built until you say build.
-This is the first request in the project that genuinely needs a new calculator tool.
+Status: **built 2026-09-23** (`priceScenarios` in `engine/canonical.ts`, tools `price_scenarios`
+and `market_costs`, the `scenarios` chart, 101 tests passing). Not deployed yet.
 
 ## 1. What was asked
 
@@ -123,11 +123,17 @@ mode.
 - independent expected values in `tests/oracle/oracle.py`;
 - a text test asserting no equation ever reaches the seller.
 
-## 8. Build order, when you say go
+## 8. What was built
 
-1. ~~Source the market defaults~~ — done 2026-09-23. Four markets have data; the rest ask.
-2. Failing tests.
-3. The tool, then the chart, then the instructions.
+1. ~~Market defaults~~ — `reference/market-defaults.json`, mirrored for the server in
+   `server/market-defaults.ts`, with a test keeping the two in step.
+2. ~~Failing tests first~~ — `tests/scenarios_test.ts`, 12 cases.
+3. ~~`priceScenarios`~~, the `scenarios` chart, and a second tool `market_costs` so the published
+   courier figures reach the seller with their source instead of being guessed.
+4. Instructions updated: a 7th job, and a rule to prefer `price_scenarios` whenever competitor
+   prices exist.
+
+Still to do: deploy, sync the instructions to Wesam, and try it on a real product.
 
 Item 13 on the outstanding list, and still behind item 4: a real seller's numbers are what fill
 the confirmation and delivery bands that this feature depends on.
