@@ -1,12 +1,12 @@
 # Spec — Bya3 pricing agent (Wesam.ai) + pricing engine MCP server
 
-Status: **draft v0.1**, 2026-09-16. Spec only. No engine code until G1 is answered (see §0).
+Status: **draft v0.1**, 2026-09-16; updated 2026-09-23. G1 is answered: building before Oct 1 is allowed (see §0).
 
 ## 0. Gate status
 
 | Gate | Answer (2026-09-16) | Effect on this spec |
 |---|---|---|
-| G1: code before Oct 1? | **Asked the organizers on 2026-09-17; waiting for a reply.** | **2026-09-16: at the user's request, the engine and MCP server are being built before G1 is confirmed.** If the rules forbid pre-built code, this is a disqualification risk. |
+| G1: code before Oct 1? | **Answered 2026-09-23 by the organizers: "you can start building, but submission starts on the first of October… the earlier the better".** Building early is allowed and encouraged; only the submission window is fixed. | No restriction. The engine, MCP server and landing page built in September are all in scope. |
 | G2: reuse Bine code? | **Yes, port it.** | The engine is a port of `reference/dart/pricing_engine.dart`, checked against `reference/golden.json`. |
 | G3: how Wesam calls tools | **MCP servers only.** Agent Builder → Tools → *Add MCP server*: name + **Streamable HTTP (https) URL**, include/exclude tool globs. "Wesam proxies it." "Every workspace signs in on its own, so no keys or passwords are stored here." "Publish, send and spend actions are always excluded." | **Replaces the REST API in CLAUDE.md §4 with an MCP server** (§2). |
 | G4: can judges run it without an account? | **Partly answered.** Publishing needs a partner registration plus admin review, and an approved agent can then be hired by any Wesam workspace. There's no public chat link, so judges need a Wesam workspace. | The README must offer a Wesam-free path (§6). |
@@ -59,7 +59,7 @@ Runtime: Deno + TypeScript.
   - anything else → JSON-RPC `-32601`.
 - The Wesam dialog's **Test** button must pass unauthenticated: it runs `initialize` + `tools/list`.
 - `GET /health` → `{ "ok": true, "version": "<semver>", "engine": "<git sha>" }`.
-- **Implementation choice is still open, decided by a spike on Oct 1 (or earlier if G1 allows):**
+- **Implementation choice (settled 2026-09-17; G1 confirmed 2026-09-23 that early building is allowed):**
   - (a) `npm:@modelcontextprotocol/sdk`, only if it offers a web-standard `Request → Response`
     transport that runs under `Deno.serve`. Check the SDK README/exports for a
     fetch/WebStandard transport, or `@hono/mcp`.
@@ -103,6 +103,7 @@ Wesam always excludes publish/send/spend actions, and its default exclude globs 
 | `price_bundles` | 2/3/4-piece bundle prices from margins, plus checks of explicit offers ("2 for 550") | `/bundles` |
 | `check_campaign` | Real campaign P&L from actual counts, with a deterministic verdict | `/campaign-pnl` |
 | `compare_prices` | Position the seller's price against confirmed competitor offers (added 2026-09-17; see `specs/competitor-pricing.md`) | — |
+| `market_demand` | **Spec only, not built** (2026-09-20): competitor search phrases, share of voice, and demand estimates with confidence levels; see `specs/market-demand.md` | — |
 
 ### 2.4 Shared input: `product` (used by all tools)
 
@@ -415,7 +416,7 @@ The same server also works in Claude Desktop and Claude Code as a fallback demo.
 
 | Item | Owner | Blocks |
 |---|---|---|
-| G1: is pre-Oct-1 code allowed? | user (rules) | Any engine code |
+| ~~G1: is pre-Oct-1 code allowed?~~ | **Answered 2026-09-23: yes, submission opens Oct 1** | — |
 | G4: judge access / marketplace | user (check *Publish to marketplace*) | README + demo |
 | ~~Does Wesam accept an MCP server with **no** OAuth?~~ | **Yes (2026-09-17):** Test said "Reachable — no sign-in needed, 5 tools"; server connected | — |
 | ~~SDK transport on Deno vs hand-written JSON-RPC~~ | done: hand-written | — |
@@ -423,3 +424,4 @@ The same server also works in Claude Desktop and Claude Code as a fallback demo.
 | Does Wesam's proxy forward `structuredContent`, or only `content` text? | spike | How much goes into the text |
 | **Domain validation of answers** (a COD practitioner reviews real Bya3 outputs, or we build a review rubric/skill) | user, **outstanding** | Trust in the advice, impact slides |
 | **Rich media in answers** (charts, analysed images, source links); see chat 2026-09-17 | design | Demo quality |
+| `market_demand`: Google Ads account? Meta Ad Library in or out? (see `specs/market-demand.md` §10) | user | Whether volumes are absolute or relative |
