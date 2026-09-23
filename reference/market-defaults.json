@@ -1,0 +1,105 @@
+{
+  "_about": "Public, citable courier pricing for COD sellers. Every number here was read off a page that was actually fetched, and carries its source. null means NO public figure was found: Bya3 must ask the seller, never assume. See specs/beginner-pricing.md §3.",
+  "_checkedOn": "2026-09-23",
+  "_rules": [
+    "Never invent a value to fill a null. A missing default becomes a question to the seller.",
+    "confirmationRatePct and deliveryRatePct have NO public source in any market. They stay null until real seller data (docs/seller-intake.md) provides them.",
+    "Bands are [low, high] in the country's own currency, per delivered order, excluding VAT unless noted.",
+    "These are list prices. Merchants who negotiate volume rates pay less, and those rates are public nowhere."
+  ],
+  "markets": {
+    "EG": {
+      "currency": "EGP",
+      "deliveryFeeBand": [45, 140],
+      "deliveryFeeTypical": [97, 110],
+      "returnShippingFee": 87,
+      "codFeePct": null,
+      "confirmationRatePct": null,
+      "deliveryRatePct": null,
+      "confidence": "high",
+      "notes": "Bosta list price by zone, before VAT: Cairo 97, Alexandria 102, Delta/Canal 110, Upper Egypt/Red Sea 140 (small & medium parcels). RTO is a published flat 87 EGP across all four zones — the only courier-stated RTO figure in the region besides Morocco. Treat as a CEILING: the same page says 'higher volume, lower price', and Bosta's own signup flow shows lower numbers (57-82 delivery, 40-65 RTO) that could not be verified without an account. noon's weight-banded 45-79 EGP marketplace fee is the realistic floor. COD collection is included up to 3,000 EGP, then 1% of the excess (terms last modified 2 Jan 2023).",
+      "sources": [
+        { "name": "Bosta pricing", "url": "https://bosta.co/en-eg/pricing", "for": "delivery, RTO", "date": "no date shown" },
+        { "name": "Bosta terms", "url": "https://bosta.freshdesk.com/support/solutions/articles/36000414648", "for": "COD 1% above 3,000 EGP", "date": "2023-01-02" },
+        { "name": "noon partner fees (Egypt)", "url": "https://support.noon.partners", "for": "floor, weight bands", "date": "2026-09-23" }
+      ]
+    },
+    "AE": {
+      "currency": "AED",
+      "deliveryFeeBand": [17.31, 35],
+      "deliveryFeeTypical": null,
+      "returnShippingFee": null,
+      "returnShippingRule": "EQUALS_DELIVERY_FEE",
+      "codFeePct": 2.5,
+      "confirmationRatePct": null,
+      "deliveryRatePct": null,
+      "confidence": "high",
+      "notes": "Two published prices that differ by about 2x: Jeebly 17.31 per shipment up to 5 kg next-day, and Quiqup 35 next-day (excluding 5% VAT), +2 AED/kg above 5 kg. No single typical value is defensible. Quiqup is the most useful source found anywhere in the region: it publishes a RULE rather than a number for returns — 'RTO, cancelled orders and failed collections are charged the full delivery fee' — plus a COD fee of 2.5% of the value collected, three delivery attempts in the main emirates and only one in remote areas.",
+      "sources": [
+        { "name": "Quiqup fees schedule", "url": "https://quiqup.com/terms-of-service/individual-quiqup-services-and-fees-schedule---self-service-25-01-21", "for": "delivery, RTO rule, COD %", "date": "no effective date" },
+        { "name": "Jeebly", "url": "https://jeebly.com", "for": "lower bound", "date": "2026, blog page not a tariff schedule" },
+        { "name": "noon partner fees (UAE)", "url": "https://support.noon.partners", "for": "marketplace comparison", "date": "2026-09-23" }
+      ]
+    },
+    "MA": {
+      "currency": "MAD",
+      "deliveryFeeBand": [18, 50],
+      "deliveryFeeTypical": [35, 35],
+      "returnShippingFee": 0,
+      "codFeePct": null,
+      "confirmationRatePct": null,
+      "deliveryRatePct": null,
+      "confidence": "high",
+      "notes": "The best-evidenced market of the nine. Pickup city 18-28, major cities about 35, outlying regions 40-50. Returns are genuinely free: three COD couriers print a return or refusal column at 0 MAD across hundreds of city rows, and two more state free returns in policy; only OXO prints a non-zero 15 MAD. Caveats: only Chrono Diali publishes a weight band at all, rates change with the departure warehouse, and NO Moroccan page printed any COD commission — the widely repeated '2-5% of COD value' could not be reproduced anywhere.",
+      "sources": [
+        { "name": "Forcelog", "url": "https://forcelog.ma/tarifs-colis/", "for": "387 cities, return column = 0", "date": "no date shown" },
+        { "name": "Olivraison", "url": "https://olivraison.com/fr/tarif", "for": "return 0, cancellation 10 DH", "date": "2026" },
+        { "name": "Sendit", "url": "https://sendit.ma/tarifs", "for": "445 cities, refusal and cancellation free", "date": "2021-04-11" },
+        { "name": "Chrono Diali", "url": "https://chronodiali.ma/simulateur_de_tarifs.html", "for": "the only published weight band", "date": "no date shown" }
+      ]
+    },
+    "SA": {
+      "currency": "SAR",
+      "deliveryFeeBand": [20, 25],
+      "deliveryFeeTypical": null,
+      "returnShippingFee": null,
+      "codFeePct": null,
+      "confirmationRatePct": null,
+      "deliveryRatePct": null,
+      "confidence": "medium",
+      "notes": "No courier publishes a national merchant COD rate on its own site: SMSA, Naqel and AyMakan all gate pricing behind calculators, and Aramex blocks retrieval. The only printed named-courier prices come from the Zid platform, excluding tax, for a first 10 kg band: SPL 20, Aramex 23, SMSA 23. Salla's 'from 13 SAR' is a marketing floor with no weight band. Zid states returns cost no extra beyond the basic shipping price, but the wording is ambiguous and no amount is given.",
+      "sources": [
+        { "name": "Zid shipping", "url": "https://zid.sa/ar/solutions/shipping/", "for": "named courier prices", "date": "no date shown" },
+        { "name": "SPL / Saudi Post", "url": "https://splonline.com.sa/ar/smes/", "for": "bundle pricing (conflicts with its own catalogue)", "date": "2026" }
+      ]
+    },
+    "BH": {
+      "currency": "BHD",
+      "deliveryFeeBand": null,
+      "returnShippingFee": null,
+      "codFeePct": null,
+      "confirmationRatePct": null,
+      "deliveryRatePct": null,
+      "confidence": "none",
+      "notes": "No merchant COD rate published. Bahrain Post's counter tariff (1.200 BHD up to 2 kg, rising to 8.400 at 20 kg) is a retail rate, not a courier rate for sellers, and Bahrain Post has no COD product. The regulator sets a price floor for licensed couriers but publishes no rates.",
+      "sources": [
+        { "name": "Bahrain Post tariff", "url": "https://bahrainpost.gov.bh", "for": "retail counter rate only", "date": "no date shown" },
+        { "name": "MTT post tariffs", "url": "https://mtt.gov.bh/post-tariffs", "for": "regulatory price floor", "date": "2025-04-26" }
+      ]
+    },
+    "KW": { "currency": "KWD", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Nothing published. Couriers price by distance or vertical inside their own apps.", "sources": [] },
+    "QA": { "currency": "QAR", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Qatar Post routes every service to a calculator; no per-order rate is printed.", "sources": [] },
+    "OM": { "currency": "OMR", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Asyad Express's pricing page contains no figures and its calculator reports the service unavailable.", "sources": [] },
+    "JO": { "currency": "JOD", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Nothing found for any courier: the large ones block automated retrieval and are calculators regardless, and local firms are quote-form only.", "sources": [] },
+    "IQ": { "currency": "IQD", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Not researched yet.", "sources": [] },
+    "LB": { "currency": "LBP", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Not researched yet.", "sources": [] },
+    "PS": { "currency": "ILS", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Not researched yet.", "sources": [] },
+    "SY": { "currency": "SYP", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Not researched yet.", "sources": [] },
+    "YE": { "currency": "YER", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Not researched yet.", "sources": [] },
+    "DZ": { "currency": "DZD", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Not researched yet. Algeria has large COD courier networks (Yalidine, ZR Express) that may publish rates.", "sources": [] },
+    "TN": { "currency": "TND", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Not researched yet.", "sources": [] },
+    "LY": { "currency": "LYD", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Not researched yet.", "sources": [] },
+    "SD": { "currency": "SDG", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Not researched yet.", "sources": [] },
+    "MR": { "currency": "MRU", "deliveryFeeBand": null, "returnShippingFee": null, "codFeePct": null, "confirmationRatePct": null, "deliveryRatePct": null, "confidence": "none", "notes": "Not researched yet.", "sources": [] }
+  }
+}

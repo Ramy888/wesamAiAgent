@@ -23,23 +23,31 @@ Then: read the market (competitor prices via the existing search and page tools)
 remaining costs from the market defaults, call the new tool, and answer with a table, a chart,
 and one line of advice.
 
-## 3. Market defaults — sourced, never invented
+## 3. Market defaults — sourced 2026-09-23, and mostly empty
 
-A new reference table in the repo, `reference/market-defaults.json`, one row per country:
+`reference/market-defaults.json` now exists, built from courier pages that were actually
+fetched, each figure carrying its source. **The research changed what this feature can
+promise**, so the flow below is built around absence, not around defaults.
 
-| Field | Source |
-|---|---|
-| Delivery fee band | The couriers' own public price pages (Egypt: Bosta, Mylerz, Aramex; Saudi: SMSA, AyMakan — **each to be verified, not recalled**) |
-| Return fee band | Same pages, RTO or return-shipping line |
-| Confirmation rate band | **No public source exists.** Leave `null` until real seller data (item 4) provides it |
-| Delivery rate band | Same — `null` until measured |
+| Market | Delivery fee | Return fee | Confidence |
+|---|---|---|---|
+| **Egypt** | 45–140 EGP, typical 97–110 (Bosta list, by zone, before VAT) | **87 EGP**, published flat | high |
+| **Morocco** | 18–50 MAD by city, ~35 typical | **0 MAD** — returns are genuinely free at three couriers | high |
+| **UAE** | 17.31–35 AED (two published prices differing ~2×) | **a rule, not a number:** a return is charged the full delivery fee. COD costs 2.5% of the value collected | high |
+| **Saudi** | 20–25 SAR excl. tax, first 10 kg, via the Zid platform | not published | medium |
+| Bahrain, Kuwait, Qatar, Oman, Jordan | **nothing published** | nothing | none |
+| The other 10 markets | not researched yet | — | none |
 
-Every row carries `sourceUrl` and `checkedOn`. A `null` means Bya3 **asks** instead of assuming.
+**Confirmation and delivery rates have no public source in any market**, so they are `null`
+everywhere. They come from the seller session (`docs/seller-intake.md`) or they get asked.
 
-**This is the sharp edge of the whole feature.** A beginner accepts whatever default we give
-them, so an invented confirmation rate becomes their business decision. Publishing a made-up
-50–60% would be exactly the failure the outstanding expert validation exists to prevent. The
-tool uses a band's midpoint and always shows the band.
+Consequences for the flow:
+- In Egypt, Morocco, the UAE and Saudi, Bya3 can offer a delivery cost and say where it came
+  from. Everywhere else it **asks**, because there is nothing honest to assume.
+- Egypt's numbers are a **ceiling**: Bosta's page says "higher volume, lower price" and its own
+  signup flow shows lower figures that couldn't be verified without an account. That
+  discrepancy is recorded rather than resolved.
+- Every seller sees the default it used and can correct it in one line.
 
 ## 4. New tool: `price_scenarios`
 
@@ -117,8 +125,7 @@ mode.
 
 ## 8. Build order, when you say go
 
-1. Source `reference/market-defaults.json` first. What's in it decides what the flow can
-   promise, and a table full of `null` changes the three questions.
+1. ~~Source the market defaults~~ — done 2026-09-23. Four markets have data; the rest ask.
 2. Failing tests.
 3. The tool, then the chart, then the instructions.
 
