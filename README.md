@@ -69,6 +69,7 @@ or run `deno run -A tests/oracle/sdk_smoke.ts` while it is running.
 | `check_campaign` | Real campaign P&L and a PAUSE / FIX / SCALE verdict with the top lever |
 | `compare_prices` | Your price against confirmed competitor offers: market band and profit if you matched each one |
 | `price_scenarios` | Every price worth considering in one table — breakeven, safe price, steps around it, your price and each competitor — with profit, margin, revenue at a stated ad spend, and a health band |
+| `read_campaign_export` | Turns an ad report the seller pasted (Meta/TikTok/Google, CSV/TSV, Arabic or English headers) into per-campaign spend, impressions, clicks and results — parsed and summed in code, never retyped by the model |
 | `market_costs` | What couriers actually publish for delivery and returns in a market, with the source link; markets with nothing published return `found: false` so the agent asks instead of guessing |
 
 ## Layout

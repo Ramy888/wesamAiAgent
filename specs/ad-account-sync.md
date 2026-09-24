@@ -1,6 +1,6 @@
 # Spec: read the seller's own ad account
 
-Status: **spec, 2026-09-24.** Investigated against the live TikTok Ads connector in Wesam. The
+Status: **spec 2026-09-24; options A and F built the same day.** Investigated against the live TikTok Ads connector in Wesam. The
 headline finding changes the plan, so read §2 before building anything.
 
 ## 1. Why this is worth more than competitor data
@@ -45,7 +45,8 @@ before Bya3 is allowed near it**, and keep only the read actions listed above.
 | **B. Smart+ / GMV Max reports** | Yes, but only for sellers running those campaign types | Free | ✅ use when the seller has them |
 | **C. Ask Wesam to add the reporting action** (the integrations page has a "request integration" button) | Yes, if they add it | Free, unknown timing | ✅ ask now, don't wait for it |
 | **D. Our own MCP tool calling TikTok's API with the seller's token** | Yes | Real work, and **we'd have to hold each seller's token** | ❌ **no** — the tenant-identity finding (`specs/product-review.md` §4) means we can't tell one workspace's calls from another's, so we must never hold per-seller credentials |
-| **E. Read a screenshot of Ads Manager** | Yes, as well as the seller's eyesight | Free, already possible | ✅ keep as the fallback it already is |
+| **E. Read a screenshot of Ads Manager** | Yes, as well as the seller's eyesight | Free, already possible | ✅ keep as the softer fallback |
+| **F. Paste or upload the export, parsed in our own code** (`read_campaign_export`, built 2026-09-24) | Yes, for all three platforms | Built | ✅ **the plan B that removes Wesam from the critical path** |
 
 ## 4. The flow, once built
 

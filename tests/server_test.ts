@@ -86,6 +86,7 @@ const REQUIRED_BY_TOOL: Record<string, string[]> = {
     "deliveryRatePct",
   ],
   market_costs: ["market"],
+  read_campaign_export: ["text"],
   compare_prices: [
     "productCost",
     "deliveryFee",
@@ -145,6 +146,7 @@ Deno.test("M3: tools/list returns every tool with schemas and read-only annotati
     "price_bundles",
     "price_product",
     "price_scenarios",
+    "read_campaign_export",
   ]);
   for (const t of tools) {
     assertEquals(t.inputSchema.type, "object");

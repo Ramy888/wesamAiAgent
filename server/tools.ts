@@ -22,6 +22,7 @@ import {
   type Assumption,
   CAMPAIGN_SCHEMA,
   COMPETITORS_SCHEMA,
+  EXPORT_TEXT_SCHEMA,
   type FieldError,
   type Lang,
   MARGINS_SCHEMA,
@@ -36,12 +37,14 @@ import {
 } from "./schema.ts";
 import { type ChartKind, signChart } from "./charts.ts";
 import { MARKET_COSTS, MARKETS_WITH_COSTS } from "./market-defaults.ts";
+import { parseCampaignExport } from "./parse-export.ts";
 import {
   bundlesText,
   campaignText,
   compareText,
   cpaTableText,
   errorsText,
+  exportText,
   Fmt,
   marketCostsText,
   priceProductText,
@@ -390,6 +393,38 @@ export const TOOLS: ToolDef[] = [
         result,
         warnings: [],
         text: (f) => marketCostsText(f, result as unknown as Record<string, unknown>),
+      };
+    },
+    charts: () => [],
+  },
+  {
+    name: "read_campaign_export",
+    title: "Read an ad report the seller pasted",
+    description: "Turn an ad-platform report (Meta, TikTok or Google — pasted text, CSV, TSV or " +
+      "semicolon, Arabic or English headers) into numbers: one row per campaign with spend, " +
+      "impressions, clicks and results, plus totals summed by this tool. Pass the text " +
+      "exactly as the seller gave it; never retype or total it yourself. Values this tool " +
+      "cannot read come back as null with a warning — ask the seller for those. Read the rows " +
+      "back to the seller and get a yes before using them in check_campaign.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        text: EXPORT_TEXT_SCHEMA,
+        lang: PRODUCT_FIELDS.lang,
+        currency: PRODUCT_FIELDS.currency,
+      },
+      required: ["text"],
+      additionalProperties: false,
+    },
+    ignored: [],
+    annotations: annotations("Read an ad report the seller pasted"),
+    compute: (v) => {
+      const r = parseCampaignExport(String(v.text ?? ""));
+      return {
+        result: r,
+        // Export warnings are their own vocabulary; they travel in the result, not as engine warnings.
+        warnings: [],
+        text: (f) => exportText(f, r as unknown as Record<string, unknown>),
       };
     },
     charts: () => [],

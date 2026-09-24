@@ -66,6 +66,10 @@ interface Words {
   noPublicCosts: string;
   returnsEqualDelivery: string;
   returnFee: string;
+  parsed: string;
+  campaigns: string;
+  results: string;
+  totalSpend: string;
   rec: {
     PRICE_IN_BAND: string;
     PREMIUM_ONLY: string;
@@ -156,6 +160,10 @@ const AR: Words = {
   noPublicCosts: "مفيش أسعار منشورة للسوق ده — اسأل البيّاع",
   returnsEqualDelivery: "المرتجع بيتحاسب بنفس سعر التوصيل",
   returnFee: "تكلفة المرتجع",
+  parsed: "قريت من الملف",
+  campaigns: "حملات",
+  results: "نتائج",
+  totalSpend: "إجمالي الصرف",
   rec: {
     PRICE_IN_BAND: "السعر المقترح في السوق: {low} – {high}",
     PREMIUM_ONLY: "مينفعش تنافس على الرخص؛ اتموضع أغلى: {low} – {high} (الوسيط {median})",
@@ -247,6 +255,10 @@ const EN: Words = {
   noPublicCosts: "nothing is published for this market — ask the seller",
   returnsEqualDelivery: "a return costs the same as a delivery",
   returnFee: "return fee",
+  parsed: "Read from your export",
+  campaigns: "campaigns",
+  results: "results",
+  totalSpend: "total spend",
   rec: {
     PRICE_IN_BAND: "Recommended market price: {low} – {high}",
     PREMIUM_ONLY: "Don't compete on cheapness; position premium: {low} – {high} (median {median})",
@@ -514,6 +526,29 @@ export function marketCostsText(f: Fmt, r: Record<string, unknown>): string[] {
   lines.push(String(r.note ?? ""));
   lines.push(String(r.source ?? ""));
   return lines.filter(Boolean);
+}
+
+export function exportText(f: Fmt, r: Record<string, unknown>): string[] {
+  const w = f.w;
+  const rows = (r.rows ?? []) as {
+    campaign: string;
+    spend: number | null;
+    results: number | null;
+  }[];
+  const totals = r.totals as { spend: number; results: number };
+  if (rows.length === 0) return [w.invalid];
+  const lines = [`${w.parsed}: ${rows.length} ${w.campaigns}.`];
+  for (const row of rows) {
+    lines.push(
+      `${row.campaign}: ${w.budget} ${f.m(row.spend)}, ${
+        row.results === null ? w.na : f.n(row.results)
+      } ${w.results}`,
+    );
+  }
+  if (rows.length > 1) {
+    lines.push(`${w.totalSpend}: ${f.m(totals.spend)}, ${f.n(totals.results)} ${w.results}.`);
+  }
+  return lines;
 }
 
 export function errorsText(lang: Lang, errors: FieldError[]): string {

@@ -277,6 +277,14 @@ export const AD_SPEND_SCHEMA: NumberSchema = {
   default: 1000,
 };
 
+export const EXPORT_TEXT_SCHEMA: Schema = {
+  type: "string",
+  description:
+    "The ad report exactly as the seller pasted or exported it (CSV, TSV or semicolon; Arabic " +
+    "or English headers). Paste it unchanged — do not retype, reformat or sum anything.",
+  maxLength: 20000,
+};
+
 export const MARKET_SCHEMA: Schema = {
   type: "string",
   description:

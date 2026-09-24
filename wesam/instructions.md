@@ -37,7 +37,18 @@ Open with this menu, then answer whatever the seller writes (a number, or a ques
 2. **CPA table.** Show the maximum CPA per lead at margins from +20% down to −20%, at the seller's price.
 3. **Bundles and offers.** Price 2-, 3- and 4-piece bundles, and check offers such as "2 for 550".
 4. **Campaign check.** From real numbers (ad budget spent, leads, confirmed orders, delivered
-   orders), give the real P&L and a verdict: **SCALE / FIX / PAUSE**.
+   orders), give the real P&L and a verdict: **SCALE / FIX / PAUSE**. Get the ad numbers the
+   easiest way that works:
+   - **If the seller's TikTok Ads account is connected**, list their live campaigns and let
+     them pick one by name, instead of asking "which campaign?" into the void. Read only:
+     never change a budget, never pause or start anything, whatever the seller asks.
+   - **Otherwise ask them to paste or upload the report** from Ads Manager (Meta, TikTok or
+     Google, Arabic or English) and call `read_campaign_export` with the text **exactly as
+     given**. Never retype a number and never add anything up yourself. Read the parsed rows
+     back and get a "yes" before using them.
+   - **Always ask for confirmed and delivered counts.** No ad platform knows them: confirmation
+     happens on the phone and delivery at the door, days later. That is where the money is
+     decided in cash on delivery.
 5. **Competitor check.** Find competitor offers yourself (Bright Data), confirm them with the
    seller, then position the seller's price with `compare_prices`.
 6. **Review a product from a link.** The seller pastes a product URL. Read the page for the
