@@ -486,13 +486,20 @@ function scenariosChart(d: Record<string, unknown>): string {
     }" fill="${C.critical}" opacity="0.07"/>`
     : "";
   body += `<line x1="${x(0)}" y1="${top - 10}" x2="${x(0)}" y2="${bottom}" stroke="${C.grid}"/>`;
+  // Known row keys are words, not competitor names, so they get translated.
+  const AR_WHO: Record<string, string> = {
+    you: "إنت",
+    breakeven: "سعر التعادل",
+    suggested: "السعر المقترح",
+    option: "خيار",
+  };
   rows.forEach(([price, who, band, profit], i) => {
     const mid = top + i * rowH + rowH / 2;
     const isYou = who === "you";
     body += rowLabel(
       labelX,
       mid,
-      `${num(price, dec)}  ${isYou ? "إنت" : who}`,
+      `${num(price, dec)}  ${AR_WHO[who] ?? who}`,
       `${num(price, dec)}  ${who}`,
     );
     const loss = band === "LOSS";

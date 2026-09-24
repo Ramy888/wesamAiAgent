@@ -18,6 +18,9 @@ MCP server in this repo.
      > نفس المنتج، الأسبوع ده صرفت 1000 جنيه، جالي 100 ليد، 50 أكدوا و40 استلموا. الهدف 20%.
    - Offer (expected: +70.94 per order, 12.9%):
      > نفس المنتج: لو عملت عرض قطعتين بـ 550 هكسب ولا هخسر؟
+   - Brand-new seller (expected: the published Egyptian courier costs with their source, then a
+     price table):
+     > I'm new to selling online, in Egypt. The product costs me 100 EGP and I don't know my other costs. A competitor sells it at 279. What should I charge?
    - Competitors (uses live web search):
      > نفس المنتج اسمه "مكواة بخار محمولة" في مصر. قارن سعري بالمنافسين.
 3. **What to expect.** Bya3 replies with a verdict first, then 3–5 numbers, one action, and a
@@ -65,6 +68,8 @@ or run `deno run -A tests/oracle/sdk_smoke.ts` while it is running.
 | `price_bundles` | 2/3/4-piece bundle prices, and checks of offers such as "2 for 550" |
 | `check_campaign` | Real campaign P&L and a PAUSE / FIX / SCALE verdict with the top lever |
 | `compare_prices` | Your price against confirmed competitor offers: market band and profit if you matched each one |
+| `price_scenarios` | Every price worth considering in one table — breakeven, safe price, steps around it, your price and each competitor — with profit, margin, revenue at a stated ad spend, and a health band |
+| `market_costs` | What couriers actually publish for delivery and returns in a market, with the source link; markets with nothing published return `found: false` so the agent asks instead of guessing |
 
 ## Layout
 
@@ -74,6 +79,7 @@ or run `deno run -A tests/oracle/sdk_smoke.ts` while it is running.
 | `engine/canonical.ts` | The single pricing model every tool uses (`specs/spec.md` §2.6) |
 | `server/` | MCP Streamable HTTP handler, schemas and validation, text summaries |
 | `wesam/` | Agent instructions, skills and workflow plan for Wesam |
+| `reference/market-defaults.json` | Courier delivery and return costs per market, each with its source page and the date checked |
 | `landing/` | Landing page (https://hesba-ten.vercel.app) |
 | `specs/` | Spec, test plan, MCP tools research |
 

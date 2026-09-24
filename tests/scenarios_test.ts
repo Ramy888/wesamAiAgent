@@ -226,6 +226,23 @@ Deno.test("price_scenarios text states the ad spend and never shows a formula", 
   }
 });
 
+Deno.test("scenarios chart labels the standard rows in both languages", async () => {
+  const { renderChart } = await import("../server/charts.ts");
+  const svg = renderChart("scenarios", {
+    cur: "EGP",
+    rows: [
+      [253.61, "breakeven", "LOSS", -0.0],
+      [279, "Store A", "CRITICAL", 25.39],
+      [298.36, "suggested", "HEALTHY", 44.75],
+      [238.69, "option", "LOSS", -14.92],
+    ],
+  });
+  for (const word of ["سعر التعادل", "السعر المقترح", "خيار", "Store A"]) {
+    assert(svg.includes(word), `chart shows "${word}"`);
+  }
+  assert(svg.includes("breakeven") && svg.includes("option"), "English keys stay in English");
+});
+
 Deno.test("market_costs returns sourced figures, or says nothing is published", async () => {
   const eg = (await call("market_costs", { market: "eg" })).structuredContent.result;
   assertEquals(eg.found, true);
