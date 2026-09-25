@@ -1,4 +1,4 @@
-# Spec — Bya3 pricing agent (Wesam.ai) + pricing engine MCP server
+# Spec — Afandina pricing agent (Wesam.ai) + pricing engine MCP server
 
 Status: **draft v0.1**, 2026-09-16; updated 2026-09-23. G1 is answered: building before Oct 1 is allowed (see §0).
 
@@ -19,7 +19,7 @@ must never do the math itself.
 ## 1. Components
 
 ```
-Seller ──chat (AR/EN)──▶ Wesam agent "Bya3"
+Seller ──chat (AR/EN)──▶ Wesam agent "Afandina"
                           (wesam/instructions.md + wesam/skills/pricing/SKILL.md)
                               │ MCP tools/call (Wesam proxies)
                               ▼
@@ -333,7 +333,7 @@ unlike Bine's simple `requiredCr`.
 
 ## 3. Agent behaviour (Wesam: `wesam/instructions.md` + `SKILL.md`)
 
-- **Persona:** Bya3 (بيّاع), a pricing and profit advisor for online sellers (mostly COD).
+- **Persona:** Afandina (افندينا), a pricing and profit advisor for online sellers (mostly COD).
   Public wording avoids jargon: "Tells you what to charge, and whether your ads are actually
   making money." Internally the domain is still cash-on-delivery.
   - Default language: Egyptian Arabic. It switches to English if the seller writes in English,
@@ -425,7 +425,7 @@ The same server also works in Claude Desktop and Claude Code as a fallback demo.
 | ~~SDK transport on Deno vs hand-written JSON-RPC~~ | done: hand-written | — |
 | Bug #8 decision (ops/gateway per shipped order) | user | Canonical expected values |
 | Does Wesam's proxy forward `structuredContent`, or only `content` text? | spike | How much goes into the text |
-| **Domain validation of answers** (a COD practitioner reviews real Bya3 outputs, or we build a review rubric/skill) | user, **outstanding** | Trust in the advice, impact slides |
+| **Domain validation of answers** (a COD practitioner reviews real Afandina outputs, or we build a review rubric/skill) | user, **outstanding** | Trust in the advice, impact slides |
 | **Rich media in answers** (charts, analysed images, source links); see chat 2026-09-17 | design | Demo quality |
 | `market_demand`: Google Ads account? Meta Ad Library in or out? (see `specs/market-demand.md` §10) | user | Whether volumes are absolute or relative |
 | ~~Tenant identity~~ | **Answered 2026-09-23: no.** A real Wesam `tools/call` carries no workspace, session or auth header → per-seller state is not safely buildable; product watch dropped (`specs/product-review.md` §4) | — |

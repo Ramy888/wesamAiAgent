@@ -7,7 +7,7 @@ measured; no invented numbers.**
 ## 1. Title
 
 - **Hesba (حِسبة)**: know your real profit before the next ad.
-- Bya3, an AI pricing and profit advisor for online sellers, on Wesam.ai.
+- Afandina, an AI pricing and profit advisor for online sellers, on Wesam.ai.
 - Team / name, the Agents at Work track, date.
 
 ## 2. The SME we built for
@@ -25,7 +25,7 @@ measured; no invented numbers.**
 - **Pain:** returns and unconfirmed orders are ignored, so "profitable" ads were actually losing
   money.
 
-## 4. With Bya3 (after)
+## 4. With Afandina (after)
 
 - A chat in Egyptian or Gulf Arabic (or English): a verdict, 3–5 numbers, one action, and a chart.
 - Pricing, max cost per lead, bundles and offers, weekly campaign check, competitor check.
@@ -33,8 +33,8 @@ measured; no invented numbers.**
 
 ## 5. How it works (no internals)
 
-- The seller chats → Bya3 on Wesam → the Hesba calculator (tested engine) → verdict + chart.
-- Competitor prices: Bya3 searches, and the seller confirms before anything is compared.
+- The seller chats → Afandina on Wesam → the Hesba calculator (tested engine) → verdict + chart.
+- Competitor prices: Afandina searches, and the seller confirms before anything is compared.
 - **Trust:** numbers never come from AI guesswork, every assumption is stated, and sources are
   linked.
 
@@ -62,7 +62,7 @@ Measured by timing the seller doing each task both ways on the same day.
 
 ## 9. Impact: revenue
 
-- Bundles launched from Bya3's offers: [**]. Extra profit per order: [**] EGP. Orders per week:
+- Bundles launched from Afandina's offers: [**]. Extra profit per order: [**] EGP. Orders per week:
   [__].
 - **Revenue or profit added:** [__] EGP per week (report only after at least one week of real
   orders).
@@ -83,9 +83,9 @@ Measured by timing the seller doing each task both ways on the same day.
 | ----------------------------------------------------------- | ----- |
 | Products priced per week                                    |       |
 | Minutes per product (manual)                                |       |
-| Minutes per product (Bya3)                                  |       |
+| Minutes per product (Afandina)                                  |       |
 | Campaigns reviewed per week                                 |       |
-| Minutes per campaign (manual / Bya3)                        |       |
+| Minutes per campaign (manual / Afandina)                        |       |
 | Losing ad sets found / daily loss (EGP)                     |       |
 | Price changes applied / extra profit per order              |       |
 | Bundles launched / orders per week / extra profit per order |       |

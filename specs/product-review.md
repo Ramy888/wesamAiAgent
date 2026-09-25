@@ -6,7 +6,7 @@ identifies the calling workspace, so per-seller state can't be kept safely (§4)
 
 ## 1. What was asked
 
-> "Bya3 should review a current product from a link; check whether our current resources are
+> "Afandina should review a current product from a link; check whether our current resources are
 > enough or we need another tool or integration; plus a workflow that keeps reviewing a
 > product on request, with competitor ads, traffic and sales. The seller should pick the task
 > from the first message, and be able to turn the recurring check on, named something simple."
@@ -78,22 +78,22 @@ design. Deno KV is the likely home.
 
 - ✅ **Deno KV is available** on the current Deploy platform (the docs list it as supported).
 - ❌ **Wesam sends nothing that identifies the workspace.** Measured, not assumed: a temporary
-  probe logged header *names only* on production, and a real `tools/call` from Bya3 arrived
+  probe logged header *names only* on production, and a real `tools/call` from Afandina arrived
   with just `accept, accept-encoding, connection, content-length, content-type, host,
   mcp-protocol-version, traceparent, tracestate, user-agent, via`. No authorization, no
   workspace or session id; `traceparent` changes per request. The probe was reverted and the
   clean build redeployed.
 
 **Consequence: per-seller watching is not safely buildable today.** Every workspace that hires
-Bya3 would share one anonymous stream of calls, so a watchlist would have no owner. Options if
+Afandina would share one anonymous stream of calls, so a watchlist would have no owner. Options if
 this is ever revisited: ask the seller for an identifier and accept that they can see each
 other's keys (bad), issue one token per workspace (defeats a single marketplace listing), or
 wait for Wesam to forward a workspace id. **Decision: drop Part B; keep the stateless
-fallback** — Bya3 offers to re-review any product whenever the seller asks.
+fallback** — Afandina offers to re-review any product whenever the seller asks.
 
 <details><summary>Original plan, kept for reference</summary>
 
-1. **Tenant identity — the blocker.** Once Bya3 is on the marketplace, every workspace that
+1. **Tenant identity — the blocker.** Once Afandina is on the marketplace, every workspace that
    hires it shares one MCP server and one token. A watchlist with no owner would leak one
    seller's products into another's weekly report. So: does Wesam's proxy send anything that
    identifies the workspace or session? Find out by logging **header names only** (never
@@ -112,13 +112,13 @@ fallback** — Bya3 offers to re-review any product whenever the seller asks.
 
 </details>
 
-The fallback costs nothing and keeps most of the value: the seller asks Bya3 to re-review
-whenever they want, and Bya3 says so at the end of a review. Stateless, no leak risk, no new
+The fallback costs nothing and keeps most of the value: the seller asks Afandina to re-review
+whenever they want, and Afandina says so at the end of a review. Stateless, no leak risk, no new
 code — and it is already in the instructions.
 
 ## 5. The first-message menu
 
-Bya3 opens with a short list, Arabic first, verbs not nouns. Six items maximum, so it reads as
+Afandina opens with a short list, Arabic first, verbs not nouns. Six items maximum, so it reads as
 a menu rather than a wall.
 
 ```
@@ -145,7 +145,7 @@ Avoid "workflow", "automation" and "schedule". Three candidates:
 | «راقب المنتج» | Watch this product | neutral, closest to the button label |
 
 Recommendation: «متابعة أسبوعية · Weekly check», because it tells the seller what they're
-agreeing to. The seller turns it on by saying so; Bya3 confirms what it will send and when,
+agreeing to. The seller turns it on by saying so; Afandina confirms what it will send and when,
 and how to stop it.
 
 ## 6. Priority

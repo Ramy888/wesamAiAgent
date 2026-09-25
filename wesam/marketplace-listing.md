@@ -1,10 +1,10 @@
-# Wesam marketplace listing: Bya3 (draft)
+# Wesam marketplace listing: Afandina (draft)
 
 Fill this into Agent Builder → *Publish to marketplace* after the partner registration.
 **Publish only after the calculator connection works with the new token.**
 
 ## Identity
-- **Name:** Bya3 (بيّاع)
+- **Name:** Afandina (افندينا)
 - **Role (EN):** Pricing and profit advisor for online sellers
 - **Role (AR):** مستشار التسعير والأرباح للتجار أونلاين
 - **One-line subtitle (EN):** Tells you what to charge, and whether your ads are actually making money.
@@ -16,9 +16,9 @@ Fill this into Agent Builder → *Publish to marketplace* after the partner regi
   paused, in Egyptian Arabic, with every number from the Hesba calculator."
 
 ## Short pitch
-**AR:** «اعرف مكسبك الحقيقي قبل ما تدفع في الإعلان الجاي. بيّاع بيسعّرلك المنتج، ويقولك أقصى تكلفة ليد، ويراجع حملاتك وعروضك ومنافسينك، بالعربي، وبرسوم بيانية واضحة.»
+**AR:** «اعرف مكسبك الحقيقي قبل ما تدفع في الإعلان الجاي. افندينا بيسعّرلك المنتج، ويقولك أقصى تكلفة ليد، ويراجع حملاتك وعروضك ومنافسينك، بالعربي، وبرسوم بيانية واضحة.»
 
-**EN:** Know your real profit before you pay for the next ad. Bya3 prices your products, sets
+**EN:** Know your real profit before you pay for the next ad. Afandina prices your products, sets
 your max cost per lead, and checks your campaigns, offers and competitors, in Arabic, with
 clear charts.
 

@@ -3,7 +3,7 @@
  *
  * Mirrors `reference/market-defaults.json`, which holds the full sourcing notes; a test keeps
  * the two in step. Only markets with a figure printed on a courier's own page appear here.
- * Everything else is absent on purpose: Bya3 must ask rather than assume.
+ * Everything else is absent on purpose: Afandina must ask rather than assume.
  */
 
 export interface MarketCosts {

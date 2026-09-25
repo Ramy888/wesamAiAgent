@@ -199,7 +199,7 @@ fixture U.
 5. Kill the server → the agent says the calculator is down and gives no numbers.
 6. Judge path (spec §6) timed on a clean machine: under 5 minutes.
 
-## X results (2026-09-17, Bya3 Preview chat in Wesam)
+## X results (2026-09-17, Afandina Preview chat in Wesam)
 
 | # | Test | Result |
 |---|---|---|

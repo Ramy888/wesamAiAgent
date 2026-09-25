@@ -15,8 +15,8 @@ is 297, so you can't win on price; compete with a bundle instead."
 | **TikTok Commercial Content API** | ❌ | EU/UK data only, and access is limited to approved researchers. Commercial users are ineligible. |
 | Scraping the public Ad Library or TikTok Creative Center pages | ❌ (avoid) | Against the platforms' terms, brittle, and it risks a hackathon entry. Prices are also usually inside images or videos, not in text. |
 | Meta / TikTok Ads MCP servers (see `tools.md`) | ❌ for this purpose | They only expose the **seller's own** account data. |
-| **Seller-supplied evidence**: screenshots of competitor ads, product-page links, WhatsApp price lists | ✅ | Bya3 already has vision and web browsing in Wesam. The seller chooses what to share. |
-| **Public store and marketplace pages** (Noon, Amazon.eg/.sa, Jumia, Salla/Zid/Shopify stores) viewed one at a time | ✅ with care | Bya3 opens a few links the seller gives, or finds them through web search. Reads the listed price only. No bulk crawling. Check each site's terms. |
+| **Seller-supplied evidence**: screenshots of competitor ads, product-page links, WhatsApp price lists | ✅ | Afandina already has vision and web browsing in Wesam. The seller chooses what to share. |
+| **Public store and marketplace pages** (Noon, Amazon.eg/.sa, Jumia, Salla/Zid/Shopify stores) viewed one at a time | ✅ with care | Afandina opens a few links the seller gives, or finds them through web search. Reads the listed price only. No bulk crawling. Check each site's terms. |
 
 ## Update 2026-09-17: the agent finds competitors itself, using Wesam integrations
 Asking the seller to collect competitor ads is too much work. Wesam's Integrations page has
@@ -41,10 +41,10 @@ Not usable for competitors:
 **New flow.** The seller just says: "I sell product X in Egypt at 300."
 1. ScrapeCreators searches ads for X in Egypt → the top 5–10 active advertisers.
 2. Firecrawl reads each landing page's price (Composio Search adds marketplace prices).
-3. Bya3 shows the evidence table (source link, price, pieces, date) and asks one question:
+3. Afandina shows the evidence table (source link, price, pieces, date) and asks one question:
    "Use these?"
 4. `compare_prices` returns the positioning.
-5. Bya3 gives the verdict and the action.
+5. Afandina gives the verdict and the action.
 
 Workflow fit: a **weekly or monthly "Competitor watch"** is a natural scheduled Wesam
 workflow, because it needs no new seller input after setup.
@@ -52,13 +52,13 @@ workflow, because it needs no new seller input after setup.
 **Costs and risks**
 - Every connected integration uses the workspace's own paid API credits.
 - A judge's workspace would need the same connections (a G4 impact).
-- Keep a fallback: Bya3's built-in web search and browsing, with no integration at all.
+- Keep a fallback: Afandina's built-in web search and browsing, with no integration at all.
 
 ## Recommended design (original, seller-supplied fallback)
-1. **Collect (agent side, no new code).** The seller shares 3–10 competitor ads or links. Bya3
+1. **Collect (agent side, no new code).** The seller shares 3–10 competitor ads or links. Afandina
    reads each one and fills a table: competitor, price, pieces in the offer, shipping included
-   (yes/no), source, and date seen. Bya3 repeats the table back and gets a "yes" (the same
-   rule as for campaign screenshots). If a price is unclear, Bya3 asks instead of guessing.
+   (yes/no), source, and date seen. Afandina repeats the table back and gets a "yes" (the same
+   rule as for campaign screenshots). If a price is unclear, Afandina asks instead of guessing.
 2. **Compare (new deterministic tool: `compare_prices`).**
    - Input: the product fields, plus `competitors: [{label, totalPrice, pieces, shippingIncluded}]`.
    - For each competitor:
@@ -100,7 +100,7 @@ workflow, because it needs no new seller input after setup.
 ## Effort estimate
 - `compare_prices` tool: small (same engine, about 1 file plus tests).
 - Skill `hesba-competitor-check` (how to read ad screenshots and normalize prices): small.
-- A good demo moment for the video: "Here are 5 competitor ads → Bya3 says don't undercut,
+- A good demo moment for the video: "Here are 5 competitor ads → Afandina says don't undercut,
   offer a bundle."
 - **Suggested timing:** after the MCP server is deployed and connected. Optional on Oct 1–3
   only if the core is finished early.

@@ -39,12 +39,12 @@ their accounting.
   ولا اسم صفحتك) في عرض تقديمي وفيديو للمسابقة؟»
 - Ask them to have open: their product cost, their courier's price list, and Ads Manager for one
   live campaign.
-- Check that Bya3 answers a test question, so the session doesn't start with a broken tool.
+- Check that Afandina answers a test question, so the session doesn't start with a broken tool.
 - Have a stopwatch. The timings are the impact slide.
 
 ## 4. The session (45 minutes)
 
-**Part 1 — how they do it today (15 min). Do this first, before they see Bya3.**
+**Part 1 — how they do it today (15 min). Do this first, before they see Afandina.**
 
 Ask them to price a product **the way they normally would**, out loud, while you time it. Don't
 help, don't hint. Record:
@@ -63,7 +63,7 @@ help, don't hint. Record:
 
 That last pair is where the "money saved" number comes from.
 
-**Part 2 — the same product through Bya3 (20 min).**
+**Part 2 — the same product through Afandina (20 min).**
 
 Collect these, which are exactly what the tool needs:
 
@@ -86,7 +86,7 @@ footage.
 
 **Part 3 — their verdict (10 min).**
 
-- Is the price Bya3 suggested sensible for their market? If not, why not?
+- Is the price Afandina suggested sensible for their market? If not, why not?
 - Was the campaign verdict right, by their judgement?
 - Would they change anything they do tomorrow because of this?
 - What did it miss?
@@ -110,5 +110,5 @@ Part 3 is also the expert validation that has been outstanding: a practitioner j
 - **Never invent a number.** A blank on a slide is survivable; an invented figure is not.
 - Anonymize by default: "a Cairo seller in home appliances", never their page name.
 - Don't show them formulas or internals, per the standing rule.
-- If their numbers say Bya3 is wrong, that is the most valuable outcome of the whole project. Write
+- If their numbers say Afandina is wrong, that is the most valuable outcome of the whole project. Write
   it down exactly and fix it.

@@ -157,7 +157,7 @@ const AR: Words = {
   ofAdSpend: "إعلان",
   orders: "أوردر",
   marketCosts: "تكاليف الشحن المنشورة",
-  noPublicCosts: "مفيش أسعار منشورة للسوق ده — اسأل البيّاع",
+  noPublicCosts: "مفيش أسعار منشورة للسوق ده — اسأل الافندينا",
   returnsEqualDelivery: "المرتجع بيتحاسب بنفس سعر التوصيل",
   returnFee: "تكلفة المرتجع",
   parsed: "قريت من الملف",

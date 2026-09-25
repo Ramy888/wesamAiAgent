@@ -1,6 +1,6 @@
-# Hesba — Bya3 pricing agent (Wesam.ai)
+# Hesba — Afandina pricing agent (Wesam.ai)
 
-Bya3 is an AI pricing and profit advisor for online sellers in Egypt, the Gulf and MENA. It
+Afandina is an AI pricing and profit advisor for online sellers in Egypt, the Gulf and MENA. It
 tells a seller what to charge, and whether their ads are actually making money. It runs on
 Wesam.ai, and all of its math comes from the **Hesba calculator**, a small, dependency-free
 MCP server in this repo.
@@ -9,7 +9,7 @@ MCP server in this repo.
 
 1. **Check the math in 5 minutes.** Follow the section below to run the calculator locally. You
    don't need an account.
-2. **Talk to Bya3 on Wesam.** _How judges get access is still to be confirmed with the
+2. **Talk to Afandina on Wesam.** _How judges get access is still to be confirmed with the
    organizers (marketplace listing or a shared workspace). The link will go here._ Paste any of
    these prompts:
    - Pricing (expected: below target; net profit 2.19 EGP; breakeven 296.94; safe price 345.23):
@@ -23,9 +23,9 @@ MCP server in this repo.
      > I'm new to selling online, in Egypt. The product costs me 100 EGP and I don't know my other costs. A competitor sells it at 279. What should I charge?
    - Competitors (uses live web search):
      > نفس المنتج اسمه "مكواة بخار محمولة" في مصر. قارن سعري بالمنافسين.
-3. **What to expect.** Bya3 replies with a verdict first, then 3–5 numbers, one action, and a
+3. **What to expect.** Afandina replies with a verdict first, then 3–5 numbers, one action, and a
    chart. If numbers are missing, it asks for them. Any default it uses is listed as an
-   assumption. Competitor prices come with source links, and Bya3 asks you to confirm them
+   assumption. Competitor prices come with source links, and Afandina asks you to confirm them
    before comparing.
 
 Demo script: [docs/demo-script.md](docs/demo-script.md). Impact slides outline:

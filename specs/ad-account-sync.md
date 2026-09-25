@@ -7,7 +7,7 @@ headline finding changes the plan, so read §2 before building anything.
 
 Today a seller types twelve numbers for every campaign check: spend, leads, confirmed,
 delivered, plus the unit costs. That typing **is** the 20 minutes a week we claim to save. If
-Bya3 reads the ad half itself, the check becomes "confirm two numbers" — and the hours-saved
+Afandina reads the ad half itself, the check becomes "confirm two numbers" — and the hours-saved
 figure on the impact slide stops depending on how fast someone types.
 
 This is the seller's **own** account, connected by them through OAuth. No scraping, no terms
@@ -33,15 +33,15 @@ of this connector.
 
 **A safety problem to fix first:** the 142 enabled actions include write actions such as
 `Update Advertiser Budgets`, `Set Smart+ Campaign Delivery Status`, `Update Smart+ Ad Status`
-and `Disable Business Center Advertiser`. Bya3 must never change a budget or pause a campaign
+and `Disable Business Center Advertiser`. Afandina must never change a budget or pause a campaign
 on its own — it advises, the seller acts. **Disable every write action on this integration
-before Bya3 is allowed near it**, and keep only the read actions listed above.
+before Afandina is allowed near it**, and keep only the read actions listed above.
 
 ## 3. Options, given the gap
 
 | Option | Gets us spend per campaign? | Cost | Verdict |
 |---|---|---|---|
-| **A. Use the connector for structure only** — Bya3 lists the seller's live campaigns by name and asks for the numbers per campaign | No, but it removes the "which campaigns do I have" step and lets Bya3 ask precisely | Free, works today | ✅ **do this** |
+| **A. Use the connector for structure only** — Afandina lists the seller's live campaigns by name and asks for the numbers per campaign | No, but it removes the "which campaigns do I have" step and lets Afandina ask precisely | Free, works today | ✅ **do this** |
 | **B. Smart+ / GMV Max reports** | Yes, but only for sellers running those campaign types | Free | ✅ use when the seller has them |
 | **C. Ask Wesam to add the reporting action** (the integrations page has a "request integration" button) | Yes, if they add it | Free, unknown timing | ✅ ask now, don't wait for it |
 | **D. Our own MCP tool calling TikTok's API with the seller's token** | Yes | Real work, and **we'd have to hold each seller's token** | ❌ **no** — the tenant-identity finding (`specs/product-review.md` §4) means we can't tell one workspace's calls from another's, so we must never hold per-seller credentials |
@@ -51,7 +51,7 @@ before Bya3 is allowed near it**, and keep only the read actions listed above.
 ## 4. The flow, once built
 
 1. Seller asks for a campaign check.
-2. Bya3 calls `List Campaigns` (and `List Ad Groups` when needed) and shows the live ones by
+2. Afandina calls `List Campaigns` (and `List Ad Groups` when needed) and shows the live ones by
    name, with status and daily budget.
 3. For a Smart+ or GMV Max campaign, it pulls the report and fills spend itself.
 4. Otherwise it asks for **spend and leads** for the chosen campaign and week.
@@ -69,7 +69,7 @@ gap that TikTok's leaves open, since Meta's API does publish spend and results p
 
 ## 6. Scope note
 
-Bya3 serves **19 markets across Egypt, the Gulf and the wider MENA region** — not Egypt alone.
+Afandina serves **19 markets across Egypt, the Gulf and the wider MENA region** — not Egypt alone.
 Campaign structure and currency come from the seller's own ad account, so nothing here is
 Egypt-specific, but the ad platforms' regional availability differs and should be checked per
 market before this is promised in the listing.

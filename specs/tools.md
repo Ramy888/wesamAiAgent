@@ -1,4 +1,4 @@
-# Tools / MCP servers for Bya3
+# Tools / MCP servers for Afandina
 
 Status: draft, 2026-09-16.
 
@@ -19,9 +19,9 @@ Research for this page used vendor docs and READMEs.
 - **Built 2026-09-16** (`engine/`, `server/`). **Deployed 2026-09-17** to
   https://hesba-calculator.hesba.deno.net (Deno Deploy org `hesba`, region global). The path
   token is a Deno Deploy secret.
-  It is the only source of numbers; without it, Bya3 refuses to give numbers, by design.
+  It is the only source of numbers; without it, Afandina refuses to give numbers, by design.
 - Hosting: Deno Deploy. URL: `https://hesba-calculator.hesba.deno.net/mcp/<token>`. Read-only annotations.
-- Wesam setup: Name `Hesba Calculator`, include `*`, exclude nothing. **Connected to Bya3 on
+- Wesam setup: Name `Hesba Calculator`, include `*`, exclude nothing. **Connected to Afandina on
   2026-09-17** (Test found 5 tools).
 
 ## Wesam integrations in use
@@ -62,7 +62,7 @@ Research for this page used vendor docs and READMEs.
   seller's courier export as a file upload or a Google Sheet instead.
 - **FX rates**: the remote FX MCP servers use ECB rates, which **don't cover EGP or the Gulf
   currencies** (checked against the Frankfurter API on 2026-09-16). **Decision:** no FX tool.
-  The seller gives prices in one currency; Bya3 asks rather than converting.
+  The seller gives prices in one currency; Afandina asks rather than converting.
 
 ### Suggested exclude globs for ad servers
 The ad servers above include write tools, so exclude:

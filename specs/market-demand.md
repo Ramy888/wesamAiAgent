@@ -48,7 +48,7 @@ Rules for this section:
    rests on every number being exact. A demand estimate lives in its own section, carries its
    source and confidence, and is never an input to price, margin or CPA. If a seller wants to
    plan volume, they type their own number.
-2. **All arithmetic stays in the MCP tool.** Bya3 gathers observations; the tool counts,
+2. **All arithmetic stays in the MCP tool.** Afandina gathers observations; the tool counts,
    ranks, divides and rounds. Same rule as everywhere else in this project.
 3. **Every row cites a link.** No link, no row.
 4. **A request budget per check** (§6), so a single question can't burn the monthly cap.
@@ -118,7 +118,7 @@ must therefore stay small:
 - at most 6 search phrases,
 - at most 8 competitor pages opened,
 - at most 2 extra calls (trend, autocomplete),
-- **hard ceiling: 16 requests per check**, and Bya3 says how many it used.
+- **hard ceiling: 16 requests per check**, and Afandina says how many it used.
 
 At that size, the monthly cap allows roughly 200 checks.
 

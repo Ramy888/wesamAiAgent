@@ -1,4 +1,4 @@
-# Bya3 workflows (Wesam Agent Builder → Workflows)
+# Afandina workflows (Wesam Agent Builder → Workflows)
 
 Each workflow in Wesam has these parts:
 - a name

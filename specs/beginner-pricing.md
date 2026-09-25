@@ -6,7 +6,7 @@ and `market_costs`, the `scenarios` chart, 101 tests passing). Not deployed yet.
 ## 1. What was asked
 
 > A seller new to online selling gives the market and the product cost, plus any other costs
-> they happen to know. From the market, the competitors and the ads for that product, Bya3
+> they happen to know. From the market, the competitors and the ads for that product, Afandina
 > recommends a price, shows likely delivery and return costs, and then a table: at price X the
 > margin is critical, at Y the margin, revenue and profit are these numbers, at Z these — with
 > the competitors' prices in the same table. No equations, no technical detail, almost no
@@ -42,7 +42,7 @@ promise**, so the flow below is built around absence, not around defaults.
 everywhere. They come from the seller session (`docs/seller-intake.md`) or they get asked.
 
 Consequences for the flow:
-- In Egypt, Morocco, the UAE and Saudi, Bya3 can offer a delivery cost and say where it came
+- In Egypt, Morocco, the UAE and Saudi, Afandina can offer a delivery cost and say where it came
   from. Everywhere else it **asks**, because there is nothing honest to assume.
 - Egypt's numbers are a **ceiling**: Bosta's page says "higher volume, lower price" and its own
   signup flow shows lower figures that couldn't be verified without an account. That
