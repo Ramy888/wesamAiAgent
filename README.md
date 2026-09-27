@@ -86,17 +86,16 @@ or run `deno run -A tests/oracle/sdk_smoke.ts` while it is running.
 
 ## Production
 
-- Server: **https://hesba-calculator.ramy-comm.workers.dev** (Cloudflare Workers).
-  `/health` and the signed chart images at `/chart/...` are public.
-- The MCP endpoint is `/mcp/<token>`. The token is the `HESBA_TOKENS` secret on the Worker; it
-  is never in this repo.
-- Deploy with `deno task deploy`, which runs the tests and then `wrangler deploy`. Secrets are
-  set once with `npx wrangler secret put HESBA_TOKENS` (and `HESBA_CHART_SECRET`).
-- `worker/index.ts` is the Workers entry point; `server/main.ts` is the Deno one. The handler,
-  the engine and the tools are shared, so either host runs the same code.
-- **History:** this ran on Deno Deploy until 2026-09-26, when the free tier suspended it — an
-  unverified organisation is capped at 1% of the free limits. `deno task deploy:deno` still
-  works if that org is ever restored.
+- Server: **https://hesba-calculator.hesba.deno.net** (Deno Deploy, org `hesba`). `/health` and
+  the signed chart images at `/chart/...` are public.
+- The MCP endpoint is `/mcp/<token>`. The token is the `HESBA_TOKENS` secret; it is never in
+  this repo.
+- Deploy with `deno task deploy` (tests, then a staged upload of `deno.json`, `deno.lock`,
+  `engine/` and `server/`).
+- **A second host is kept warm:** `deno task deploy:cf` publishes the same code to Cloudflare
+  Workers (`worker/index.ts`, `wrangler.jsonc`), and `hesba-ten.vercel.app/mcp/...` proxies to
+  it. The Deno app was suspended on 2026-09-26 when an unverified free org hit 1% of the free
+  limits; the org is verified now, and the Workers copy stays as a fallback.
 
 ## Configuration
 
