@@ -131,6 +131,7 @@ function toProduct(v: Record<string, unknown>): Product {
     vatPct: n("vatPct"),
     marketerCommissionPct: n("marketerCommissionPct"),
     targetMarginPct: n("targetMarginPct"),
+    codFeePct: n("codFeePct"),
     sellingPrice: v.sellingPrice as number | undefined,
   };
 }

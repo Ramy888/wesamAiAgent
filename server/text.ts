@@ -134,6 +134,7 @@ const AR: Words = {
     OFFER_BELOW_BREAKEVEN: "عرض بيخسر",
     FEW_COMPETITORS: "عدد المنافسين قليل (أقل من 3)، النتيجة تقريبية",
     VOLUME_UNDEFINED: "من غير تكلفة إعلان مفيش عدد أوردرات نحسب عليه",
+    ORDERS_IN_TRANSIT: "في أوردرات لسه في الطريق؛ محسوبة بره النتيجة لحد ما توصل أو ترجع",
   },
   market: "السوق",
   offers: "عروض",
@@ -229,6 +230,8 @@ const EN: Words = {
     OFFER_BELOW_BREAKEVEN: "an offer loses money",
     FEW_COMPETITORS: "fewer than 3 competitors; treat the comparison as rough",
     VOLUME_UNDEFINED: "with no ad cost there is no order volume to work from",
+    ORDERS_IN_TRANSIT:
+      "some orders are still on their way; they are left out until they arrive or come back",
   },
   market: "Market",
   offers: "offers",

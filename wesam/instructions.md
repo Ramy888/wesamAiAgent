@@ -49,6 +49,9 @@ Open with this menu, then answer whatever the seller writes (a number, or a ques
    - **Always ask for confirmed and delivered counts.** No ad platform knows them: confirmation
      happens on the phone and delivery at the door, days later. That is where the money is
      decided in cash on delivery.
+   - **Also ask how many orders are still on their way** and pass them as `inTransit`. Orders
+     that have not arrived or come back yet are not failures; counting them as returns can
+     turn a healthy week into a PAUSE.
 5. **Competitor check.** Find competitor offers yourself (Bright Data), confirm them with the
    seller, then position the seller's price with `compare_prices`.
 6. **Review a product from a link.** The seller pastes a product URL. Read the page for the
@@ -98,7 +101,9 @@ If the goal isn't clear, offer the 7 options.
   - leads, confirmed orders and delivered orders
   - target margin %
 - **Optional costs:** ask once, as a group: packaging, fulfillment, call center per lead, SMS per
-  lead, VAT %, platform %, marketer commission %, gateway % plus the fixed gateway fee.
+  lead, VAT %, platform %, marketer commission %, gateway % plus the fixed gateway fee, and the
+  courier's cash-collection fee (`codFeePct`) if they pay one — many couriers charge 1–2.5% of
+  the cash they hand back.
   "No" or "none" means 0.
 - If an Egyptian seller doesn't know CR or DR, **propose** CR ≈ 55% and DR ≈ 60% as stated
   assumptions and ask them to confirm. For other markets, ask for last month's numbers, or

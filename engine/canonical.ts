@@ -27,6 +27,8 @@ export interface Product {
   vatPct: number;
   marketerCommissionPct: number;
   targetMarginPct: number;
+  /** Courier's fee for handing back collected cash, as a % of what the customer pays. */
+  codFeePct?: number;
   sellingPrice?: number;
 }
 
@@ -42,7 +44,8 @@ export type WarningCode =
   | "NO_AD_BUDGET"
   | "OFFER_BELOW_BREAKEVEN"
   | "FEW_COMPETITORS"
-  | "VOLUME_UNDEFINED";
+  | "VOLUME_UNDEFINED"
+  | "ORDERS_IN_TRANSIT";
 
 export interface Warning {
   code: WarningCode;
@@ -101,8 +104,8 @@ export function economics(p: Product): Economics {
   const fixedCostsExLead = unitProductCost + blendedShipping + operationsCost +
     p.paymentGatewayFixed;
   const fixedCostsPerDelivered = fixedCostsExLead + leadProcessingCost;
-  const pctStack = (p.vatPct + p.platformFeePct + p.marketerCommissionPct + p.paymentGatewayPct) /
-    100;
+  const pctStack = (p.vatPct + p.platformFeePct + p.marketerCommissionPct + p.paymentGatewayPct +
+    (p.codFeePct ?? 0)) / 100;
   const adCostPerDelivered = p.leadCpa * leadsPerDelivered;
   const tm = p.targetMarginPct / 100;
   const total = fixedCostsPerDelivered + adCostPerDelivered;
@@ -497,6 +500,8 @@ export function comparePrices(p: Product, competitors: Competitor[]): CompareRes
 // ─── check_campaign ─────────────────────────────────────────────────────────
 
 export interface Campaign {
+  /** Confirmed orders that have neither been delivered nor returned yet. */
+  inTransit?: number;
   adBudgetSpent: number;
   leads: number;
   confirmed: number;
@@ -511,6 +516,7 @@ export type CampaignCostKey =
   | "callCenter"
   | "sms"
   | "gatewayFixed"
+  | "codFees"
   | "gatewayPct"
   | "platformFees"
   | "marketerFees"
@@ -539,6 +545,9 @@ export interface CampaignResult {
   crPct: number | null;
   drPct: number | null;
   rtoCount: number;
+  inTransit: number;
+  /** Confirmed orders whose outcome is known: delivered or returned. */
+  settledOrders: number;
   maxCplBreakeven: number | null;
   maxCplAtTarget: number | null;
   requiredPrice: number | null;
@@ -552,20 +561,27 @@ export function checkCampaign(p: Product, c: Campaign): CampaignResult {
   if (p.sellingPrice === undefined) throw new RangeError("checkCampaign needs a selling price.");
   const price = p.sellingPrice;
   const unit = p.productCost + p.customsDutyPerUnit;
-  const stack = (p.vatPct + p.platformFeePct + p.marketerCommissionPct + p.paymentGatewayPct) /
-    100;
+  const stack = (p.vatPct + p.platformFeePct + p.marketerCommissionPct + p.paymentGatewayPct +
+    (p.codFeePct ?? 0)) / 100;
   const tm = p.targetMarginPct / 100;
   const warnings: Warning[] = [];
-  if (c.delivered > c.confirmed || c.confirmed > c.leads) {
+  const inTransit = Math.max(0, c.inTransit ?? 0);
+  if (
+    c.delivered > c.confirmed || c.confirmed > c.leads ||
+    c.delivered + inTransit > c.confirmed
+  ) {
     warnings.push({ code: "COUNTS_INCONSISTENT" });
   }
+  if (inTransit > 0) warnings.push({ code: "ORDERS_IN_TRANSIT", detail: { orders: inTransit } });
   if (c.delivered === 0) warnings.push({ code: "NO_DELIVERIES" });
   if (c.adBudgetSpent === 0) warnings.push({ code: "NO_AD_BUDGET" });
   if (stack >= 1) warnings.push({ code: "STACK_GE_100" });
   else if (stack + tm >= 1) warnings.push({ code: "STACK_PLUS_MARGIN_GE_100" });
   if (tm < 0) warnings.push({ code: "NEGATIVE_TARGET_MARGIN" });
 
-  const rtoCount = Math.max(0, c.confirmed - c.delivered);
+  // Orders still on their way have not failed: they leave the settled population entirely.
+  const settledOrders = Math.max(0, c.confirmed - inTransit);
+  const rtoCount = Math.max(0, settledOrders - c.delivered);
   const revenue = c.delivered * price;
   const fixedParts = {
     productCosts: c.delivered * unit,
@@ -577,6 +593,7 @@ export function checkCampaign(p: Product, c: Campaign): CampaignResult {
     gatewayFixed: c.confirmed * p.paymentGatewayFixed,
   };
   const pctParts = {
+    codFees: revenue * (p.codFeePct ?? 0) / 100,
     gatewayPct: revenue * p.paymentGatewayPct / 100,
     platformFees: revenue * p.platformFeePct / 100,
     marketerFees: revenue * p.marketerCommissionPct / 100,
@@ -639,8 +656,10 @@ export function checkCampaign(p: Product, c: Campaign): CampaignResult {
     roas: c.adBudgetSpent > 0 ? revenue / c.adBudgetSpent : null,
     breakEvenRoas: contributionBeforeAds > EPS ? revenue / contributionBeforeAds : null,
     crPct: c.leads > 0 ? (c.confirmed / c.leads) * 100 : null,
-    drPct: c.confirmed > 0 ? (c.delivered / c.confirmed) * 100 : null,
+    drPct: settledOrders > 0 ? (c.delivered / settledOrders) * 100 : null,
     rtoCount,
+    inTransit,
+    settledOrders,
     maxCplBreakeven: c.leads > 0 ? contributionBeforeAds / c.leads : null,
     maxCplAtTarget,
     requiredPrice,

@@ -117,6 +117,10 @@ export const PRODUCT_FIELDS: Record<string, Schema> = {
   paymentGatewayFixed: money("Fixed payment gateway fee per order.", 0),
   vatPct: feePct("VAT, % of revenue"),
   marketerCommissionPct: feePct("Marketer or affiliate commission, % of revenue"),
+  codFeePct: feePct(
+    "Cash-on-delivery collection fee, % of the amount the courier collects (e.g. 2.5). " +
+      "Ask the seller; couriers differ and many charge nothing",
+  ),
   targetMarginPct: {
     type: "number",
     description: "Target net margin in percent (-100 to 100). Default 20.",
@@ -161,6 +165,15 @@ export const CAMPAIGN_SCHEMA: ObjectSchema = {
       description: "Delivered and paid orders.",
       minimum: 0,
       maximum: LIMIT,
+    },
+    inTransit: {
+      type: "integer",
+      description:
+        "Confirmed orders still on their way: neither delivered nor returned yet. They are " +
+        "left out of the delivery rate and charged no return shipping. Omit if unknown.",
+      minimum: 0,
+      maximum: LIMIT,
+      default: 0,
     },
   },
   required: ["adBudgetSpent", "leads", "confirmed", "delivered"],
