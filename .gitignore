@@ -6,3 +6,7 @@
 .env
 .env.*
 !.env.example
+.dev.vars
+
+# Cloudflare
+.wrangler/

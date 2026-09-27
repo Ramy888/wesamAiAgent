@@ -6,7 +6,8 @@
     "test": "deno test --allow-read=reference",
     "serve": "deno run --env-file=.env --allow-net=0.0.0.0 --allow-env=HESBA_TOKENS,PORT,HESBA_CHART_SECRET,PUBLIC_BASE_URL server/main.ts",
     "check": "deno check server/main.ts && deno lint && deno fmt --check",
-    "deploy": "bash scripts/deploy.sh"
+    "deploy": "deno task test && npx wrangler deploy",
+    "deploy:deno": "bash scripts/deploy.sh"
   },
   "fmt": {
     "lineWidth": 100,

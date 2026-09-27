@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hesba-calculator",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-01",
+  // node:crypto (HMAC signing for chart links) comes from the Node compatibility layer.
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "vars": {
+    "PUBLIC_BASE_URL": "https://hesba-calculator.ramy-comm.workers.dev"
+  }
+}

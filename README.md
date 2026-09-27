@@ -86,12 +86,17 @@ or run `deno run -A tests/oracle/sdk_smoke.ts` while it is running.
 
 ## Production
 
-- Server: https://hesba-calculator.hesba.deno.net (Deno Deploy, org `hesba`). `/health` and the
-  signed chart images at `/chart/...` are public.
-- The MCP endpoint is `/mcp/<token>`. The token is the `HESBA_TOKENS` secret on Deno Deploy; it
+- Server: **https://hesba-calculator.ramy-comm.workers.dev** (Cloudflare Workers).
+  `/health` and the signed chart images at `/chart/...` are public.
+- The MCP endpoint is `/mcp/<token>`. The token is the `HESBA_TOKENS` secret on the Worker; it
   is never in this repo.
-- Redeploy with `deno task deploy`, which runs the tests and uploads only `deno.json`,
-  `deno.lock`, `engine/` and `server/`.
+- Deploy with `deno task deploy`, which runs the tests and then `wrangler deploy`. Secrets are
+  set once with `npx wrangler secret put HESBA_TOKENS` (and `HESBA_CHART_SECRET`).
+- `worker/index.ts` is the Workers entry point; `server/main.ts` is the Deno one. The handler,
+  the engine and the tools are shared, so either host runs the same code.
+- **History:** this ran on Deno Deploy until 2026-09-26, when the free tier suspended it — an
+  unverified organisation is capped at 1% of the free limits. `deno task deploy:deno` still
+  works if that org is ever restored.
 
 ## Configuration
 

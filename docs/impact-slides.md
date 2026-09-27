@@ -83,9 +83,9 @@ Measured by timing the seller doing each task both ways on the same day.
 | ----------------------------------------------------------- | ----- |
 | Products priced per week                                    |       |
 | Minutes per product (manual)                                |       |
-| Minutes per product (Afandina)                                  |       |
+| Minutes per product (Afandina)                              |       |
 | Campaigns reviewed per week                                 |       |
-| Minutes per campaign (manual / Afandina)                        |       |
+| Minutes per campaign (manual / Afandina)                    |       |
 | Losing ad sets found / daily loss (EGP)                     |       |
 | Price changes applied / extra profit per order              |       |
 | Bundles launched / orders per week / extra profit per order |       |

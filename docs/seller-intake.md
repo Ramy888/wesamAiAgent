@@ -110,5 +110,5 @@ Part 3 is also the expert validation that has been outstanding: a practitioner j
 - **Never invent a number.** A blank on a slide is survivable; an invented figure is not.
 - Anonymize by default: "a Cairo seller in home appliances", never their page name.
 - Don't show them formulas or internals, per the standing rule.
-- If their numbers say Afandina is wrong, that is the most valuable outcome of the whole project. Write
-  it down exactly and fix it.
+- If their numbers say Afandina is wrong, that is the most valuable outcome of the whole project.
+  Write it down exactly and fix it.
