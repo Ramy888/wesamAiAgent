@@ -1,50 +1,97 @@
-# Demo video — script and shot list (target 2:30, max 3:00)
+# Demo video — recording run-sheet
 
-**Format:** screen recording of the Wesam chat plus the landing page. **Voice-over:** Egyptian
-Arabic, with burned-in English subtitles. **Recording:** 1920×1080, browser zoom 110%, one clean
-Wesam workspace, notifications off.
+Target **2:30–2:50** (the form accepts 2–3 minutes). Upload as **mp4** (the form also allows mov,
+avi, mkv, wmv, flv, webm, m4v, 3gp).
 
-**Numbers:** use only real Afandina output recorded on the day, never typed-in numbers. The example
-numbers below come from the tested calculator; re-record if any number differs.
+Voice-over in Egyptian Arabic, burned-in English subtitles. Screen recording of the Wesam chat, plus
+two seconds of the landing page.
 
-| # | Time      | Shot (screen)                                                                                                                                                 | Voice-over (Egyptian Arabic)                                                                                                   | Subtitle (English)                                                                                                                    |
-| - | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| 1 | 0:00–0:12 | A seller's messy Excel sheet, a Facebook Ads Manager screenshot, a courier report                                                                             | «كل بياع أونلاين بيسأل نفس السؤال: أنا كسبان ولا بخسر؟ والإجابة متوزعة بين شيت وإعلانات وشركة شحن.»                            | Every online seller asks: am I making money? The answer is scattered across sheets, ads and courier reports.                          |
-| 2 | 0:12–0:20 | Landing page hero (hesba-ten.vercel.app)                                                                                                                      | «حِسبة… وافندينا، محلل التسعير بتاعك على Wesam.»                                                                                | Meet Hesba, and Afandina, your pricing analyst on Wesam.                                                                              |
-| 3 | 0:20–1:00 | Wesam chat. Type a pricing request in Arabic (cost, shipping, CPA, CR, DR, price 300). The reply appears: verdict, numbers, **cost chart**                    | «بكتب أرقامي بالمصري… في ثواني: قراري، مكسبي الحقيقي في الأوردر، وأقصى تكلفة ليد أقدر أدفعها… والرسم بيوريني فين فلوسي بتروح.» | I type my numbers. In seconds: a verdict, my real profit per order, the most I can pay per lead, and a chart of where the money goes. |
-| 4 | 1:00–1:35 | Campaign check: paste a week's numbers (budget, leads, confirmed, delivered). Verdict **PAUSE/FIX**, funnel chart, top lever                                  | «مراجعة حملة الأسبوع: افندينا بيقولي وقّف ولا صلّح ولا كبّر… وإيه أهم خطوة.»                                                      | Weekly campaign check: pause, fix or scale, and the one move that matters.                                                            |
-| 5 | 1:35–2:05 | Competitor check: "مكواة بخار محمولة in Egypt". Afandina finds real offers, asks to confirm, then shows the **market chart** and the "don't undercut" verdict | «وكمان بيدوّر على المنافسين بنفسه، بياخد موافقتي، ويقولي: متنزلش سعرك… اعمل باكدج.»                                             | It finds competitors itself, asks me to confirm, then tells me: don't undercut, bundle instead.                                       |
-| 6 | 2:05–2:20 | Bundle offer check ("2 for 550") → profit per order + bundle chart                                                                                            | «وأي عرض قبل ما أنزله… أعرف هيكسب ولا هيخسر.»                                                                                  | Any offer, checked before I launch it.                                                                                                |
-| 7 | 2:20–2:40 | Impact slide (real seller numbers, see `impact-slides.md`)                                                                                                    | «مع [اسم البياع]: وفّرنا [X] ساعة في الأسبوع ووقفنا [Y] جنيه كانوا رايحين في إعلانات خسرانة.»                                   | With [seller]: [X] hours saved a week, [Y] EGP of losing ad spend stopped.                                                            |
-| 8 | 2:40–2:50 | Logo + landing URL + "Built on Wesam.ai"                                                                                                                      | «حِسبة… اعرف مكسبك الحقيقي قبل الإعلان الجاي.»                                                                                  | Hesba: know your real profit before the next ad.                                                                                      |
+## Before you press record
 
-## Prompts to use (copy exactly)
+- [ ] افندينا answers correctly — send one throwaway prompt first; a cold chat is slower.
+- [ ] **A fresh chat per segment.** Wesam applies saved instructions from the next message, and a
+      clean thread films better than a scrolled one.
+- [ ] Browser at 1920×1080, zoom 110%, notifications off, bookmarks bar hidden.
+- [ ] **No secrets on screen:** never open `.env`, the Tools dialog, or the server URL.
+- [ ] A stopwatch where you can see it (not on screen), so any timing you quote is real.
+- [ ] Every number shown must come from افندينا live. Re-record rather than retype.
 
-1. **Pricing:**
-   > عايز أسعّر منتج في مصر. التكلفة 100 جنيه + جمارك 10، الشحن 25 والمرتجع 15، تغليف 5 وتجهيز 10،
-   > كول سنتر 2 و SMS نص جنيه لكل ليد. عمولة المنصة 8% وبوابة الدفع 2.5% + 3 جنيه، ضريبة 15% وعمولة
-   > مسوّق 3%. الـ CPA عندي 15، التأكيد 60% والتسليم 45%، وببيع بـ 300 وعايز هامش 10%.
+## The shots
 
-   **Expected:** below target; net profit 2.19 EGP (0.7%); breakeven 296.94; suggested price 345.23.
-2. **Campaign:** use the seller's real week, or this sample:
-   > المنتج ده بسعر 300، الأسبوع ده صرفت 1000 جنيه، جالي 100 ليد، 50 أكدوا و40 استلموا. الهدف 20%.
+| # | Time      | On screen                                                                                                 | Say (Egyptian Arabic)                                                                                  | Subtitle                                                                                                              |
+| - | --------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| 1 | 0:00–0:12 | A spreadsheet, Ads Manager and a courier sheet side by side                                               | «التاجر بيدفع الإعلان الأول، وبياخد فلوسه بس لما العميل يرد ويستلم. فين المكسب الحقيقي؟ مفيش حد عارف.» | You pay for the ad first, and only get paid if the customer answers and opens the door. Nobody knows the real profit. |
+| 2 | 0:12–0:22 | hesba-ten.vercel.app hero, then the Wesam chat opening                                                    | «افندينا — مستشار التسعير والأرباح، شغال على Wesam.»                                                   | افندينا — a pricing and profit advisor, running on Wesam.                                                             |
+| 3 | 0:22–1:00 | **Prompt A**, then the answer: verdict, numbers, cost chart                                               | «بكتب أرقامي بالمصري… وفي ثواني: مكسبي الحقيقي في الأوردر، السعر الآمن، وأقصى تكلفة ليد.»              | I type my numbers in Arabic. In seconds: real profit per order, the safe price, and my cost-per-lead ceiling.         |
+| 4 | 1:00–1:35 | **Prompt B**, the beginner flow: courier costs with the Bosta source link, then the price table and chart | «ولو لسه بادئ؟ ثلاث أسئلة بس — وبيجيبلي أسعار الشحن المنشورة ومصدرها، وجدول أسعار كامل.»               | New to this? Three questions — published courier costs with their source, and a full price table.                     |
+| 5 | 1:35–2:05 | **Prompt C**, campaign verdict with the funnel chart                                                      | «مراجعة الحملة: كمّل، صلّح، ولا وقّف — وأهم خطوة واحدة.»                                                  | The campaign check: scale, fix or pause — and the one move that matters.                                              |
+| 6 | 2:05–2:25 | **Prompt D**, offer verdict                                                                               | «وأي عرض، قبل ما أنزله.»                                                                               | And any offer, before you launch it.                                                                                  |
+| 7 | 2:25–2:50 | Impact slide (below), then logo and URL                                                                   | «الأرقام كلها بتطلع من حاسبة متختبرة — الذكاء الاصطناعي عمره ما بيخمّن رقم.»                            | Every number comes from a tested calculator. The AI never guesses one.                                                |
 
-   **Expected with the same fees:** FIX; net profit +880 EGP (7.3%, target 20%); top lever: raise
-   the price to 373.79.
-3. **Competitors:**
-   > نفس التكاليف دي، المنتج "مكواة بخار محمولة" وببيعها في مصر بـ 300. شوفلي المنافسين بيبيعوها
-   > بكام وقارن سعري بيهم. بحث واحد و4 صفحات بالكتير.
-4. **Offer:**
-   > نفس المنتج: لو عملت عرض قطعتين بـ 550 هكسب ولا هخسر؟
+## The exact prompts
 
-   **Expected:** +70.94 per order (12.9%).
+**A — price a product** (fresh chat, "Just a simple task")
 
-## Recording checklist
+```
+عايز أسعّر منتج في مصر. التكلفة 100 جنيه + جمارك 10، الشحن 25 والمرتجع 15، تغليف 5 وتجهيز 10، كول سنتر 2 و SMS نص جنيه لكل ليد. عمولة المنصة 8% وبوابة الدفع 2.5% + 3 جنيه، ضريبة 15% وعمولة مسوّق 3%. الـ CPA عندي 15، التأكيد 60% والتسليم 45%، وببيع بـ 300 وعايز هامش 10%.
+```
 
-- [ ] The server URL in Wesam has the **new token**, and the connection test passes.
-- [ ] Bright Data credits are available; the monthly caps are set (they are).
-- [ ] Record each segment separately and cut them together. Wait time is sped up ×4 and labelled
-      "sped up".
-- [ ] Show **no** secrets: no `.env`, no server URL, no Wesam MCP dialog.
-- [ ] Charts are visible for at least 3 seconds each.
-- [ ] The final cut runs 2:30–2:50, with subtitles checked against the audio.
+Expect: below target · net profit **2.19** per delivered order (0.7%) · breakeven **296.94** · safe
+price **345.23** · cost chart. Hold on the chart for three seconds.
+
+**B — the beginner flow** (fresh chat)
+
+```
+I'm new to selling online, in Egypt. The product costs me 100 EGP and I don't know my other costs. A competitor sells it at 279. What should I charge?
+```
+
+It answers with Egypt's published courier costs (delivery ~97, return 87) **and the Bosta link**,
+then asks you to confirm. Reply:
+
+```
+Yes, use 97 delivery and 87 return. CR 55%, DR 60%, CPA 20 EGP, no other fees, target margin 15%.
+```
+
+Expect the price table: breakeven **253.61** · competitor **279 → +25.39 (9.1%)** · suggested
+**298.36 (15%)** · price chart. This is the strongest half-minute in the video — linger on the
+source link and the table.
+
+**C — campaign check** (same chat)
+
+```
+نفس المنتج: الأسبوع ده صرفت 5000 جنيه، جالي 100 ليد، 50 أكدوا، 30 استلموا، و15 لسه في الطريق.
+```
+
+Expect **FIX** (not PAUSE), the delivery rate measured on settled orders only, and a line saying 15
+orders are still open. Say: «الأوردرات اللي لسه في الطريق مش محسوبة مرتجعات» — orders still on their
+way are not counted as returns.
+
+**D — an offer** (same chat)
+
+```
+لو عملت عرض قطعتين بـ 550 هكسب ولا هخسر؟
+```
+
+Expect a per-order profit figure and a verdict.
+
+## Shot 7, the impact slide — two honest versions
+
+**If the seller session happened:** show the filled slide — hours saved per week, money saved, the
+seller's quote.
+
+**If it did not:** do not invent numbers. Show what you measured on camera instead:
+
+```
+Pricing one product by spreadsheet: [__] minutes.
+With افندينا: 40 seconds.
+Campaign check: [__] minutes → under a minute.
+Measured on this recording.
+```
+
+A judge can verify that from the video itself, which beats an unverifiable figure.
+
+## After recording
+
+- Cut to 2:30–2:50; speed any wait over three seconds to ×4 and label it "sped up".
+- Check the subtitles against the audio.
+- Export mp4 and upload to **Q12** of the submission form — a link is not accepted there.
