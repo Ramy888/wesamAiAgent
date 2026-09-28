@@ -1,7 +1,7 @@
 # Untap submission form — ready answers
 
-Round 2 "Hackathon", deadline **3 October 2026, 11:59 PM**. Draft already open; 5 of 13
-required questions answered. Paste these, then attach the two files.
+Round 2 "Hackathon", deadline **3 October 2026, 11:59 PM**. Draft already open; 5 of 13 required
+questions answered. Paste these, then attach the two files.
 
 **Q3 — Agent name**
 
@@ -61,11 +61,11 @@ https://github.com/Ramy888/wesamAiAgent
 https://hesba-ten.vercel.app
 ```
 
-**Q12 — Upload your video** → the 2–3 minute demo file. **Required, a link is not enough.**
-Script and shot list: `docs/demo-script.md`.
+**Q12 — Upload your video** → the 2–3 minute demo file. **Required, a link is not enough.** Script
+and shot list: `docs/demo-script.md`.
 
-**Q13 — Supporting documents (optional)** → upload the impact slides as PDF. Optional on the
-form, but the judging criteria are about measured impact, so send them.
+**Q13 — Supporting documents (optional)** → upload the impact slides as PDF. Optional on the form,
+but the judging criteria are about measured impact, so send them.
 
 **Q14 — How can a reviewer run or test your agent?**
 

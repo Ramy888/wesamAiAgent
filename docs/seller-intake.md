@@ -4,6 +4,8 @@ Everything the judges score — hours saved, money saved, revenue — comes from
 sellers. This is the pack for getting one and running a 45-minute session that produces the slide
 numbers, the demo material, and the answer to bug #8.
 
+**Arabic version for running the session: [`docs/seller-intake-ar.md`](seller-intake-ar.md).**
+
 Target: **two sellers**, one Egyptian, ideally one Gulf. One is enough if time is short.
 
 ## 1. Where to find them
