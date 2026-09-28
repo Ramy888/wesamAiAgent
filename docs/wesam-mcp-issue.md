@@ -1,4 +1,8 @@
-# Wesam: MCP tools never reach the server from a chat (evidence, 2026-09-27)
+# Wesam: the chat runtime only calls some MCP hosts (resolved 2026-09-27)
+
+**Outcome: fixed by moving back to `deno.net`.** The agent works again. What follows is the
+evidence, kept because Wesam's Test button reports success on hosts the chat runtime will not
+actually call — a false positive worth reporting to them.
 
 ## Symptom
 
