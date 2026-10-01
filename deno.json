@@ -18,7 +18,8 @@
       "wesam/",
       "CLAUDE.md",
       "README.md",
-      "tests/oracle/"
+      "tests/oracle/",
+      "docs/deck"
     ]
   },
   "lint": {

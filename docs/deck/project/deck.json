@@ -1,6 +1,9 @@
 {
   "v": 4,
-  "createdOnFiles": { "v": 1, "at": "2026-09-25T09:00:00Z" },
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-09-25T09:00:00Z"
+  },
   "title": "Hesba — Agents at Work impact deck",
   "order": [
     "cover",
@@ -17,17 +20,27 @@
     "next"
   ],
   "sections": {
-    "s1": { "description": "Who this is for and what the job is", "start": "cover" },
-    "s2": { "description": "The work Afandina replaced, before and after", "start": "before" },
-    "s3": { "description": "The measured impact: time, money, revenue", "start": "time" },
-    "s4": { "description": "Why it can be trusted, and what comes next", "start": "proof" }
+    "s1": {
+      "description": "Who this is for and what the job is",
+      "start": "cover"
+    },
+    "s2": {
+      "description": "The scenario, and what the calculator returns on it",
+      "start": "seller"
+    },
+    "s3": {
+      "description": "Why it can be trusted, and what comes next",
+      "start": "revenue"
+    }
   },
   "faces": {
     "rubik": {
       "family": "Rubik",
       "href": "https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;600&display=swap"
     },
-    "ibm-plex-sans": { "family": "IBM Plex Sans" }
+    "ibm-plex-sans": {
+      "family": "IBM Plex Sans"
+    }
   },
   "designSystems": []
 }
