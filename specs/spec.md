@@ -7,7 +7,7 @@ Status: **draft v0.1**, 2026-09-16; updated 2026-09-23. G1 is answered: building
 | Gate | Answer (2026-09-16) | Effect on this spec |
 |---|---|---|
 | G1: code before Oct 1? | **Answered 2026-09-23 by the organizers: "you can start building, but submission starts on the first of October… the earlier the better".** Building early is allowed and encouraged; only the submission window is fixed. | No restriction. The engine, MCP server and landing page built in September are all in scope. |
-| G2: reuse Bine code? | **Yes, port it.** | The engine is a port of `reference/dart/pricing_engine.dart`, checked against `reference/golden.json`. |
+| G2: reuse the original app code? | **Yes, port it.** | The engine is a port of `the original engine`, checked against `reference/golden.json`. |
 | G3: how Wesam calls tools | **MCP servers only.** Agent Builder → Tools → *Add MCP server*: name + **Streamable HTTP (https) URL**, include/exclude tool globs. "Wesam proxies it." "Every workspace signs in on its own, so no keys or passwords are stored here." "Publish, send and spend actions are always excluded." | **Replaces the REST API in CLAUDE.md §4 with an MCP server** (§2). |
 | G4: can judges run it without an account? | **Partly answered.** Publishing needs a partner registration plus admin review, and an approved agent can then be hired by any Wesam workspace. There's no public chat link, so judges need a Wesam workspace. | The README must offer a Wesam-free path (§6). |
 
@@ -27,7 +27,7 @@ Seller ──chat (AR/EN)──▶ Wesam agent "Afandina"
                               │ pure function calls
                               ▼
                   engine/  (pure TS, no I/O)
-                    parity.ts     5 Bine modes, same behaviour to 1e-4 → golden.json
+                    parity.ts     5 the original app modes, same behaviour to 1e-4 → golden.json
                     canonical.ts  one full model used by every MCP tool
 ```
 
@@ -128,9 +128,9 @@ Wesam always excludes publish/send/spend actions, and its default exclude globs 
 | `returnShippingFee` | number | 0 | ≥ 0 |
 | `packagingCost`, `fulfillmentFee` | number | 0 | ≥ 0 |
 | `callCenterCostPerLead`, `smsCostPerLead` | number | 0 | ≥ 0 |
-| `platformFeePct`, `paymentGatewayPct`, `vatPct`, `marketerCommissionPct` | number | **0** (not Bine's hidden tracker defaults; bug #2) | 0 ≤ x < 100 |
+| `platformFeePct`, `paymentGatewayPct`, `vatPct`, `marketerCommissionPct` | number | **0** (not the original app's hidden tracker defaults; bug #2) | 0 ≤ x < 100 |
 | `paymentGatewayFixed` | number | 0 | ≥ 0 |
-| `targetMarginPct` | number | 20 (Bine's default) | −100 < x < 100 |
+| `targetMarginPct` | number | 20 (the original app's default) | −100 < x < 100 |
 | `currency` | string | `"EGP"` | One of EGP, SAR, AED, KWD, QAR, BHD, OMR, JOD, ILS, LBP, USD, SYP, IQD, YER, MAD, DZD, TND, LYD, SDG, MRU |
 | `market` | string | none | ISO 3166 alpha-2 (EG, SA, AE, …). Echo only, used for wording and assumptions; it never changes the math |
 | `lang` | `"ar"` \| `"en"` \| `"fr"` | `"ar"` | Language of the `content` text only (`fr` for Maghreb sellers) |
@@ -149,7 +149,7 @@ Each tool has its own input schema, and the validator is generated from that sam
 | `targetMarginPct` | default 20 | default 20 | default 20 | default 20 (the `FIX` verdict depends on it) |
 | other fees | default 0 | default 0 | default 0 | default 0 |
 
-CR = 0 and DR = 0 are rejected at the tool layer. In the Bine formulas they zero out
+CR = 0 and DR = 0 are rejected at the tool layer. In the the original app formulas they zero out
 `leadsPerDelivered`, which silently drops ad cost from the price (see test plan, E1/E2). The
 parity engine keeps that behaviour; the tools refuse it with the error "No order can ever be
 delivered at CR/DR = 0".
@@ -206,7 +206,7 @@ delivered at CR/DR = 0".
 
 ### 2.6 Canonical model (all tools)
 
-This is Bine's Ultimate model (CLAUDE.md §5), extended to evaluate **at the seller's price
+This is the original app's Ultimate model (CLAUDE.md §5), extended to evaluate **at the seller's price
 `p`**. That fixes bugs #1 and #4, and uses one percentage stack everywhere (bug #3).
 
 ```
@@ -231,7 +231,7 @@ at p:  gross(p)   = p*(1-stack) - fixed          (contribution before ads, per d
 ```
 
 `requiredCr` is solved exactly. It accounts for lead processing, which also scales with 1/CR,
-unlike Bine's simple `requiredCr`.
+unlike the original app's simple `requiredCr`.
 
 ### 2.7 Tool specs
 
@@ -285,11 +285,11 @@ unlike Bine's simple `requiredCr`.
   `campaign { adBudgetSpent, leads, confirmed, delivered, periodName? }`, all counts ≥ 0.
   The field is named `adBudgetSpent` because the tool name must avoid "spend"; the field name is
   free.
-- Formulas: Bine's P&L Tracker, with these changes:
+- Formulas: the original app's P&L Tracker, with these changes:
 
   | Output | Formula |
   |---|---|
-  | `contributionBeforeAds` | `revenue - totalCosts` (bug #6: replaces Bine's `grossProfit`) |
+  | `contributionBeforeAds` | `revenue - totalCosts` (bug #6: replaces the original app's `grossProfit`) |
   | `maxCplBreakeven` | `contributionBeforeAds / leads` |
   | `maxCplAtTarget` | `(revenue*(1-tm) - totalCosts) / leads` |
   | `requiredPrice` | `(nonPctCosts + adBudgetSpent) / (delivered*(1-stack-tm))` |
@@ -379,14 +379,14 @@ unlike Bine's simple `requiredCr`.
 - Saving products or merchants
 - Reading ad-platform APIs
 - CSV/Sheets import (stretch goal only)
-- Showing Bine's simple-formula modes through the tools (they exist only in `engine/parity.ts`
+- Showing the original app's simple-formula modes through the tools (they exist only in `engine/parity.ts`
   for golden tests)
 
 ## 5. Bug handling (CLAUDE.md §6 + new findings)
 
 **Order of work:** port for parity (`parity.ts` passes `golden.json`) → build `canonical.ts`
 with its own hand-computed tests. Canonical tools never call parity functions, so golden entries
-stay unchanged. Each canonical change that differs from Bine is a separate commit whose test
+stay unchanged. Each canonical change that differs from the original app is a separate commit whose test
 cites the bug number.
 
 | # | Bug | Resolution in canonical |
@@ -398,10 +398,10 @@ cites the bug number.
 | 5 | Reverse bundles use `deliveryFee` | Bundles use `blended` |
 | 6 | Tracker `grossProfit` | `contributionBeforeAds` |
 | 7 | No tests | This project has them |
-| **8 (new, needs your decision)** | The quote model counts packaging, fulfillment and gateway-fixed **per delivered** order. The tracker counts them **per confirmed** order, and Advanced P&L uses `fulfillment/dr`. For COD, every shipped order incurs these costs, so the quote under-costs by a factor of `1/dr`. | Proposed: `ops/dr` and `gatewayFixed/dr` in canonical. **Not applied** until confirmed; the C-tests in the test plan use the Bine (per-delivered) form. |
+| **8 (new, needs your decision)** | The quote model counts packaging, fulfillment and gateway-fixed **per delivered** order. The tracker counts them **per confirmed** order, and Advanced P&L uses `fulfillment/dr`. For COD, every shipped order incurs these costs, so the quote under-costs by a factor of `1/dr`. | Proposed: `ops/dr` and `gatewayFixed/dr` in canonical. **Not applied** until confirmed; the C-tests in the test plan use the the original app (per-delivered) form. |
 | **9 (new)** | CPA Matrix marks negative-margin rows (−5…−20%) "viable" | Canonical marks them not viable |
 | **10 (new)** | Parity `requiredCr` ignores lead-processing costs | Canonical solves it exactly (§2.6) |
-| **11 (new)** | Bine returns `0` for undefined results (suggested price at stack + margin ≥ 1; BE ROAS at gross ≤ 0), which reads as a real number | Canonical returns `null` + a warning |
+| **11 (new)** | the original app returns `0` for undefined results (suggested price at stack + margin ≥ 1; BE ROAS at gross ≤ 0), which reads as a real number | Canonical returns `null` + a warning |
 
 ## 6. Judge path (< 5 minutes, works without Wesam)
 

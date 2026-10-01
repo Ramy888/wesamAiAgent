@@ -65,7 +65,7 @@ the suite silently.
 | pctStack | 0.285 |
 | leadProcessing | 9.2593 |
 
-**Parity traps.** These assert Bine's *current* behaviour. They are not fixed in `parity.ts`.
+**Parity traps.** These assert the original app's *current* behaviour. They are not fixed in `parity.ts`.
 
 | ID | Trap | Evidence in golden |
 |---|---|---|
@@ -91,7 +91,7 @@ hand case where they differ, e.g. input CR 60, DR 45 with the same counts. Expec
 
 **Proposed fix:** extend `reference/golden.dart` with a second fixture set per mode (for
 example, the ultimate inputs fed to every mode) and regenerate with the command in CLAUDE.md §7.
-That runs Dart inside the Bine repo, so it needs your OK.
+That runs Dart inside the the original app repo, so it needs your OK.
 
 ## C — canonical model (spec §2.6)
 

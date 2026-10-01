@@ -1,12 +1,12 @@
 /**
  * Canonical pricing model used by every MCP tool (specs/spec.md §2.6–2.7).
  *
- * It is Bine's Ultimate model evaluated at the seller's own price, with one percentage stack
+ * It is the original app's Ultimate model evaluated at the seller's own price, with one percentage stack
  * everywhere. Values that are undefined (for example a suggested price when the stack plus the
  * target margin reach 100%) are `null`, never 0, NaN or Infinity.
  *
  * Open decision (bug #8): packaging, fulfillment and the fixed gateway fee are counted per
- * delivered order, as in Bine. See specs/spec.md §5.
+ * delivered order, as in the original app. See specs/spec.md §5.
  */
 
 export interface Product {

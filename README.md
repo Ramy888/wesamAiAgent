@@ -1,43 +1,69 @@
-# Hesba — Afandina pricing agent (Wesam.ai)
+<div align="center">
 
-Afandina is an AI pricing and profit advisor for online sellers in Egypt, the Gulf and MENA. It
-tells a seller what to charge, and whether their ads are actually making money. It runs on
-Wesam.ai, and all of its math comes from the **Hesba calculator**, a small, dependency-free
-MCP server in this repo.
+<img src="landing/logo-512.png" width="96" alt="Hesba logo">
 
-## For judges
+# Hesba · افندينا
 
-1. **Check the math in 5 minutes.** Follow the section below to run the calculator locally. You
-   don't need an account.
-2. **Talk to Afandina on Wesam.** _How judges get access is still to be confirmed with the
-   organizers (marketplace listing or a shared workspace). The link will go here._ Paste any of
-   these prompts:
-   - Pricing (expected: below target; net profit 2.19 EGP; breakeven 296.94; safe price 345.23):
-     > عايز أسعّر منتج في مصر. التكلفة 100 جنيه + جمارك 10، الشحن 25 والمرتجع 15، تغليف 5 وتجهيز 10، كول سنتر 2 و SMS نص جنيه لكل ليد. عمولة المنصة 8% وبوابة الدفع 2.5% + 3 جنيه، ضريبة 15% وعمولة مسوّق 3%. الـ CPA عندي 15، التأكيد 60% والتسليم 45%، وببيع بـ 300 وعايز هامش 10%.
-   - Campaign (expected: FIX; top lever: raise the price to 373.79):
-     > نفس المنتج، الأسبوع ده صرفت 1000 جنيه، جالي 100 ليد، 50 أكدوا و40 استلموا. الهدف 20%.
-   - Offer (expected: +70.94 per order, 12.9%):
-     > نفس المنتج: لو عملت عرض قطعتين بـ 550 هكسب ولا هخسر؟
-   - Brand-new seller (expected: the published Egyptian courier costs with their source, then a
-     price table):
-     > I'm new to selling online, in Egypt. The product costs me 100 EGP and I don't know my other costs. A competitor sells it at 279. What should I charge?
-   - Competitors (uses live web search):
-     > نفس المنتج اسمه "مكواة بخار محمولة" في مصر. قارن سعري بالمنافسين.
-3. **What to expect.** Afandina replies with a verdict first, then 3–5 numbers, one action, and a
-   chart. If numbers are missing, it asks for them. Any default it uses is listed as an
-   assumption. Competitor prices come with source links, and Afandina asks you to confirm them
-   before comparing.
+**Know your real profit before the next ad.**
 
-Demo script: [docs/demo-script.md](docs/demo-script.md). Impact slides outline:
-[docs/impact-slides.md](docs/impact-slides.md).
+An AI pricing and profit advisor for cash-on-delivery sellers across Egypt, the Gulf and MENA.
+Every number comes from a tested calculator — never from the language model.
 
-## Run it in under 5 minutes (no Wesam account needed)
+[Live site](https://hesba-ten.vercel.app) · [Run it in five minutes](#run-it-in-five-minutes) ·
+[How it works](#how-it-works)
 
-Requires [Deno](https://deno.com) 2.x.
+</div>
+
+---
+
+## The problem
+
+A cash-on-delivery seller pays for the ad up front, but only collects cash if the customer
+answers the phone and opens the door. Confirmation rates, delivery rates, returns and courier
+fees decide whether an order made money — and none of that is visible in an ads dashboard.
+
+So a campaign showing a healthy ROAS can lose money on every delivered order for weeks before
+anyone notices.
+
+## What افندينا does
+
+| | |
+|---|---|
+| **Price a product** | Safe price, breakeven price, and the profit at the price you charge today |
+| **Set the ad ceiling** | The most you can pay per lead and still hit your margin |
+| **Check a campaign** | Real orders in, a verdict out: SCALE / FIX / PAUSE, with the one move that matters |
+| **Test an offer** | "2 for 550" checked before you launch it |
+| **Compare competitors** | Finds offers, asks you to confirm them, then shows where your price stands |
+| **Start from zero** | Three questions, then a full price table built on published courier costs |
+
+Every answer carries a chart drawn by the server from its own results, in Arabic and English:
+
+<div align="center">
+<img src="docs/img/chart-cost.png" width="49%" alt="Where each order's money goes">
+<img src="docs/img/chart-market.png" width="49%" alt="Your price against competitor prices">
+</div>
+
+## How it works
+
+```
+seller ──chat──▶ افندينا on Wesam.ai ──MCP──▶ Hesba calculator ──▶ numbers + signed chart
+                 collects inputs,              Deno + TypeScript,
+                 explains, never computes      no dependencies, 121 tests
+```
+
+The rule the whole project is built on: **the model never does arithmetic.** It gathers inputs,
+states its assumptions and explains the verdict; every figure comes from code with a test behind
+it. The engine works per *delivered* order, so confirmation and delivery rates, returns, courier
+fees, packaging, platform and payment fees, VAT, the courier's cash-collection fee and ad cost
+are all counted.
+
+## Run it in five minutes
+
+No account and no API key. Requires [Deno](https://deno.com) 2.x.
 
 ```sh
-deno task test      # test suite (charts included): Bine golden parity, the pricing model, validation, MCP protocol
-deno task serve     # http://localhost:8000/mcp/dev  (token "dev" unless .env sets HESBA_TOKENS)
+deno task test      # 121 tests: engine parity, the pricing model, validation, MCP protocol, charts
+deno task serve     # http://localhost:8000/mcp/dev
 ```
 
 Call a tool:
@@ -52,59 +78,61 @@ curl -s -X POST http://localhost:8000/mcp/dev -H 'content-type: application/json
   "targetMarginPct":10,"sellingPrice":300,"lang":"en"}}}'
 ```
 
-Expected verdict: **BELOW TARGET**. Net profit is 2.19 EGP per order, and the tool suggests
-raising the price to 345.23 EGP.
+Expected verdict: **BELOW TARGET** — net profit 2.19 EGP per delivered order, suggested price
+345.23 EGP.
 
-You can also connect MCP Inspector (`npx @modelcontextprotocol/inspector`) or Claude Code
-(`claude mcp add --transport http hesba http://localhost:8000/mcp/dev`) to the local server,
-or run `deno run -A tests/oracle/sdk_smoke.ts` while it is running.
+It also connects to MCP Inspector (`npx @modelcontextprotocol/inspector`) or Claude Code
+(`claude mcp add --transport http hesba http://localhost:8000/mcp/dev`).
 
-## Tools
+## The tools
 
 | Tool | What it answers |
 |---|---|
 | `price_product` | Safe and breakeven price, profit at your price, max CPA, breakeven ROAS, the CR needed, and a verdict |
+| `price_scenarios` | Every price worth considering in one table — profit, margin, revenue at a stated ad spend, and a health band |
 | `cpa_table` | Max CPA per lead at margins from +20% to −20% |
 | `price_bundles` | 2/3/4-piece bundle prices, and checks of offers such as "2 for 550" |
-| `check_campaign` | Real campaign P&L and a PAUSE / FIX / SCALE verdict with the top lever |
-| `compare_prices` | Your price against confirmed competitor offers: market band and profit if you matched each one |
-| `price_scenarios` | Every price worth considering in one table — breakeven, safe price, steps around it, your price and each competitor — with profit, margin, revenue at a stated ad spend, and a health band |
-| `read_campaign_export` | Turns an ad report the seller pasted (Meta/TikTok/Google, CSV/TSV, Arabic or English headers) into per-campaign spend, impressions, clicks and results — parsed and summed in code, never retyped by the model |
-| `market_costs` | What couriers actually publish for delivery and returns in a market, with the source link; markets with nothing published return `found: false` so the agent asks instead of guessing |
+| `check_campaign` | Real campaign P&L and a PAUSE / FIX / SCALE verdict, with orders still in transit excluded |
+| `compare_prices` | Your price against confirmed competitor offers: market band, and profit if you matched each one |
+| `market_costs` | What couriers actually publish for delivery and returns in a market, with the source link |
+| `read_campaign_export` | Turns an ad report you paste (Meta/TikTok/Google, Arabic or English) into per-campaign numbers |
 
 ## Layout
 
 | Path | Contents |
 |---|---|
-| `engine/parity.ts` | Faithful port of Bine's Dart engine, checked against `reference/golden.json` |
-| `engine/canonical.ts` | The single pricing model every tool uses (`specs/spec.md` §2.6) |
-| `server/` | MCP Streamable HTTP handler, schemas and validation, text summaries |
-| `wesam/` | Agent instructions, skills and workflow plan for Wesam |
-| `reference/market-defaults.json` | Courier delivery and return costs per market, each with its source page and the date checked |
-| `landing/` | Landing page (https://hesba-ten.vercel.app) |
-| `specs/` | Spec, test plan, MCP tools research |
+| `engine/canonical.ts` | The single pricing model every tool uses |
+| `engine/parity.ts` | Faithful port of the original Dart engine, checked against `reference/golden.json` |
+| `server/` | MCP Streamable HTTP handler, schemas and validation, text summaries, chart rendering |
+| `worker/`, `wrangler.jsonc` | Cloudflare Workers entry point — a second host for the same code |
+| `wesam/` | Agent instructions, skills and workflow for the Wesam.ai side |
+| `reference/market-defaults.json` | Courier delivery and return costs per market, each with its source page and date |
+| `landing/` | Landing page ([hesba-ten.vercel.app](https://hesba-ten.vercel.app)) |
+| `specs/` | The contract, the test plan, and design notes for features not yet built |
+
+## Design decisions worth knowing
+
+- **Nothing is estimated.** Where a figure isn't published — confirmation and delivery rates are
+  published nowhere in any market researched — the agent asks instead of assuming.
+- **Courier costs carry their sources.** Only Egypt, Morocco, the UAE and Saudi Arabia publish
+  usable delivery prices; each number links to the page it came from.
+- **Charts cannot disagree with the text.** They are rendered server-side from the same result
+  object and signed, so a chart link cannot be forged or drift out of date.
+- **Orders in transit are not returns.** Counting them as failures turns healthy campaigns into
+  "pause" verdicts, so they are excluded from the delivery rate until they settle.
 
 ## Production
 
-- Server: **https://hesba-calculator.hesba.deno.net** (Deno Deploy, org `hesba`). `/health` and
-  the signed chart images at `/chart/...` are public.
-- The MCP endpoint is `/mcp/<token>`. The token is the `HESBA_TOKENS` secret; it is never in
-  this repo.
-- Deploy with `deno task deploy` (tests, then a staged upload of `deno.json`, `deno.lock`,
-  `engine/` and `server/`).
-- **A second host is kept warm:** `deno task deploy:cf` publishes the same code to Cloudflare
-  Workers (`worker/index.ts`, `wrangler.jsonc`), and `hesba-ten.vercel.app/mcp/...` proxies to
-  it. The Deno app was suspended on 2026-09-26 when an unverified free org hit 1% of the free
-  limits; the org is verified now, and the Workers copy stays as a fallback.
+- Server: `https://hesba-calculator.hesba.deno.net` (Deno Deploy). `/health` and the signed
+  chart images at `/chart/...` are public; the MCP endpoint is `/mcp/<token>` and the token is a
+  deployment secret, never in this repo.
+- `deno task deploy` runs the tests and deploys; `deno task deploy:cf` publishes the same code to
+  Cloudflare Workers as a fallback host.
 
-## Configuration
+## Status
 
-Put these in a local `.env` (copy `.env.example`). `.env` is git-ignored; never commit it.
+121 automated tests pass, including parity against the original engine to four decimal places
+and independently computed expected values. The server runs in production and is what the agent
+on Wesam.ai calls.
 
-| Variable | Default | Purpose |
-|---|---|---|
-| `HESBA_TOKENS` | `dev` | Comma-separated secrets accepted in the `/mcp/<token>` path |
-| `PORT` | `8000` | Listen port |
-| `HESBA_CHART_SECRET` | derived from the first token | Signs chart links (`/chart/<kind>/<payload>.<sig>.svg`). Keep it stable |
-| `PUBLIC_BASE_URL` | request origin | Origin used in chart links |
-| `DENO_DEPLOY_TOKEN`, `DENO_DEPLOY_ORG` | — | Used only by `deno task deploy` |
+Built for the Agents at Work hackathon — Taalam.ai × Wesam.ai × Untap, 2026.

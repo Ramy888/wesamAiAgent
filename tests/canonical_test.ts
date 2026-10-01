@@ -1,7 +1,7 @@
 // Canonical layer (test plan §C and §E). Expected values come from the independent
 // Python oracle in tests/oracle/oracle.py, not from this engine.
 // Bug #8 (ops/gateway per shipped order) is NOT applied: ops costs are per delivered order,
-// matching Bine's Ultimate model. If that decision changes, these values must be recomputed.
+// matching the original app's Ultimate model. If that decision changes, these values must be recomputed.
 import { assert, assertAlmostEquals, assertEquals } from "@std/assert";
 import golden from "../reference/golden.json" with { type: "json" };
 import {
@@ -76,7 +76,7 @@ function assertNum(actual: number | null | undefined, expected: number, tol = TO
 
 // ─── price_product ──────────────────────────────────────────────────────────
 
-Deno.test("C1: suggested and breakeven prices equal Bine's Ultimate model", () => {
+Deno.test("C1: suggested and breakeven prices equal the original app's Ultimate model", () => {
   const r = priceProduct(U);
   assertNum(r.suggestedPrice, 345.2273);
   assertNum(r.breakevenPrice, 296.9438);
@@ -100,7 +100,7 @@ Deno.test("C7/C8: unreachable CR is warned; verdict is BELOW_TARGET with raiseTo
   assertNum(r.verdict?.raiseTo, 345.2273);
 });
 
-Deno.test("price_product: at-suggested block reproduces Bine's Ultimate headline", () => {
+Deno.test("price_product: at-suggested block reproduces the original app's Ultimate headline", () => {
   const a = priceProduct(U).atSuggested!;
   assertNum(a.netProfit, 34.5227);
   assertNum(a.netMarginPct, 10);
@@ -115,7 +115,7 @@ Deno.test("price_product: without a selling price there is no verdict or at-pric
   assertNum(r.suggestedPrice, 345.2273);
 });
 
-Deno.test("price_product: cost breakdown matches Bine's Ultimate breakdown at the suggested price", () => {
+Deno.test("price_product: cost breakdown matches the original app's Ultimate breakdown at the suggested price", () => {
   const r = priceProduct({ ...U, sellingPrice: undefined });
   const golden7 = golden.ultimatePricing.output.cogsBreakdown.map((c) => c.amount);
   assertEquals(r.costBreakdown.length, 7);
@@ -155,7 +155,7 @@ Deno.test("cpa_table: headline is at the seller's price (bug #4 fixed)", () => {
 
 // ─── price_bundles ──────────────────────────────────────────────────────────
 
-Deno.test("C10: default tiers equal Bine's Ultimate bundles", () => {
+Deno.test("C10: default tiers equal the original app's Ultimate bundles", () => {
   const r = priceBundles(U, DEFAULT_TIERS, []);
   const gold = golden.ultimatePricing.output.bundles;
   assertEquals(r.tiers.length, 3);
@@ -208,7 +208,7 @@ Deno.test("C12: campaign P&L on the golden tracker input", () => {
   assertEquals(r.verdict, "FIX");
 });
 
-Deno.test("C12: campaign totals equal Bine's tracker totals (bridge to parity)", () => {
+Deno.test("C12: campaign totals equal the original app's tracker totals (bridge to parity)", () => {
   const r = checkCampaign(T, TC);
   const gold = golden.plTracker.output.cogsBreakdown.map((c) => c.amount);
   const sum = r.costBreakdown.reduce((a, c) => a + c.amount, 0);

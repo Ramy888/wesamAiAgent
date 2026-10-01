@@ -1,7 +1,7 @@
 /**
- * Parity port of Bine's PricingEngine (reference/dart/pricing_engine.dart).
+ * Parity port of the original Flutter app's pricing engine.
  *
- * This module reproduces Bine's current behaviour on purpose, including its known bugs
+ * This module reproduces the original app's current behaviour on purpose, including its known bugs
  * (CLAUDE.md §6). It exists only so the golden tests can prove the port is faithful.
  * The MCP tools use engine/canonical.ts instead. Do not "fix" anything here.
  */
@@ -78,7 +78,7 @@ export interface PricingResults {
   maxCpa: number;
   breakEvenRoas: number;
   roas: number;
-  /** Already multiplied by 100, as in Bine. */
+  /** Already multiplied by 100, as in the original app. */
   successRate: number;
   leadsPerDelivered: number;
   adCostPerDelivered: number;
